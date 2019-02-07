@@ -202,11 +202,11 @@ We can calculate the energy expended by the voltage source, which is entirely st
     && E_L(t) &= \int_0^t VI(t) \, \dt \\
     &&&= \frac{V^2}{L} \int_0^t t \, \dt \\
     &&&= \frac{V^2t^2}{2L} \\
-    &&&= \frac{1}{2L} (I(t))^2.
+    &&&= \frac{1}{2}L (I(t))^2.
 }
 It can be shown (try it!) that this equation holds true for all inductors, not just the inductor in this circuit. Notice how this equation is analogous to the equation for the energy in a capacitor:
 \[
-    E_C(t) = \frac{1}{2C} (Q(t))^2.
+    E_C(t) = \frac{1}{2}C (V(t))^2.
 \]
 
 In fact, considering the basic defining equations of capacitors and inductors, we observe similarities in the equations for current / voltage:
@@ -398,11 +398,6 @@ and
 Thus, $\max({R_1, R_2})$ is a $2$-approximation of the resistance of $R_1$ and $R_2$ placed in series.
 
 Similarly, consider two resistors $R_1$ and $R_2$ placed in parallel, as shown:
-\begin{center}
-\begin{circuitikz}[american]
-\draw (0, 0) node[circ]{} to[R, R=$R_1$] (2, 0) to[R, R=$R_2$] (4, 0) node[circ]{};
-\end{circuitikz}
-\end{center}
 \begin{center}
 \begin{circuitikz}[american]
 \draw (0, 0) node[circ]{} to (1, 0) to (1, 0.5) to[R, R=$R_1$] (3, 0.5) to (3, 0) to (4, 0) node[circ]{};
