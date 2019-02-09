@@ -353,7 +353,7 @@ and
     && \abs{Z_L} &= \omega L \\
     \thus \log{\abs{Z_L}} &= \log{L} + \log{\omega}.
 }
-Thus, our log-log plot will be entirely linear. Plotting a capacitor $C = \SI{1}{\pico\farad}$ and an inductor $L = \SI{1}{\henry}$, as well as a resistor $\abs{Z_R} = R = \SI{1}{\ohm}$, we obtain:
+Thus, our log-log plot will be entirely linear. Plotting a capacitor $C = \SI{1}{\pico\farad}$ and an inductor $L = \SI{1}{\henry}$, as well as a resistor $\abs{Z_R} = R = \SI{1}{\mega\ohm}$, we obtain:
 \begin{center}
 \begin{tikzpicture}
 \begin{loglogaxis}[
@@ -539,6 +539,5 @@ Notice that this homogenous first-order linear differential equation looks very 
     I(t) = I_0 e^{-\frac{R}{L}t} = I_0 e^{-t / \tau},
 \]
 where $\tau = \frac{L}{R}$ is the \emph{time constant} of an LR circuit. We see here that the current decreases rapidly, approaching but never quite reaching $0$, just like the behavior of the voltage across a discharging capacitor.
-
 
 \end{document}
