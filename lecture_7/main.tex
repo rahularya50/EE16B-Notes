@@ -144,7 +144,7 @@
 \lhead{EE 16B}
 \cfoot{\thepage}
 
-\title{Lecture 6 - Notes}
+\title{Lecture 7 - Notes}
 \author{Rahul Arya}
 \date{February 2019}
 \begin{document}
@@ -255,7 +255,7 @@ We will now consider all the possible forms of impedances that we can substitute
     \]
     with $\omega_p$ as defined previously.
     
-    \item One component is a resistor, and the other is an inductor. There are two possible configurations of these two components. One of them is as follows:
+    \item One component is a resistor, and the other is an capacitor. There are two possible configurations of these two components. One of them is as follows:
     \begin{center}
     \begin{circuitikz}[american]
     \draw (0, 0) to[R, l=$R$] (2, 0) to[C, l=$C$] (2, -2) node[ground] {};
@@ -270,7 +270,7 @@ We will now consider all the possible forms of impedances that we can substitute
     where $\omega_p = 1 / \tau$ as before. This time, however, since we have an RC-circuit, $\tau = RC$. The other configuration is as follows:
     \begin{center}
     \begin{circuitikz}[american]
-    \draw (0, 0) to[R, l=$R$] (2, 0) to[C, l=$C$] (2, -2) node[ground] {};
+    \draw (0, 0) to[C, l=$C$] (2, 0) to[R, l=$R$] (2, -2) node[ground] {};
     \draw (2, 0) to (3, 0) node[ocirc] {} node[right] {$V_{out}$};
     \draw (0, 0) node[ocirc] {} node[left] {$V_{in}$};
     \end{circuitikz}
@@ -294,7 +294,7 @@ The first of these two transfer functions describes a \emph{low-pass filter}, si
 \section{Straight-line approximations}
 In Lectures 4 and 6, we saw how the magnitude and phase of such transfer functions can be approximated using $2$ straight lines on a log-log plot, and provided some algebraic justification. Now, we will consider an equivalent geometric model of the situation, in order to gain further insight into why these approximations are valid.
 
-For simplicity, we will focus on the transfer function of a low-ass filter, but the behavior for high-pass filters is analogous. Recall that any complex number can be written in polar form, so we may express $H(\omega)$ as
+For simplicity, we will focus on the transfer function of a low-pass filter, but the behavior for high-pass filters is analogous. Recall that any complex number can be written in polar form, so we may express $H(\omega)$ as
 \eqn{
     && H(\omega) = \frac{1}{1 + j\omega / \omega_p} &= re^{j\theta} \\
     \thus 1 + j\omega / \omega_p &= \frac{1}{r} e^{-j\theta}.
