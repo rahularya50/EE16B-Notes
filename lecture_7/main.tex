@@ -433,7 +433,7 @@ Unfortunately, we are encoding this signal using a $4$-bit ADC, much like the on
 \[
     \frac{\SI{3.3}{\volt}}{2^4} \approx \SI{0.2}{\volt}.
 \]
-But our signal only has an amplitude \SI{1}{\milli\volt}! What to do?
+But our signal only has an amplitude of \SI{1}{\milli\volt}! What to do?
 
 The natural response is to amplify our signal, perhaps using an op-amp circuit from EE16A, until the amplitude of our signal is of the same order as our measurement ability. To do so, we will need to amplify by a factor of at least
 \[
@@ -443,7 +443,7 @@ Unfortunately, when we do this, our noise signals will shoot up, reaching amplit
 \[
     \SI{50}{\milli\volt} \cdot 3300 = \SI{165}{\volt}!
 \]
-Of course, our op-amps can only produce voltages between their rails, which we might set to $\pm \SI{5}{\volt}$. So our amplified signal will rail much of the time. Plotting the end result of this amplification, we obtain:
+Of course, our op-amps can only produce voltages between their rails, which we might set to $\pm \SI{5}{\volt}$. So our amplified signal will rail much of the time. Plotting the end result of this amplification, we obtain\footnote{The diagram is actually fairly inaccurate due to limitations of the plotting software - it should really look more like a solid block of color.}:
 \begin{center}
 \begin{tikzpicture}
 \begin{axis}[
@@ -458,5 +458,51 @@ Of course, our op-amps can only produce voltages between their rails, which we m
 \end{center}
 Notice that our signal has railed for a significant portion of the cycle, meaning that information has been irretrievably lost before ever getting to a computer.
 
-Clearly, analog processing is necessary in order to remove the noise from our circuit.
+Clearly, analog processing is necessary in order to remove the noise from our circuit. What we'd like to do is remove both the high and low frequency noise from our circuit, while maintaining the amplitude of our signal frequency. We could then amplify the signal, without worrying about our op-amp railing. To do so, consider the following circuit:
+
+\noindent\makebox[\textwidth]{%
+\begin{circuitikz}[american]
+\draw (1, 0) node[ground]{} to[sinusoidal voltage source, l=$V_{raw}$] (1, 2) to[R, l=\SI{1}{\kilo\ohm}] (3, 2) to[C,l=\SI{0.1}{\micro\farad}] (3, 0) node[ground]{};
+\draw (3, 2) to[R, l=\SI{100}{\kilo\ohm}] (5, 2) to[C, l=\SI{1}{\nano\farad}] (5, 0) node[ground]{};
+\draw (7.7, 1.5) node[op amp, yscale=-1](opamp){};
+\draw(opamp.+) to (5, 2);
+\draw(opamp.-) to (6.5, 1) to (6.5, 0) to (8.9, 0) to (8.9, 1.5) to (opamp.out);
+\draw(opamp.out) to(8.9, 1.5) to (8.9, 2) to[C, l=\SI{1}{\micro\farad}] (10.5, 2) to[R,l=\SI{200}{\ohm}] (10.5, 0) node[ground]{};
+\draw(10.5, 2) to[C, l=\SI{10}{\nano\farad}] (12.5, 2) to[R,l=\SI{20}{\kilo\ohm}] (12.5, 0) node[ground]{};
+\draw(12.5, 2) to[C, l=\SI{100}{\pico\farad}] (14.5, 2) to[R,l=\SI{2}{\mega\ohm}] (14.5, 0) node[ground]{};
+\draw(14.5, 2) node[ocirc]{} node[right] {$V_{filter}$};
+\end{circuitikz}}
+The final amplification of $V_{signal}$ is omitted for reasons of space, but can be easily constructed using an non-inverting amplifier.
+
+Recall that our analysis of L-filters relied heavily on the voltage divider equation. That equation, in turn, assumed that all the current flowing into the top impedance flowed out of the bottom one. But here, some current flows out of the top impedance of each filter and into the next one in series. There are two ways to handle this issue. This first is to use a unity gain buffer, to allow us to access the output voltage of a filter without drawing current. This is done here between the low-pass and high-pass filters, but is not done between all pairs of adjacent filters. 
+
+Instead, we simply try to make the current draw (known as the \emph{load} of a filter) as low as possible, by increasing the impedance of subsequent filters. On the low-pass side, notice that the resistance of the resistor jumps by a factor of $100$ from the first filter to the second, as does the impedance of the capacitors (as a capacitor's impedance is inversely proportional to its capacitance, reducing the capacitance actually increases the impedance). On the high-pass side, we again increase the impedance of each filter by a factor of $100$ as well (for both the resistor and capacitor). Thus, each consecutive filter imposes only a very small load on the previous filters, so we can approximate the filters as being independent.
+
+Of course, it may not be clear why chaining multiple low-pass or high-pass filters is necessary. Why not just use a single filter of each type? Notice that the transfer function $H(\omega)$ of two filters chained together is the product of their two transfer functions $H_1(\omega)$ and $H_2(\omega)$, assuming that the second filter draws very little current from the first. Consider the case of two low pass filters with time constant $\tau = RC$ driven by a frequency significantly greater than $\omega_p$. Making linear approximations, observe that
+\eqn{
+    && \abs{H_1(\omega)} &\approx \frac{1}{\omega RC} \\
+    && \abs{H_2(\omega)} &\approx \frac{1}{\omega RC} \\
+    && \abs{H(\omega)} &\approx \frac{1}{\omega^2 R^2C^2}.
+}
+Notice that $\abs{H(\omega)}$ drops with $\omega^2$, rather than $\omega$. If we were to plot it on a log-log plot, its slope would be $-2$, whereas $H_1(\omega)$ and $H_2(\omega)$ would only have a slope of $-1$. The magnitude of this slope is known as the \emph{roll-off} of a filter. As the filter formed by chaining two low-pass filters together has a greater roll-off than either of the two filters did individually, it attenuates high-frequency signals much more, without significantly affecting signals of frequencies below $\omega_p$ (since for those frequencies to first-order the transfer function remains $\approx 1$). Similar behavior is present when chaining multiple high-pass filters in series, so it is advantageous to chain filters in this manner to reject undesirable frequencies more strongly.
+
+Looking at the ultimate end-result $V_{filter}$ versus $V_{signal}$, we observe something like\footnote{This is based off of the SPICE diagram from lecture, you'd better believe that I have better things to do than actually calculate this by hand.}
+\begin{center}
+\begin{tikzpicture}
+\begin{axis}[
+    xlabel=$t (\SI{}{\second})$, ylabel=$V (\SI{}{\volt})$,
+    xmin=0, xmax=0.01,
+    ymin=-2*10^(-3), ymax=2*10^(-3),
+    % legend style={at={(1.02,1)},anchor=north west},
+ ]
+\addplot [domain=0:0.01, samples=250] {0.001 * sin(360 * 1000 * x)};
+\addlegendentry{$V_{signal}$}
+\addplot [domain=0:0.01, samples=250, color=blue] {0.001 / sqrt(2) * sin(360 * 1000 * x + 45)};
+\addlegendentry{$V_{filter}$}
+\end{axis}
+\end{tikzpicture}
+\end{center}
+
+Notice that we have successfully used our low- and high-pass filters to reject undesired frequencies, but have attenuated our signal somewhat. Its phase has also shifted. Thus, we would have to adjust our amplification factor to compensate, but having done so we would be able to successfully measure our signal with just a $4$-bit DAC.
+
 \end{document}
