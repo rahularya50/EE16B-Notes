@@ -378,7 +378,7 @@ Following this procedure for amplitude (with the individual filters on the left 
     \addplot [domain=10^2:5*10^3, forget plot] {(x/(5 * 10^3))};
     \addplot [domain=5*10^3:10^4] {1};
     \addplot [domain=10^4:10^6] {1 / (x/10^4)};
-    \addlegendentry{$H_2(\omega)$ (approx)};
+    \addlegendentry{$H_1(\omega)H_2(\omega)$ (approx)};
     
     \end{loglogaxis}
     \end{tikzpicture}
@@ -665,7 +665,7 @@ In other words, it describes how far the frequency $\omega$ can deviate from $\o
 
 Now, we can solve for $B$. Let $\omega_1 = \omega_n - B/2$. Thus,
 \eqn{
-    && \abs{Z_{eq}}\left(\omega_1 - \frac{B}{2}\right) &= \sqrt{2} (\abs{Z_{eq}}(\omega_n)) \\
+    && \abs{Z_{eq}}\left(\omega - \frac{B}{2}\right) &= \sqrt{2} (\abs{Z_{eq}}(\omega_n)) \\
     \thus \sqrt{R^2 + (\omega_1 L - \frac{1}{\omega_1 C})^2} &= R\sqrt{2} \\
     \thus R^2 + (\omega_1 L - \frac{1}{\omega_1 C})^2 &= 2R^2 \\
     \thus \omega L - \frac{1}{\omega_1 C} &= -R \\
@@ -674,7 +674,7 @@ Now, we can solve for $B$. Let $\omega_1 = \omega_n - B/2$. Thus,
     &&&= -\frac{R}{2L} + \sqrt{\frac{R^2}{4L^2} + \frac{1}{LC}} \\
     &&&= \frac{1}{\sqrt{LC}} \left(-\frac{R\sqrt{C}}{2\sqrt{L}} + \sqrt{1 + \frac{R^2C}{L}} \right) \\
 }
-Let $\omega_2 = \omega_n - B/2$. A very similar calculation will demonstrate that
+Let $\omega_2 = \omega_n + B/2$. A very similar calculation will demonstrate that
 \[
     \omega_2 = \frac{1}{\sqrt{LC}} \left(\frac{R\sqrt{C}}{2\sqrt{L}} + \sqrt{1 + \frac{R^2C}{L}} \right).
 \]
