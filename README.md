@@ -1,6 +1,6 @@
 # EE16B-Notes
 
-This repo contains my notes for Module 1 of EE 16B.
+This repo contains my notes for EE 16B.
 
 I compile the .tex files using pdftex, and embed graphics as .pdf.
 
