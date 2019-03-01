@@ -1,0 +1,337 @@
+\documentclass[letterpaper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[parfill]{parskip}    % Activate to begin paragraphs with an empty line rather than an indent
+\usepackage{graphicx}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{mathtools}
+
+\usepackage{afterpage}
+
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+
+\usepackage{verse}
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{corollary}{Corollary}[theorem]
+\newtheorem{lemma}[theorem]{Lemma}
+
+\theoremstyle{remark}
+\newtheorem*{remark}{Remark}
+
+\usepackage{epstopdf}
+\usepackage{circuitikz}
+\usepackage[separate-uncertainty = true,multi-part-units=single]{siunitx}
+\usepackage{booktabs}
+\usepackage{enumitem}
+\usepackage[toc,page]{appendix}
+\usepackage{color}
+\usepackage{pgfplots}
+\usepackage{pgfplotstable}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{url}
+\usepackage{multirow}
+\usepackage{makecell}
+\usepackage[round]{natbib}   % omit 'round' option if you prefer square brackets
+\usepackage{titling}
+\usepackage{siunitx}
+\usepackage{physics}
+
+\usepackage{setspace}
+% \doublespacing
+\usepackage{float}
+
+
+\pgfplotsset{compat=1.14}
+
+%  Special math symbols
+%       floor, ceiling, angled brackets
+%-----------------------------------------------------------------------
+\newcommand{\floor}[1]{\left\lfloor #1\right\rfloor}
+\newcommand{\ceil}[1]{\left\lceil #1\right\rceil}
+\newcommand{\etal}{\textit{et al.}}
+\newcommand{\RE}{\mathbb{R}}        % real space
+\newcommand{\ZZ}{\mathbb{Z}}        % integers
+\newcommand{\NN}{\mathbb{N}}        % natural numbers
+\newcommand{\eps}{{\varepsilon}}    % prettier epsilon
+%-----------------------------------------------------------------------
+%  Tighter lists
+%-----------------------------------------------------------------------
+\newenvironment{itemize*}% Tighter itemized list
+  {\begin{itemize}%
+    \setlength{\itemsep}{-0.5ex}%
+    \setlength{\parsep}{0pt}}%
+  {\end{itemize}}
+\newenvironment{description*}% Tighter description list
+  {\begin{description}%
+    \setlength{\itemsep}{-0.5ex}%
+    \setlength{\parsep}{0pt}}%
+  {\end{description}}
+\newenvironment{enumerate*}% Tighter enumerated list
+  {\begin{enumerate}%
+    \setlength{\itemsep}{-0.5ex}%
+    \setlength{\parsep}{0pt}}%
+  {\end{enumerate}}
+%-----------------------------------------------------------------------
+% Typing shortcuts
+%-----------------------------------------------------------------------
+\newcommand{\X}{\mathbb{X}}
+\newcommand{\SG}{\mathbf{S}}
+\newcommand{\GE}{\mathcal{G}}
+\newcommand{\ST}{\,:\,}
+\renewcommand{\tilde}[1]{\widetilde{#1}}
+\newcommand{\diam}{\mathrm{diam}}
+\newcommand{\sq}{\square}
+\newcommand{\half}[1]{\frac{#1}{2}}
+\newcommand{\inv}[1]{\frac{1}{#1}}
+\newcommand{\alg}{\textsf{SplitReduce}}
+\newcommand{\sz}[1]{\sigma_{#1}}
+\newcommand{\LL}{\mathcal{L}}
+\newcommand{\softOmega}{\widetilde{\Omega}} 
+\newcommand{\softO}{\widetilde{O}}
+\newcommand{\OO}{O^*}  %or \widetilde{O}?
+
+\newcommand{\dx}{\mathrm{d}x}
+\newcommand{\dy}{\mathrm{d}y}
+\newcommand{\dz}{\mathrm{d}z}
+\newcommand{\dt}{\mathrm{d}t}
+\newcommand{\du}{\mathrm{d}u}
+\newcommand{\dtheta}{\mathrm{d}\theta}
+\newcommand{\dq}{\mathrm{d}q}
+\newcommand{\diff}{\mathrm{d}}
+\newcommand{\dV}{\mathrm{d}V}
+\newcommand{\dL}{\mathrm{d}L}
+\newcommand{\dA}{\mathrm{d}A}
+\newcommand{\dH}{\mathrm{d}H}
+\newcommand{\df}{\mathrm{d}f}
+\newcommand{\dg}{\mathrm{d}g}
+\newcommand{\dr}{\mathrm{d}r}
+\newcommand{\dw}{\mathrm{d}w}
+\newcommand{\dI}{\mathrm{d}I}
+
+\newcommand*\len[1]{\overline{#1}}
+
+
+\newcommand\note[1]{\marginpar{\textcolor{red}{#1}}}
+\newcommand*{\tageq}{\refstepcounter{equation}\tag{\theequation}}
+
+\newcommand*{\equals}{=}
+
+\usepackage{fancyhdr}
+
+\pgfplotscreateplotcyclelist{grayscale}{
+    thick,white!10!black,mark=x,mark options=solid, dashed\\%
+    thick,white!20!black,mark=o,mark options=solid\\%
+}
+
+\newcommand{\mat}[1]{\ensuremath{\begin{bmatrix}#1\end{bmatrix}}}
+\newcommand{\cat}[1]{\ensuremath{\begin{vmatrix}#1\end{vmatrix}}}
+\newcommand{\eqn}[1]{\begin{alignat*}{2}#1\end{alignat*}}
+\newcommand{\p}[2]{\frac{\partial #1}{\partial #2}}
+\newcommand*{\thus}{&\implies\quad&}
+
+\newcommand{\answer}[1]{\framebox{$\displaystyle #1 $}}
+
+\newcommand{\shrug}[1][]{%
+\begin{tikzpicture}[baseline,x=0.8\ht\strutbox,y=0.8\ht\strutbox,line width=0.125ex,#1]
+\def\arm{(-2.5,0.95) to (-2,0.95) (-1.9,1) to (-1.5,0) (-1.35,0) to (-0.8,0)};
+\draw \arm;
+\draw[xscale=-1] \arm;
+\def\headpart{(0.6,0) arc[start angle=-40, end angle=40,x radius=0.6,y radius=0.8]};
+\draw \headpart;
+\draw[xscale=-1] \headpart;
+\def\eye{(-0.075,0.15) .. controls (0.02,0) .. (0.075,-0.15)};
+\draw[shift={(-0.3,0.8)}] \eye;
+\draw[shift={(0,0.85)}] \eye;
+% draw mouth
+\draw (-0.1,0.2) to [out=15,in=-100] (0.4,0.95); 
+\end{tikzpicture}}
+
+
+\pagestyle{fancy}
+\fancyhf{}
+\rhead{Rahul Arya}
+\lhead{EE 16B}
+\cfoot{\thepage}
+
+\title{Lecture 10 - Notes}
+\author{Rahul Arya}
+\date{February 2019}
+\begin{document}
+
+\maketitle
+
+\section{Overview}
+Last lecture, we focused on the behavior of linear continuous time systems with no input, and developed a general way of solving for their evolution over time. When considering the case of input, we demonstrated that we could adapt a single solution for the case with input but with different initial conditions into a solution with our given initial conditions.
+
+However, we did not discuss how to produce such a solution in much depth. For circuits with AC inputs, the method of phasors applies. But for arbitrary inputs, this method clearly does not work, so more general techniques must be developed. In particular, we will demonstrate how arbitrary input functions can be approximated by piecewise-constant approximations, that we can use to model the evolution of a system.
+
+\section{Scalar Differential Equations}
+First, though, we will study a simpler scalar system. Consider the differential equation
+\[
+    \frac{\dx}{\dt} = \lambda x(t) + u(t),
+\]
+where $x(t)$ is the state and $u(t)$ is the \emph{input}. Abusing notation somewhat, we can rearrange this equation to obtain
+\[
+    \left(\frac{\diff}{\dt} - \lambda I\right)x(t) = u(t),
+\]
+where we can think of $T = \frac{\diff}{\dt} - \lambda I$ as some sort of \emph{linear operator} acting on $x(t)$. Continuing this abuse of notation\footnote{Treating functions as elements of a vector space is actually very well defined, as is the notion of differentiation as a linear operator, but we won't go into depth in that here. Take Math 110 to learn more, I think!}, we know that $x(t) = e^{\lambda t}$ is in the null space of $T$, since $T(e^{\lambda t}) = 0$. Thus, we can add multiples of $e^{\lambda t}$ to any solution to that differential equation, and we will obtain another solution. Similarly, since we have previously shown that (up to scaling) $e^{\lambda t}$ is the only member of $\text{Null}(T)$, it is clear that any two solutions to our differential equation will differ only by a multiple of $e^{\lambda t}$. As a result, if we obtain a single solution, we will obtain the entire space of solutions.
+
+All that being said, we still have no idea how to solve the equation in its most general form. We can make the problem easier by restricting $u(t)$ to the form $u(t) = e^{st}$, for some constant $s \ne \lambda$. We will allow $s$ to be complex, since we know that complex exponents are often useful when analyzing sinusoidal behavior. Now, by analogy with $e^{\lambda t}$ being in the null space of $T$, we will conjecture a solution of the form $x(t) = \alpha e^{st}$, for some unknown constant $\alpha$.
+
+Substituting into the differential equation, we obtain
+\eqn{
+    && \frac{\diff}{\dt} (\alpha e^{st}) &= \lambda(\alpha e^{st}) + e^{st} \\
+    && s\alpha e^{st} &= \lambda\alpha e^{st} + e^{st} \\
+    \thus \alpha &= \frac{1}{s - \lambda}.
+}
+Notice that this solution is undefined for $s = \lambda$, but otherwise can be quickly verified. Therefore, from our earlier observation, we see that the general solution to our differential equation is
+\[
+    x(t) = \frac{1}{s - \lambda} e^{st} + \beta e^{\lambda t}
+\]
+for an arbitrary constant $\beta$.
+
+Now, imagine that we had the additional constraint of an initial condition $x(0) = x_0$. Then, substituting in our general solution, we obtain
+\eqn{
+    && x(0) &= x_0 \\
+    \thus \frac{1}{s - \lambda} e^{0} + \beta e^{0} &= x_0 \\
+    \thus \beta &= x_0 - \frac{1}{s-\lambda} \\
+    \thus x(t) &= \frac{1}{s - \lambda} e^{st} + \left( x_0 - \frac{1}{s-\lambda} \right)  e^{\lambda t} \\
+}
+
+The only remaining case is when $s = \lambda$. Notice that any solution of the form $\alpha e^{st} = \alpha e^{\lambda t}$ will fail, since such a solution would lie in $\text{Null}(t)$. This case is covered as part of Homework 4.
+
+\section{Vector Differential Equations}
+Now that we have got some practice dealing with inputs to differential equations, imagine the system
+\[
+    \frac{\diff \vec{x}}{\dt} = A\vec{x}(t) + \vec{u}(t).
+\]
+From last lecture, we know that by diagonalizing $A = V^{-1}\Lambda V$ and defining $\tilde{x} = V^{-1}x$ and $\tilde{u} = V^{-1}u$, we can rewrite this system as a series of decoupled linear differential equations
+\eqn{
+    && \frac{\diff \tilde{x}_1}{\dt} &= \lambda_1 \tilde{x}_1(t) + \tilde{u}_1(t) \\
+    && \frac{\diff \tilde{x}_2}{\dt} &= \lambda_2 \tilde{x}_2(t) + \tilde{u}_2(t) \\
+    && \vdots \\
+    && \frac{\diff \tilde{x}_n}{\dt} &= \lambda_i \tilde{x}_n(t) + \tilde{u}_n(t),
+}
+assuming that $\vec{x}$ has $n$ scalar components. 
+
+Imagine that we continue to supply some input $\vec{u}$ of a fixed frequency, of the form
+\[
+    \vec{u}(t) = \vec{u}_0 e^{st}.
+\]
+Then it is clear that each of the $\tilde{u}_i$ are of the form
+\[
+    \tilde{u}_i(t) = \alpha_i e^{st},
+\]
+where $\alpha_i$ is a constant independent of time. Thus, the general solution (i.e. selecting initial conditions to remove the $e^{\lambda t}$ term) to $\tilde{x_i}$ will each be of the form
+\[
+    \tilde{x_i}(t) = \frac{\beta_i}{s - \lambda_i}e^{st},
+\]
+where $\beta_i$ is a constant independent of time.
+
+Thus, recalling that each $\vec{x}_j$ is a linear combination of all the $\tilde{x}_i$, we see that we may express any $\vec{x}_j$ as
+\[
+    \vec{x}_j = \sum_i \frac{\gamma_i\beta_i}{s - \lambda_i} = \frac{\cdots}{(s - \lambda_1)\cdots(s-\lambda_n)} e^{st},
+\]
+where the numerator is some polynomial independent of time, that can be calculated if necessary.
+
+It is interesting to note that an AC filter receiving an input of frequency $\omega$ can be represented as such a system, with an input of
+\[
+    V_{in}(t) = \tilde{V}_{in} e^{j\omega t} + \overline{\tilde{V_{in}}}e^{-j\omega t}.
+\]
+In other words, the input is the superposition of two input signals, with $s = j\omega$ and $s = -j\omega$. Intuitively, we should always be able to set up our system such that the output voltage is itself a state $x_i$.
+
+Therefore, considering any superposition of the solution for $x_i$ when $s = j\omega$ and $s = -j\omega$, we find that
+\[
+    x_i(t) = \frac{Ae^{j\omega t} + \overline{A} e^{-j\omega t}}{(s - \lambda_1)\cdots(s-\lambda_n)}.
+\]
+Note that the coefficients of $e^{st}$ and $e^{-st}$ must be conjugate pairs for $x_i(t)$ to remain real for all $t$. Thus, the output voltage phasor may be expressed as
+\[
+    \tilde{V}_{out} = \frac{A}{(s - \lambda_1)\cdots(s-\lambda_n)}.
+\]
+
+Thus, we see the transfer function for this filter looks like
+\[
+    H(\omega) = \frac{A / \tilde{V}_{in}}{(s - \lambda_1)\cdots(s - \lambda_n)},
+\]
+as the time-dependent exponential terms cancel out. Notice that the eigenvalues in the denominator depend only on the general state transition matrix $A$, not on the input signal or on the initial conditions, so they are the same eigenvalues that we obtain when calculating the transient behavior of the circuit. 
+Thus, we have now explained the ``mysterious'' phenomenon from last lecture, where the eigenvalues from the transient analysis appeared in the denominator of the transfer function.
+
+\section{Discrete-time Scalar Approximations}
+Of course, we have not yet addressed the most general case, as $u(t)$ may not be a sum of exponentials. Let's return again to the scalar case. Recall that we originally planned to approximate $u(t)$ as piecewise constant. For instance, the function $u(t) = t^2 - t^3$ could be approximated as:
+\begin{center}
+\begin{tikzpicture}
+\begin{axis}[
+    xlabel=$t$, ylabel=$ $,
+    xmin=0, xmax=4,
+    ymin=-1, ymax=10,
+    legend style={at={(1.02,1)},anchor=north west},
+ ]
+\addplot [domain=0:5, color=blue, samples=500] {4*x^2 - x^3};
+\addlegendentry{$u(t)$ (exact)};
+\addplot [domain=0:5, color=red] coordinates {(0, 0) (1, 0) (1, 3) (2, 3) (2, 8) (3, 8) (3, 9) (4, 9)};
+\addlegendentry{$u(t)$ (approx)};
+% \addplot [domain=10^(-2):1] {x};
+% \addplot [domain=1:10^(2)] {1 / x};
+% \addlegendentry{Approximation};
+\end{axis}
+\end{tikzpicture}
+\end{center}
+
+Notice that our approximation is made every $1$ unit of time - we denote this period as $\Delta = 1$. Except for brief discontinuities, this approximation allows us to treat $u(t) = u_0$ for some constant $u_0$.
+
+We will now solve our differential equation for this new form of $u(t)$. Notice that this approximation is essentially a special case of our earlier approximation $u(t) = e^{st}$, where $s = 0$, except for a constant factor $u_0$. Nevertheless, we will do the calculation again just to make sure it is correct\footnote{This is a good idea, since often solutions break down near $0$ or $\infty$ due to implicit assumptions in their calculation, though that's not the case here.}. We may express
+\eqn{
+    && \frac{\dx}{\dt} &= \lambda x(t) + u_0 \\
+    \thus \frac{\dx}{\dt} &= \lambda \left(x(t) + \frac{u_0}{\lambda}\right) \\
+    \thus \frac{\diff}{\dt}\left(x(t) + \frac{u_0}{\lambda}\right) &= \lambda \left(x(t) + \frac{u_0}{\lambda}\right).
+}
+By our uniqueness theorem, we know that the solution for $x(t)$ must be of the form
+\[
+    x(t) + \frac{u_0}{\lambda} = \beta e^{\lambda t}.
+\]
+Substituting in an initial condition $x(0) = x_0$, we obtain
+\eqn{
+    && x(0) + \frac{u_0}{\lambda} &= x_0 + \frac{u_0}{\lambda} \\
+    \thus \beta e^{0} &= x_0 + \frac{u_0}{\lambda} \\
+    \thus \beta &= x_0 + \frac{u_0}{\lambda} \\
+    \thus x(t) &= \left(x_0 + \frac{u_0}{\lambda}\right)e^{\lambda t} - \frac{u_0}{\lambda}.
+}
+We can rearrange this solution to obtain
+\[
+    x(t) = e^{\lambda t}x_0 + \frac{e^{\lambda t} - 1}{\lambda}u_0,
+\]
+so we have separated our solution for $x(t)$ into one component dependent on the initial condition $x_0$, and another component dependent on the input $u_0$.
+
+This solution can be used to solve for $x(t)$ given an arbitrary $u(t)$. We will use the notation $u[i] = u(\Delta i)$, for some fixed interval $\Delta$. Notice the use of square brackets to represent the approximation. Similarly, let $x[i] = x(\Delta i)$. Given $x[i]$ and $u[i]$, our goal will be to approximate $x[i + 1]$, by assuming that $u(t)$ does not vary (much) between $t = \Delta i$ and $t = \Delta(i+1)$. From our solution, setting $x_0 = x[i]$, $u_0 = u[i]$, and $t = \Delta$, it is clear that
+\[
+    x[i + 1] = e^{\lambda \Delta}x[i] + \frac{e^{\lambda \Delta} - 1}{\lambda} u[i].
+\]
+
+Thus, given an initial condition $x[0]$ and an input function $u(t)$, we can repeatedly apply the above model to obtain an approximation for $x(t)$ after some period of time, even as $u(t)$ varies, by iteratively computing $x[i]$. Notice that our approximation gets better as $\Delta \to 0$ - indeed, by taking the limit, we can obtain a continuous solution for $x(t)$, as we will see in discussion.
+
+\section{Discrete-time Vector Approximations and Future Topics}
+Recall that we may convert the vector form of our differential equation into the set of decoupled differential equations
+\eqn{
+    && \frac{\diff \tilde{x}_1}{\dt} &= \lambda_1 \tilde{x}_1(t) + \tilde{u}_1(t) \\
+    && \frac{\diff \tilde{x}_2}{\dt} &= \lambda_2 \tilde{x}_2(t) + \tilde{u}_2(t) \\
+    && \vdots \\
+    && \frac{\diff \tilde{x}_n}{\dt} &= \lambda_i \tilde{x}_n(t) + \tilde{u}_n(t)
+}
+by performing a change of basis into the eigenbasis of the state transition matrix.
+
+We may use our approximation to iteratively compute $\tilde{x}[i]$, and then apply a change of basis to compute $\vec{x}[j]$. Therefore, this method allows us to solve linear first-order coupled differential equations with arbitrary input functions.
+
+However, there are still a number of lingering questions:
+\begin{itemize}
+    \item Many physical systems exhibit strongly nonlinear behavior, preventing us from writing their state transition equation in a form that we know how to solve. We will study a technique known as \emph{control linearization} in order to address this. 
+    \item We have not yet discussed how to compute the state transition equation in the first place, which is a problem known as \emph{system identification}. While sometimes we can compute it physically through a thorough understanding of its physical behavior, that approach is often complex, if not altogether infeasible. Instead, by simply providing inputs and observing outputs, we can ``learn'' the equations underlying a system's behavior, in what is known as \emph{data-driven modelling}.
+    \item When providing inputs $\vec{u}[i]$, we often wish to drive $\vec{x}[i]$ towards some target $\vec{x}^*$. Deciding how to choose these inputs, and indeed of deciding whether they even exist, is known as studying the \emph{controllability} of the system.
+\end{itemize}
+
+All of these questions, and many others, will be resolved throughout Module 2!
+
+\end{document}
