@@ -161,7 +161,7 @@ Recall that a complex number $z$ can be uniquely written as
 \]
 where $a$ and $b$ are both real numbers. Recall also that the magnitude of $z$ is defined to be
 \[
-    \abs{z} = z\overline{z} = a^2 + b^2.
+    \abs{z} = \sqrt{z\overline{z}} = \sqrt{a^2 + b^2}.
 \]
 We can plot complex numbers on a 2D plane, known as the \emph{complex plane}\footnote{Or an ``Argand Diagram'' if simple naming conventions aren't your thing.} as follows:
 \begin{center}
@@ -191,7 +191,7 @@ Using trigonometric inverses, we can easily reconstruct $\theta$ from the compon
 Now, observe that we can rewrite $z$ as follows:
 \eqn{
     && z &= a + bj \\
-    &&&= \abs{z}\cos{\theta} + \abs{z}\sin{\theta}b j \\
+    &&&= \abs{z}\cos{\theta} + j\abs{z}\sin{\theta} \\
     &&&= \abs{z} \left(\cos{\theta} + j \sin{\theta} \right) \\
     &&&= \abs{z} e^{j\theta},
 }
