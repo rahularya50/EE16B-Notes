@@ -287,6 +287,191 @@ so we will not be able to recover the initial state.
 
 
 \section{System Identification}
+We now know how, given $A$, $B$, and a sequence of control inputs and observed responses $(\vec{u}, \vec{y})$, how to deduce the initial state $\vec{x}[0]$. We will now go one step further - given only $\vec{u}$ and $\vec{y}$, we will attempt to determine $A$ and $B$, in order to identify the characteristics of our system. This process is of great importance, as when constructing real-world mechanical systems, it is practically impossible to determine all their behaviors theoretically - we must do so empirically.
 
+We will first consider a simpler version of the problem, where $C$ is known to be the identity matrix, and no noise is present. As we have seen many times, since $C=I$, we have that
+\[
+    \vec{y}[i + 1] = A\vec{x}[i] + B\vec{u}[i].
+\]
+
+Let's also express our unknown matrices $A$ and $B$ in terms of scalars, as follows:
+\eqn{
+    && A &= \mat{
+    a_{11} & a_{12} & \ldots & a_{1n} \\
+    a_{21} & a_{22} & \ldots & a_{2n} \\
+    \vdots & \vdots & \ddots & \vdots \\
+    a_{n1} & a_{n2} & \ldots & a_{nn}} \\
+    && B &= \mat{
+    b_{11} & b_{12} & \ldots & b_{1k} \\
+    b_{21} & b_{22} & \ldots & b_{2k} \\
+    \vdots & \vdots & \ddots & \vdots \\
+    b_{n1} & b_{n2} & \ldots & b_{nk}}.
+}
+
+Substituting into our relation for $\vec{y}$, we obtain
+\eqn{
+    && \mat{
+        y_1[i+1] \\
+        y_2[i+1] \\
+         \\
+        y_n[i+1] \\
+    } &= \mat{
+    a_{11} & a_{12} & \ldots & a_{1n} \\
+    a_{21} & a_{22} & \ldots & a_{2n} \\
+    \vdots & \vdots & \ddots & \vdots \\
+    a_{n1} & a_{n2} & \ldots & a_{nn}}
+    \mat{
+        x_1[i] \\
+        x_2[i] \\
+        \vdots \\
+        x_n[i]
+    } + \mat{
+    b_{11} & b_{12} & \ldots & b_{1k} \\
+    b_{21} & b_{22} & \ldots & b_{2k} \\
+    \vdots & \vdots & \ddots & \vdots \\
+    b_{n1} & b_{n2} & \ldots & b_{nk}} 
+    \mat{
+        u_1[i] \\
+        u_2[i] \\
+        \vdots \\
+        u_k[i]
+    },
+}
+breaking down our state, observation, and input vectors into their scalar components as well.
+
+Now comes the interesting part. Recall that our unknowns are in fact all the $a_{ij}$ and $b_{ij}$, and our knowns are all the $\vec{y}_i$, $\vec{x}_i$, and $\vec{u}_i$. When solving linear systems, we know that we should put our unknowns into a vector. By considering each row of the above matrix separately, we obtain scalar equations of the form
+\[
+    y_j[i + 1] = \mat{a_{j1} & a_{j2} & \ldots & a_{jn}} \mat{x_1[i] \\ x_2[i] \\ \vdots \\ x_n[i] } + \mat{b_{j1} & b_{j2} & \ldots & b_{jk}} \mat{u_1[i] \\ u_2[i] \\ \vdots \\ u_k[i] }
+\]
+for all $1 \le j \le n$. Notice that the two terms on the right of the equation are really just dot products, producing a scalar. As the dot product is symmetric in $\mathbb{R}$, we may rewrite the above equation as
+\[
+    y_j[i + 1] = \mat{x_1[i] & x_2[i] & \cdots & x_n[i]} \mat{a_{j1} \\ a_{j2} \\ \vdots \\ a_{jn}}  + \mat{u_1[i] & u_2[i] & \cdots & u_k[i]} \mat{b_{j1} \\ b_{j2} \\ \vdots \\ b_{jk}}
+\]
+again for all $1 \le j \le n$.
+
+Combining the two terms on the right, we finally obtain the equation
+\[
+    y_j[i + 1] = \mat{x_1[i] & x_2[i] & \cdots & x_n[i] & u_1[i] & u_2[i] & \cdots & u_k[i]} \mat{a_{j1} \\ a_{j2} \\ \vdots \\ a_{jn} \\ b_{j1} \\ b_{j2} \\ \vdots \\ b_{jk}}
+\]
+again for all $1 \le j \le n$.
+
+Notice that we have managed to place all the unknowns involving the $j$th element of the state in a single vector. Since we now have a linear equation with our unknowns in a vector, are we done, since we can do Gaussian elimination to solve for the unknowns?
+
+Unfortunately not. Notice that there are $n + k$ unknowns, but only a single equation. We could try to get more equations by considering all values of $j$ simultaneously, but that would also bring in new unknowns, since we'd have to consider the $a_{ji}$ and $b_{ji}$ for \emph{all} $j$. So is all hope lost?
+
+No! Recall that our equation holds for \emph{all} values of $i$, since we are assuming that our system's transition equation does not vary over time! Notice that for all timesteps $0 < i \le t$, the vector of unknowns remains the same. Thus, by considering all these values of $i$ and stacking them vertically, we obtain the system
+\[
+    \mat{
+        y_j[1] \\
+        y_j[2] \\
+        \vdots \\
+        y_j[t]
+    } = \mat{
+        x_1[0] & \cdots & x_n[0] & u_1[0] & \cdots & u_k[0] \\
+        x_1[1] & \cdots & x_n[1] & u_1[1] & \cdots & u_k[1] \\
+        \vdots & \vdots & \vdots & \vdots & \vdots & \\
+        x_1[t - 1] & \cdots & x_n[t - 1] & u_1[t - 1] & \cdots & u_k[t - 1] \\
+    } \mat{a_{j1} \\ a_{j2} \\ \vdots \\ a_{jn} \\ b_{j1} \\ b_{j2} \\ \vdots \\ b_{jk}}
+\]
+which consists of $t$ equations, not just $1$! For $t \ge n + j$, we can use least squares to solve for our unknowns, and repeat the process for each value of $j$ in order to fully determine our system. Typically, we create a matrix $P$ of our unknowns across all values of $j$ by stacking them horizontally to obtain
+\[
+    P = \mat{
+    a_{11} & a_{21} & \ldots & a_{n1} \\ 
+    a_{12} & a_{22} & \ldots & a_{n2} \\ 
+    \vdots & \vdots & \ddots & \vdots \\
+    a_{1n} & a_{2n} & \ldots & a_{nn} \\ 
+    b_{11} & b_{21} & \ldots & b_{n1} \\ 
+    b_{12} & b_{22} & \ldots & b_{n2} \\ 
+    \vdots & \vdots & \ddots & \vdots \\
+    b_{1k} & a_{2k} & \ldots & b_{nk} \\
+    } = \mat{A^T \\ B^T}.
+\]
+We can follow a similar stacking procedure to obtain
+\[
+    D = \mat{
+        x_1[0] & \cdots & x_n[0] & u_1[0] & \cdots & u_k[0] \\
+        x_1[1] & \cdots & x_n[1] & u_1[1] & \cdots & u_k[1] \\
+        \vdots & \ddots & \vdots & \vdots & \ddots & \vdots & \\
+        x_1[t - 1] & \cdots & x_n[t - 1] & u_1[t - 1] & \cdots & u_k[t - 1] \\
+    }
+\]
+and
+\[
+    S = \mat{
+        y_1[1] & y_2[1] & \cdots & y_n[1] \\
+        y_1[2] & y_2[2] & \cdots & y_n[2] \\
+        \vdots & \ddots & \vdots \\
+        y_1[t] & y_2[t] & \cdots & y_n[t] \\
+    }.
+\]
+Thus, we can combine all our values of $j$ into the single equation
+\[
+    DP = S
+\]
+and solve using least squares to obtain
+\[
+    P = (D^TD)^{-1}D^TS.
+\]
+
+Recall that $D^TD$ is invertible exactly when $D$ has linearly independent columns. We will discuss what happens when the columns made out of the $x_j$ are dependent later - for now, we will simply comment that choosing our inputs randomly will ensure with high probability that the input columns are all linearly independent both of each other and of the earlier $x_j$ columns.
+
+\section{Scalar-Output System Identification}
+However, all of these calculations have assumed that we have perfect knowledge of the state $\vec{x}$ at every timestep. But as we saw when considering the problem of observability, such a scenario is very unlikely. In this section, we will demonstrate that receiving even just a one-dimensional output scalar $y$ can be sufficient to fully determine the behavior of a system.
+
+We can imagine such a system as follows:
+\begin{center}
+\begin{circuitikz}[american] 
+    \draw [-latex] (-2, 2) node[left] {u[i]} to (-1.5, 2);
+    \draw [-latex] (1.5, 2) -- (2, 2) node[right] {y[i]};
+    \draw (0, 2) node[draw,minimum width=3cm,minimum height=1cm] {Unknown System};
+\end{circuitikz}
+\end{center}
+Every timestep, we supply an input scalar $u[i]$, and observe a scalar output $y[i]$.
+
+To model such a system, we will make the following observation. For the purposes of system identification, we \emph{don't} actually care about the matrices $A$ and $B$. What we are interested in is in the modelling of our system's \emph{behavior}. Specifically, given sufficiently many past $(\vec{u}, \vec{y})$ pairs, we want to predict our observations of the state in response to arbitrary future inputs. Thus, it doesn't actually matter whether our model's internal state is the same as that of the true system, so long as it behaves identically for all possible inputs.
+
+Consider the following model of a system with scalar input $\vec{u}$ and scalar output $y$:
+\[
+    y[i + 1] = a_{11}y[i] + \ldots + a_{n1}y[i - n + 1] + b_1u[i] + \ldots + b_n[i - n + 1].
+\]
+
+It can be proved, though we will not do so here, that \emph{any} observable system with an $n$-dimensional internal state can be modelled as the above, in what is known as \emph{observable canonical form}. 
+
+Instead, we will justify this claim intuitively. If a system is observable, then (given $A$ and $B$) we can deduce its internal state from $n$ consecutive observations of both $u$ and $y$. From its internal state, we can then apply the state transition equation to determine the next output $y[i+1]$. Since our model has access to the last $n$ values of both $u$ and $y$, and since everything is linear, it should make sense that $y[i+1]$ can be represented as a linear combination of the past $n$ values of $u$ and $y$, which is what we do here.
+
+If we accept that our system can be modelled in this fashion, then a straightforward least squares computation can be performed to deduce the coefficients $a_{i1}$ and $b_i$. Specifically, we can rearrange and stack our state equation and combine additive terms, just as we did in the previous section, to obtain
+\[
+    \mat{y[n] \\ y[n+1] \\ \vdots \\ y[n+t]} = 
+    \mat{
+    y[n - 1] & \cdots & y[0] & u[n - 1] & \cdots & u[0] \\
+    y[n] & \cdots & y[1] & u[n] & \cdots & u[1] \\
+    \vdots & \ddots & \vdots & \vdots & \ddots & \vdots \\
+    y[n + t - 1] & \cdots & y[t] & u[n + t - 1] & \cdots & u[t] \\
+    }
+    \mat{a_{11} \\ a_{21} \\ \vdots \\ a_{n1} \\ b_1 \\ b_2 \\ \vdots \\ b_n}.
+\]
+We will establish some terminology analogous to those that we saw previously, such that
+\eqn{
+    && \vec{p} &= \mat{a_{11} & a_{21} & \cdots & a_{n1} & b_1 & b_2 &\ \cdots & b_n}^T \\
+    && \vec{s} &= \mat{y[n] & y[n+1] & \cdots & y[n+t]}^T \\
+    && D &= \mat{
+    y[n - 1] & \cdots & y[0] & u[n - 1] & \cdots & u[0] \\
+    y[n] & \cdots & y[1] & u[n] & \cdots & u[1] \\
+    \vdots & \ddots & \vdots & \vdots & \ddots & \vdots \\
+    y[n + t - 1] & \cdots & y[t] & u[n + t - 1] & \cdots & u[t] \\
+    },
+}
+so we can rewrite our equation as
+\[
+    D\vec{p} = \vec{s}.
+\]
+Finally, by least squares, we obtain the solution
+\[
+    \vec{p} = (D^TD)^{-1}D^T\vec{s}.
+\]
+
+Of course, the only remaining issue is in ensuring that $D^TD$ is in fact invertible. We have already mentioned that we must choose inputs that form linearly independent columns, and that one good way to do this is to choose inputs randomly. However, it is also possible that the $y$ columns of $D$ are linearly independent. Imagine, for instance, a system with no memory, so $y[n+1] = x[n+1] = u[n]$. Then clearly the $y$ columns would be linearly dependent with the $u$ columns, no matter how we chose our inputs.
+
+While we will not prove this formally, such linear dependence is ultimately caused by a poor choice of $n$. Recall that we just assumed the dimension of our system's internal state vector to be $n$. If this choice is too low, we will discover that quickly, as our predictions fail to match reality. It should be at least intuitively clear that if we choose to high a value of $n$, we will in some sense ``overfit'' our observations, producing linearly dependent columns and failing to make accurate predictions, meaning that the choice of $n$ is important when performing this sort of system identification.
 
 \end{document}
