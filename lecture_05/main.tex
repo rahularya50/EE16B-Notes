@@ -190,10 +190,10 @@ You can think of $X$ as representing an alternating current or voltage. We call 
 Here, $\phi$ represents the \emph{phase shift} of $Y$ with respect to $X$. As can be seen, a positive phase shift moves the function to the left by that amount. In particular, notice that the sine and cosine functions are really the same sinusoid, with each just the other after a $\pi/2$ radian phase shift in the appropriate direction.
 
 \section{Phase Shifts and Phasors}
-Now, we will consider the behavior of capacitors and inductors when supplied with a sinusoidal voltage. First, let's look at a capacitor provided with the sinusoidal voltage $V(t) = V_0\sin{\omega t}$, as shown:
+Now, we will consider the behavior of capacitors and inductors when supplied with a sinusoidal voltage. First, let's look at a capacitor provided with the sinusoidal voltage $V(t) = V_0\cos{\omega t}$, as shown:
 \begin{center}
 \begin{circuitikz}[american]
-\draw (0, 0) node[ocirc]{} to[C, l=$C$, v=$V_0\sin{\omega t}$, i=$I(t)$] (2, 0) node[ocirc]{};
+\draw (0, 0) node[ocirc]{} to[C, l=$C$, v=$V_0\cos{\omega t}$, i=$I(t)$] (2, 0) node[ocirc]{};
 \end{circuitikz}
 \end{center}
 Note that we aren't assuming anything about the origin of the $V(t)$ - it could come from a voltage supply directly, or from some other complicated circuit.
@@ -201,15 +201,15 @@ Note that we aren't assuming anything about the origin of the $V(t)$ - it could 
 From the capacitor equation, and applying basic calculus, we find that
 \eqn{
     && I(t) &= C \frac{\diff V}{\dt} \\
-    &&&= \omega C V_0 \cos{\omega t}.
+    &&&= -\omega C V_0 \sin{\omega t}.
 }
 Ideally, we'd like to obtain some sort of linear relationship between $V(t)$ and $I(t)$, similar to the resistance of a resistor. However, here we find that
 \[
-    \frac{V(t)}{I(t)} = \frac{1}{\omega C} \tan{\omega t},
+    \frac{V(t)}{I(t)} = -\frac{1}{\omega C} \cot{\omega t},
 \]
 which doesn't seem very useful, since it varies with time, taking on all the values from $-\infty$ to $\infty$.
 
-The key issue here is the phase shift from $\sin{\omega t}$ to $\cos{\omega t}$, which messes up our attempt to calculate a ratio. It would be nice if we could rewrite our sinusoids in a manner where we could calculate some sort of ratio of sinusoids of different phases that remained invariant with time, as then we'd be able to get some sort of reasonable analogue of resistance.
+The key issue here is the phase shift from $\cos{\omega t}$ to $\sin{\omega t}$, which messes up our attempt to calculate a ratio. It would be nice if we could rewrite our sinusoids in a manner where we could calculate some sort of ratio of sinusoids of different phases that remained invariant with time, as then we'd be able to get some sort of reasonable analogue of resistance.
 
 To do this, we will use complex numbers. These notes assume a basic understanding of complex numbers, at the level of the following properties, presented without further elaboration:
 \eqn{
@@ -245,8 +245,8 @@ Now, let's return to our analysis of the capacitor. Rewriting our results using 
     && V(t) &= V_0\cos{\omega t} \\
     &&&= \frac{V_0}{2} e^{j\omega t} + \frac{V_0}{2} e^{-j\omega t} \\
     &&&= \frac{1}{2} \left( V_0 e^{j\omega t} + \overline{V_0} e^{-j\omega t} \right) \\
-    && I(t) &= \omega C V_0 \sin{\omega t} \\
-    &&&= \frac{j\omega C V_0}{2} (e^{j\omega t} - e^{-j\omega t}) \\
+    && I(t) &= -\omega C V_0 \sin{\omega t} \\
+    &&&= -\frac{\omega C V_0}{2j} (e^{j\omega t} - e^{-j\omega t}) \\
     &&&= \frac{j\omega C V_0}{2} e^{j\omega t} + (-\frac{j\omega C V_0}{2}) e^{-j\omega t} \\
     &&&= \frac{1}{2} \left(j \omega C V_0 e^{j\omega t} + \overline{j \omega C V_0} e^{-j\omega t} \right)
 }

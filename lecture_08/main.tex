@@ -593,7 +593,7 @@ In a similar manner, a current source at the resonant frequency $omega = 1 / \sq
 \end{center}
 We can see this by computing the equivalent impedance of the inductor and capacitor in series, to obtain
 \[
-    Z_{eq} = j\omega L + \frac{1}{j\omega C} = \frac{j\omega L}{\sqrt{LC}} + \frac{\sqrt{LC}}{j \omega C} = j\omega\left(\sqrt{\frac{L}{C}} - \sqrt{\frac{L}{C}}\right) = 0.
+    Z_{eq} = j\omega L + \frac{1}{j\omega C} = \frac{j L}{\sqrt{LC}} + \frac{\sqrt{LC}}{j C} = j\left(\sqrt{\frac{L}{C}} - \sqrt{\frac{L}{C}}\right) = 0.
 \]
 Thus, it is as if we shorted the two terminals of the current source together, so of course no voltage can ever exist across them.
 
@@ -706,7 +706,7 @@ Recall that, without the inductor's internal resistance, this circuit provided a
     &&&= (R + j\omega L) \left(\frac{1}{j\omega C} \right) \frac{1}{R + j\omega L + \frac{1}{j\omega C}} \\
     &&&= (Z_R + Z_L) Z_C \frac{1}{R + j\omega L + \frac{1}{j\omega C}}.
 }
-Notice that the first term is the impedance of a real inductor, the second term is the impedance of an inductor, and the final term is the reciprocal of the impedance of an RLC series circuit. Discarding the last term, we can construct a linear approximation in the standard fashion, with $Z_{eq}$ modelled by the capacitor at low frequencies and by the inductor at high frequencies. Plotting both the exact and approximate $\abs{Z_{eq}}$ against $\omega$ for $R = \SI{100}{\milli\ohm}$, $L = \SI{1}{\henry}$, we obtain
+Notice that the first term is the impedance of a real inductor, the second term is the impedance of a capacitor, and the final term is the reciprocal of the impedance of an RLC series circuit. Discarding the last term, we can construct a linear approximation in the standard fashion, with $Z_{eq}$ modelled by the capacitor at low frequencies and by the inductor at high frequencies. Plotting both the exact and approximate $\abs{Z_{eq}}$ against $\omega$ for $R = \SI{100}{\milli\ohm}$, $L = \SI{1}{\henry}$, we obtain
 \begin{center}
 \begin{tikzpicture}
 \begin{loglogaxis}[
