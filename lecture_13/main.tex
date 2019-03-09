@@ -1,0 +1,346 @@
+\documentclass[letterpaper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[parfill]{parskip}    % Activate to begin paragraphs with an empty line rather than an indent
+\usepackage{graphicx}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{mathtools}
+\usepackage{mathrsfs}
+
+\usepackage{afterpage}
+
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+
+\usepackage{verse}
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{corollary}{Corollary}[theorem]
+\newtheorem{lemma}[theorem]{Lemma}
+
+\theoremstyle{remark}
+\newtheorem*{remark}{Remark}
+
+\usepackage{epstopdf}
+\usepackage{circuitikz}
+\usepackage[separate-uncertainty = true,multi-part-units=single]{siunitx}
+\usepackage{booktabs}
+\usepackage{enumitem}
+\usepackage[toc,page]{appendix}
+\usepackage{color}
+\usepackage{pgfplots}
+\usepackage{pgfplotstable}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{url}
+\usepackage{multirow}
+\usepackage{makecell}
+\usepackage[round]{natbib}   % omit 'round' option if you prefer square brackets
+\usepackage{titling}
+\usepackage{siunitx}
+\usepackage{physics}
+
+\usepackage{setspace}
+% \doublespacing
+\usepackage{float}
+
+
+\pgfplotsset{compat=1.14}
+
+%  Special math symbols
+%       floor, ceiling, angled brackets
+%-----------------------------------------------------------------------
+\newcommand{\floor}[1]{\left\lfloor #1\right\rfloor}
+\newcommand{\ceil}[1]{\left\lceil #1\right\rceil}
+\newcommand{\etal}{\textit{et al.}}
+\newcommand{\RE}{\mathbb{R}}        % real space
+\newcommand{\ZZ}{\mathbb{Z}}        % integers
+\newcommand{\NN}{\mathbb{N}}        % natural numbers
+\newcommand{\eps}{{\varepsilon}}    % prettier epsilon
+%-----------------------------------------------------------------------
+%  Tighter lists
+%-----------------------------------------------------------------------
+\newenvironment{itemize*}% Tighter itemized list
+  {\begin{itemize}%
+    \setlength{\itemsep}{-0.5ex}%
+    \setlength{\parsep}{0pt}}%
+  {\end{itemize}}
+\newenvironment{description*}% Tighter description list
+  {\begin{description}%
+    \setlength{\itemsep}{-0.5ex}%
+    \setlength{\parsep}{0pt}}%
+  {\end{description}}
+\newenvironment{enumerate*}% Tighter enumerated list
+  {\begin{enumerate}%
+    \setlength{\itemsep}{-0.5ex}%
+    \setlength{\parsep}{0pt}}%
+  {\end{enumerate}}
+%-----------------------------------------------------------------------
+% Typing shortcuts
+%-----------------------------------------------------------------------
+\newcommand{\X}{\mathbb{X}}
+\newcommand{\SG}{\mathbf{S}}
+\newcommand{\GE}{\mathcal{G}}
+\newcommand{\ST}{\,:\,}
+\renewcommand{\tilde}[1]{\widetilde{#1}}
+\newcommand{\diam}{\mathrm{diam}}
+\newcommand{\sq}{\square}
+\newcommand{\half}[1]{\frac{#1}{2}}
+\newcommand{\inv}[1]{\frac{1}{#1}}
+\newcommand{\alg}{\textsf{SplitReduce}}
+\newcommand{\sz}[1]{\sigma_{#1}}
+\newcommand{\LL}{\mathcal{L}}
+\newcommand{\softOmega}{\widetilde{\Omega}} 
+\newcommand{\softO}{\widetilde{O}}
+\newcommand{\OO}{O^*}  %or \widetilde{O}?
+
+\newcommand{\dx}{\mathrm{d}x}
+\newcommand{\dy}{\mathrm{d}y}
+\newcommand{\dz}{\mathrm{d}z}
+\newcommand{\dt}{\mathrm{d}t}
+\newcommand{\du}{\mathrm{d}u}
+\newcommand{\dtheta}{\mathrm{d}\theta}
+\newcommand{\dq}{\mathrm{d}q}
+\newcommand{\diff}{\mathrm{d}}
+\newcommand{\dV}{\mathrm{d}V}
+\newcommand{\dL}{\mathrm{d}L}
+\newcommand{\dA}{\mathrm{d}A}
+\newcommand{\dH}{\mathrm{d}H}
+\newcommand{\df}{\mathrm{d}f}
+\newcommand{\dg}{\mathrm{d}g}
+\newcommand{\dr}{\mathrm{d}r}
+\newcommand{\dw}{\mathrm{d}w}
+\newcommand{\dI}{\mathrm{d}I}
+
+\newcommand*\len[1]{\overline{#1}}
+
+
+\newcommand\note[1]{\marginpar{\textcolor{red}{#1}}}
+\newcommand*{\tageq}{\refstepcounter{equation}\tag{\theequation}}
+
+\newcommand*{\equals}{=}
+
+\usepackage{fancyhdr}
+
+\pgfplotscreateplotcyclelist{grayscale}{
+    thick,white!10!black,mark=x,mark options=solid, dashed\\%
+    thick,white!20!black,mark=o,mark options=solid\\%
+}
+
+\newcommand{\mat}[1]{\ensuremath{\begin{bmatrix}#1\end{bmatrix}}}
+\newcommand{\cat}[1]{\ensuremath{\begin{vmatrix}#1\end{vmatrix}}}
+\newcommand{\eqn}[1]{\begin{alignat*}{2}#1\end{alignat*}}
+\newcommand{\p}[2]{\frac{\partial #1}{\partial #2}}
+\newcommand*{\thus}{&\implies\quad&}
+
+\newcommand{\answer}[1]{\framebox{$\displaystyle #1 $}}
+
+\newcommand{\shrug}[1][]{%
+\begin{tikzpicture}[baseline,x=0.8\ht\strutbox,y=0.8\ht\strutbox,line width=0.125ex,#1]
+\def\arm{(-2.5,0.95) to (-2,0.95) (-1.9,1) to (-1.5,0) (-1.35,0) to (-0.8,0)};
+\draw \arm;
+\draw[xscale=-1] \arm;
+\def\headpart{(0.6,0) arc[start angle=-40, end angle=40,x radius=0.6,y radius=0.8]};
+\draw \headpart;
+\draw[xscale=-1] \headpart;
+\def\eye{(-0.075,0.15) .. controls (0.02,0) .. (0.075,-0.15)};
+\draw[shift={(-0.3,0.8)}] \eye;
+\draw[shift={(0,0.85)}] \eye;
+% draw mouth
+\draw (-0.1,0.2) to [out=15,in=-100] (0.4,0.95); 
+\end{tikzpicture}}
+
+
+\pagestyle{fancy}
+\fancyhf{}
+\rhead{Rahul Arya}
+\lhead{EE 16B}
+\cfoot{\thepage}
+
+\title{Lecture 13 - Notes}
+\author{Rahul Arya}
+\date{March 2019}
+\begin{document}
+
+\maketitle
+
+\emph{This note is shorter than usual because Professor Sahai spent some time reviewing content before the midterm.}
+
+\section{Overview}
+Given a discrete-time linear system, we now know how to determine its behavior by supplying inputs, to determine its internal state by observing arbitrary input-observation pairs, and to apply inputs to control it to a target value. We will now discuss the problem of \emph{noise}, and how it affects our ability to both control a system and to keep it at a given steady state.
+
+\section{Noise and Stability}
+Recall that we typically model the evolution of a linear system using the equation
+\[
+    \vec{x}[i + 1] = A\vec{x}[i] + B\vec{u}[i].
+\]
+In reality, though, these models never capture the full behavior of a system - errors, due to nonlinearities in the system or factors not taken into account when building the model, or just random noise, will always be present. We denote the error term as $\vec{\omega}$, to obtain the full state equation
+\[
+    \vec{x}[i + 1] = A\vec{x}[i] + B\vec{u}[i] + \vec{\omega},
+\]
+where $\vec{\omega}$ is unobservable and varies randomly at each time step.
+
+At this point, a natural question to ask would be: if $\omega$ is unknown and varies randomly, how can we possibly do anything with our system? We can apply control inputs and observe the system extremely carefully, only for everything to be thrown off by an arbitrarily large $\omega$ term! To address this, we will introduce the notion of \emph{bounded noise}. Specifically, we are given that $\norm{\vec{\omega}} \le \eps$ for some small nonzero constant $\eps$.
+
+Now, we will demonstrate that bounding the magnitude of $\vec{\omega}$ is sufficient to guarantee the \emph{stability} of our system. First, though, we need to define stability. For our purposes, we will call a system stable if, starting at $\vec{x}[0] = \vec{0}$ and supplying no input $\vec{u}$, the system will never diverge arbitrarily far from its initial state - in other words, for all discrete time $t$, $\norm{\vec{x}[t]} \le K$ for some (finite) constant $K$. This definition of stability is known as \emph{bounded-input bounded output} stability.
+
+\section{Scalar Stability}
+First, we will consider the case of system stability in one dimension, so $\vec{x}$ is in fact a scalar quantity $x$. Thus, our system's behavior can be modelled as
+\[
+    x[i + 1] = \lambda x[i] + \omega.
+\]
+The use of the symbol $\lambda$ may remind you of eigenvalues - we'll see why that's the case shortly. We have $x[0] = 0$. Therefore, we have
+\eqn{
+    && x[0] &= 0 \\
+    \thus x[1] &= \omega[0] \\
+    \thus x[2] &= \lambda \omega[0] + \omega[1] \\
+    \thus x[3] &= \lambda^2 \omega[0] + \lambda \omega[1] + \omega[2] \\
+    && \vdots & \\
+    \thus x[i] &= \lambda^{i-1}\omega[0] + \lambda^{i-2}\omega[1] + \ldots + \omega[i - 1].
+}
+For now, let's assume that $\lambda \ge 0$. Recall that we have no control over the noise. For our system to be stable, $x[i]$ should be bounded no matter how $\omega$ is chosen. In this scenario, it should make intuitive sense that $x[i]$ is maximized when we, in turn, maximize $\omega$, by setting it to $\eps$ every timestep. Therefore, we can write
+\[
+    x[i] = \eps (1 + \lambda + \lambda^2 + \ldots + \lambda^{i-1}).
+\]
+Since the system should remain bounded after arbitrarily many timesteps, we can take the limit $i \to \infty$ (and abuse notation somewhat), to obtain
+\[
+    \lim_{i\to\infty}x[i] = x[\infty] = \eps(1 + \lambda + \lambda^2 + \ldots).
+\]
+From our knowledge of geometric series, we know that this quantity converges to a finite value if and only if $\lambda < 1$. In other words, a scalar system where $\lambda \ge 0$ is stable exactly when $\lambda < 1$. 
+
+Now, let's consider the case when $\lambda < 0$. Then we would obtain
+\[
+    x[i] = \lambda^{i-1}\omega[0] + \lambda^{i-2}\omega[1] + \ldots + \omega[i - 1]
+\]
+as before. This time, however, it's not so clear how to choose $\omega$ to maximize $\abs{x[i]}$, since the signs of the powers of $\lambda$ keep flipping. Let's try setting $\omega = \eps$, as before. As an example, let's choose $\lambda = -1$. Then we obtain
+\[
+    x[i] = (-1)^{i - 1}\eps + (-1)^{i-2}\eps + \ldots + \eps = \eps - \eps + \eps - \ldots \pm \eps
+\]
+which is bounded, since every other noise term cancels out the previous. Since we're trying to determine if our system converges in the worst-case, this choice of noise isn't very good, since it doesn't contribute to maximizing the movement away from $0$. 
+
+Instead, it should be intuitively clear that $\omega[i] = (-1)^i \eps$ is ideal for all $\lambda < 0$, since its sign will flip in a manner as to always add on to the deviation from $0$, cancelling with the sign flips caused by increasing powers of $\lambda$. Thus, we find that the limit
+\[
+    x[\infty] = \eps - \eps\lambda + \eps\lambda^2 - \ldots = \eps(1 + \abs{\lambda} + \abs{\lambda}^2 + \ldots),
+\]
+indicating that the condition for convergence is $\abs{\lambda} < 1$ when $\lambda < 0$. As this condition is also what we obtained for $\lambda \ge 0$, we find that a scalar system is stable if and only if $\abs{\lambda} < 1$. Notice that this condition does not depend on $\eps$, meaning that the exact value of $\eps$ isn't important, so long as some bound on $\omega$ does in fact exist.
+
+Clearly, though, $\eps$ must affect the stability of our system somehow! Intuitively, we should expect larger values of $\eps$ to lead to larger deviations from our target value (of $0$). More precisely, we see that in the worst case noise scenario, when $\abs{\lambda} < 1$,
+\eqn{
+    && x[\infty] &= \eps(1 + \abs{\lambda} + \abs{\lambda}^2 + \ldots) \\
+    &&&= \frac{\eps}{1 - \abs{\lambda}},
+}
+by the formula for summing an infinite geometric series. Here, $\lambda = 0$ produces a maximum error of $\eps$ in the limit, with the error growing to infinity as $\abs{\lambda}$ approaches $1$. For $\abs{\lambda} \ge 1$, of course, this formula produces nonsensical results, which makes sense since we expect the system not to converge.
+
+\section{Vector Stability}
+Now, we will look at the general case, with the state equation
+\[
+    \vec{x}[t + 1] = A\vec{x}[t] + B\vec{u}[t] + \vec{\omega}.
+\]
+We will assume that we start at the target state $\vec{x}[0] = \vec{0}$, and that we supply no inputs thereafter, so all $\vec{u} = \vec{0}$. Note that this means that $B$ cannot affect the stability of our system, so we will disregard it.
+
+Now, recall that when we considered continuous-time systems with coupled differential equations, we were able to separate them into a set of decoupled differential equations by diagonalizing their state matrix. We can do something similar here, by letting $A = V\Lambda V^{-1}$\footnote{We will discuss the case when $A$ is not diagonalizable later in the course.}, and rearranging to obtain
+\eqn{
+    && \vec{x}[t + 1] = V\Lambda V^{-1}\vec{x}[t] + \vec{\omega} \\
+    \thus V^{-1}\vec{x}[t + 1] = \Lambda V^{-1}\vec{x}[t] + V^{-1}\vec{\omega} \\
+    \thus \tilde{x}[t + 1] = \Lambda \tilde{x}[t] + \tilde{\omega},
+}
+where $\tilde{x} = V^{-1}\vec{x}$ and $\tilde{\omega}$ = $V^{-1}\vec{\omega}.
+
+Clearly, if a single component of $\tilde{x}$ is bounded, then the system as a whole is unstable. So all we have to do is consider each of the components of $\tilde{x}$, each of which gives us the scalar state equation
+\[
+    \tilde{x}_j[i + 1] = \lambda_j \tilde{x}_j[i] + \tilde{\omega}_j.
+\]
+It would seem that we can just apply the result from the previous section, to state that this component is stable exactly when $\abs{\lambda_j} < 1$. Although $\lambda$ may now be complex, a straightforward generalization of our argument using geometric series will show that the condition $\abs{\lambda_j} < 1$ is still the case.
+
+Recall, however, that that result only applied when the input noise was bounded - in other words, doing so would assume that $\norm{\tilde{\omega}_j} < \tilde{\eps}$ for some finite constant $\tilde{\eps}$. We were given that our original noise $\vec{\omega}$ was bounded, so there existed some $\eps$ such that each component $\vec{\omega}_j < \eps$. But after applying $V^{-1}$, can we be certain that the transformed noise is still bounded? 
+
+From our intuition of linear transformations, we should expect the answer to be yes. But for the sake of completeness (and because it was done in lecture!), we will derive a proof here. Let
+\[
+    V^{-1} = \mat{
+    v_{11} & v_{12} & \cdots & v_{1n} \\
+    v_{21} & v_{22} & \cdots & v_{2n} \\
+    \vdots & \vdots & \ddots & \vdots \\
+    v_{n1} & v_{n2} & \cdots & v_{nn}
+    },
+\]
+and let $m$ be the entry $a_{ij}$ within $A$ with the largest magnitude. Thus,
+\eqn{
+    && V^{-1}\vec{\omega} &= \mat{
+    v_{11} & v_{12} & \cdots & v_{1n} \\
+    v_{21} & v_{22} & \cdots & v_{2n} \\
+    \vdots & \vdots & \ddots & \vdots \\
+    v_{n1} & v_{n2} & \cdots & v_{nn}
+    } \mat{\omega_1 \\ \omega_2 \\ \vdots \omega_n} \\
+    &&&= \mat{
+    v_{11}\omega_1 + v_{12}\omega_2 + \ldots + v_{1n}\omega_n \\
+    v_{21}\omega_1 + v_{22}\omega_2 + \ldots + v_{2n}\omega_n \\
+    \vdots \\
+    v_{n1}\omega_1 + v_{n2}\omega_2 + \ldots + v_{nn}\omega_n \\
+    }.
+}
+Any given row of $\tilde{\omega} = V^{-1}\vec{\omega}$ is bounded by
+\[
+    v_{i1}\omega_1 + v_{i2}\omega_2 + \ldots + v_{in}\omega_n \le \abs{m}(\omega_1 + \omega_2 + \ldots + \omega_n).
+\]
+Since $\abs{m}$ is a constant that does not depend on $\vec{\omega}$, and $\omega_1 + \omega_2 + \ldots + \omega_n$ is bounded since $\norm{\vec{\omega}}$ is bounded, each element of $\tilde{\omega}$ is also bounded by some finite constant.
+
+Therefore, we can indeed apply our original result in the eigenbasis. Consequently, our system as a whole is stable exactly when $\abs{\lambda_j} < 1$ for all the eigenvalues $\lambda_j$ of $A$.
+
+\section{Closed-Loop Control}
+Now, we know (at least to some extent) when a system is stable in the absence of input. That is to say, any bounded perturbations when applied over time can never lead to unbounded deviations from the stable state. However, many real-world systems are not stable in this manner, instead relying on continuous input to keep them near a stable state. We will now begin to explore how we may choose inputs that achieve our goal of stability.
+
+In particular, imagine choosing inputs that linearly depend on the state vector. Specifically, let
+\[
+    \vec{u}[i] = K\vec{x}[i]
+\]
+where $K$ is a matrix that we can adjust. Then, our state equation becomes
+\eqn{
+    && \vec{x}[i + 1] &= A\vec{x}[i] + B\vec{u}[i] + \vec{\omega} \\
+    &&&= A\vec{x}[i] + BK\vec{x}[i] + \vec{\omega} \\
+    &&&= (A + BK)\vec{x}[i] + \vec{\omega}.
+}
+In essence, it is as if we have replaced our original state matrix $A$ with the new matrix $A + BK$, and continue to apply no other input. Ideally, we'd be able to choose a $K$ that would move the eigenvalues of the state transition matrix $A + BK$ into the regime of stability.
+
+We will derive the general condition for the existence of such a $K$ in future lectures. Right now, however, we will examine a few special cases. Consider the scalar case, with the system
+\[
+    x[i + 1] = ax[t] + bu[t] + \omega.
+\]
+If $\abs{a} \ge 1$ (for instance, if $a = 3$), we know that this system will be unstable in the absence of input. But now, imagine that we choose $u[t] = kx[t]$ for a constant $k$ to be determined. Substituting into the state equation, we obtain
+\[
+    x[i + 1] = (a + bk)x[t] + \omega.
+\]
+Thus, when $b \ne 0$, we can choose $k$ to set our system's eigenvalues to whatever we want! In particular, by setting $k = -a/b$, we obtain
+\[
+    x[i + 1] = \omega,
+\]
+minimizing the system's eigenvalues and ensuring that noise cannot accumulate geometrically.
+
+Now, we will look at a simple 2D case, with the state equation
+\[
+    \vec{x}[i + 1] = \mat{ 0 & 1 \\ 3 & 2 } \vec{x}[i] + \mat{0 \\ 1}\vec{u}[t] + \vec{\omega}.
+\]
+Notice that with no input, the eigenvalues of our state matrix are $3$ and $-1$, so this system is definitely unstable in the absence of input. Notice also that the input only affects the second state directly, so we have no direct way of manipulating the first state. This is in contrast to our scalar example, where our input could affect the entire (one-dimensional) state.
+
+With that in mind, let our unknown $K$ be
+\[
+    K = \mat{k_1 & k_2},
+\]
+so we obtain the state equation
+\[
+    \vec{x}[i + 1] = \left(\mat{ 0 & 1 \\ 3 & 2 } + \mat{0 \\ 1}\mat{k_1 & k_2}\right) \vec{x}[i] + \vec{\omega}.
+\]
+We are interested in minimizing the magnitudes of both eigenvectors of our state transition matrix, which may be reexpressed as
+\[
+    A + BK = \mat{0 & 1 \\ 3 & 2} + \mat{0 & 0 \\ k_1 & k_2} = \mat{0 & 1 \\ 3 + k_1 & 2 + k_2}
+\]
+
+Computing the eigenvalues $\lambda$, we see that they must satisfy the characteristic polynomial
+\[
+(-\lambda)(2 + k_2 - \lambda) - (3 + k_1) = 0 \implies \lambda^2 - (k_2 + 2)\lambda - (k_1+3) = 0.
+\]
+Notice that we have full control over both coefficients of the characteristic polynomial, even though we can't fully control the state matrix. Therefore, we can place the state matrix's eigenvalues wherever we like, so we can still provide inputs to make our system.
+
+Next lecture, we will explore the condition that determines whether a $K$ that stabilizes a system exists.
+
+\end{document}
