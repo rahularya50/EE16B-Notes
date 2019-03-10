@@ -1,0 +1,472 @@
+\documentclass[letterpaper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[parfill]{parskip}    % Activate to begin paragraphs with an empty line rather than an indent
+\usepackage{graphicx}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{mathtools}
+\usepackage{mathrsfs}
+
+\usepackage{afterpage}
+
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+
+\usepackage{verse}
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{corollary}{Corollary}[theorem]
+\newtheorem{lemma}[theorem]{Lemma}
+
+\theoremstyle{remark}
+\newtheorem*{remark}{Remark}
+
+\usepackage{epstopdf}
+\usepackage{circuitikz}
+\usepackage[separate-uncertainty = true,multi-part-units=single]{siunitx}
+\usepackage{booktabs}
+\usepackage{enumitem}
+\usepackage[toc,page]{appendix}
+\usepackage{color}
+\usepackage{pgfplots}
+\usepackage{pgfplotstable}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{url}
+\usepackage{multirow}
+\usepackage{makecell}
+\usepackage[round]{natbib}   % omit 'round' option if you prefer square brackets
+\usepackage{titling}
+\usepackage{siunitx}
+\usepackage{physics}
+
+\usepackage{setspace}
+% \doublespacing
+\usepackage{float}
+
+
+\pgfplotsset{compat=1.14}
+
+%  Special math symbols
+%       floor, ceiling, angled brackets
+%-----------------------------------------------------------------------
+\newcommand{\floor}[1]{\left\lfloor #1\right\rfloor}
+\newcommand{\ceil}[1]{\left\lceil #1\right\rceil}
+\newcommand{\etal}{\textit{et al.}}
+\newcommand{\RE}{\mathbb{R}}        % real space
+\newcommand{\ZZ}{\mathbb{Z}}        % integers
+\newcommand{\NN}{\mathbb{N}}        % natural numbers
+\newcommand{\eps}{{\varepsilon}}    % prettier epsilon
+%-----------------------------------------------------------------------
+%  Tighter lists
+%-----------------------------------------------------------------------
+\newenvironment{itemize*}% Tighter itemized list
+  {\begin{itemize}%
+    \setlength{\itemsep}{-0.5ex}%
+    \setlength{\parsep}{0pt}}%
+  {\end{itemize}}
+\newenvironment{description*}% Tighter description list
+  {\begin{description}%
+    \setlength{\itemsep}{-0.5ex}%
+    \setlength{\parsep}{0pt}}%
+  {\end{description}}
+\newenvironment{enumerate*}% Tighter enumerated list
+  {\begin{enumerate}%
+    \setlength{\itemsep}{-0.5ex}%
+    \setlength{\parsep}{0pt}}%
+  {\end{enumerate}}
+%-----------------------------------------------------------------------
+% Typing shortcuts
+%-----------------------------------------------------------------------
+\newcommand{\X}{\mathbb{X}}
+\newcommand{\SG}{\mathbf{S}}
+\newcommand{\GE}{\mathcal{G}}
+\newcommand{\ST}{\,:\,}
+\renewcommand{\tilde}[1]{\widetilde{#1}}
+\newcommand{\diam}{\mathrm{diam}}
+\newcommand{\sq}{\square}
+\newcommand{\half}[1]{\frac{#1}{2}}
+\newcommand{\inv}[1]{\frac{1}{#1}}
+\newcommand{\alg}{\textsf{SplitReduce}}
+\newcommand{\sz}[1]{\sigma_{#1}}
+\newcommand{\LL}{\mathcal{L}}
+\newcommand{\softOmega}{\widetilde{\Omega}} 
+\newcommand{\softO}{\widetilde{O}}
+\newcommand{\OO}{O^*}  %or \widetilde{O}?
+
+\newcommand{\dx}{\mathrm{d}x}
+\newcommand{\dy}{\mathrm{d}y}
+\newcommand{\dz}{\mathrm{d}z}
+\newcommand{\dt}{\mathrm{d}t}
+\newcommand{\du}{\mathrm{d}u}
+\newcommand{\dtheta}{\mathrm{d}\theta}
+\newcommand{\dq}{\mathrm{d}q}
+\newcommand{\diff}{\mathrm{d}}
+\newcommand{\dV}{\mathrm{d}V}
+\newcommand{\dL}{\mathrm{d}L}
+\newcommand{\dA}{\mathrm{d}A}
+\newcommand{\dH}{\mathrm{d}H}
+\newcommand{\df}{\mathrm{d}f}
+\newcommand{\dg}{\mathrm{d}g}
+\newcommand{\dr}{\mathrm{d}r}
+\newcommand{\dw}{\mathrm{d}w}
+\newcommand{\dI}{\mathrm{d}I}
+
+\newcommand*\len[1]{\overline{#1}}
+
+
+\newcommand\note[1]{\marginpar{\textcolor{red}{#1}}}
+\newcommand*{\tageq}{\refstepcounter{equation}\tag{\theequation}}
+
+\newcommand*{\equals}{=}
+
+\usepackage{fancyhdr}
+
+\pgfplotscreateplotcyclelist{grayscale}{
+    thick,white!10!black,mark=x,mark options=solid, dashed\\%
+    thick,white!20!black,mark=o,mark options=solid\\%
+}
+
+\newcommand{\mat}[1]{\ensuremath{\begin{bmatrix}#1\end{bmatrix}}}
+\newcommand{\cat}[1]{\ensuremath{\begin{vmatrix}#1\end{vmatrix}}}
+\newcommand{\eqn}[1]{\begin{alignat*}{2}#1\end{alignat*}}
+\newcommand{\p}[2]{\frac{\partial #1}{\partial #2}}
+\newcommand*{\thus}{&\implies\quad&}
+
+\newcommand{\answer}[1]{\framebox{$\displaystyle #1 $}}
+
+\newcommand{\shrug}[1][]{%
+\begin{tikzpicture}[baseline,x=0.8\ht\strutbox,y=0.8\ht\strutbox,line width=0.125ex,#1]
+\def\arm{(-2.5,0.95) to (-2,0.95) (-1.9,1) to (-1.5,0) (-1.35,0) to (-0.8,0)};
+\draw \arm;
+\draw[xscale=-1] \arm;
+\def\headpart{(0.6,0) arc[start angle=-40, end angle=40,x radius=0.6,y radius=0.8]};
+\draw \headpart;
+\draw[xscale=-1] \headpart;
+\def\eye{(-0.075,0.15) .. controls (0.02,0) .. (0.075,-0.15)};
+\draw[shift={(-0.3,0.8)}] \eye;
+\draw[shift={(0,0.85)}] \eye;
+% draw mouth
+\draw (-0.1,0.2) to [out=15,in=-100] (0.4,0.95); 
+\end{tikzpicture}}
+
+
+\pagestyle{fancy}
+\fancyhf{}
+\rhead{Rahul Arya}
+\lhead{EE 16B}
+\cfoot{\thepage}
+
+\title{Lecture 14 - Notes}
+\author{Rahul Arya}
+\date{March 2019}
+\begin{document}
+
+\maketitle
+
+\section{Overview}
+Last lecture, we introduced the concept of stability, and explored how in some simple cases we can apply control inputs that stabilize an unstable system. In particular, for a system described by
+\[
+    \vec{x}[i + 1] = A\vec{x}[i] + B\vec{u}[i] + \vec{\omega},
+\]
+we demonstrated that by making our inputs linearly depend on the state as $\vec{u}[i] = K\vec{x}[i]$, our system's state equation becomes
+\[
+    \vec{x}[i + 1] = (A + BK)\vec{x}[i] + \vec{\omega}.
+\]
+By appropriately choosing $K$, we can sometimes drive the eigenvalues of $A + BK$ to zero, even when the eigenvalues of the original state matrix $A$ are large.
+
+In this lecture, we will demonstrate that when our original system is controllable, we can set the eigenvalues of $A + BK$ to whatever we like, via an appropriate choice of $K$. In particular, a trivial corollary of this result is that any unstable controllable system can be made controllable through an appropriate choice of input feedback.
+
+\section{Feedback}
+For simplicity, we will only address the problem of a single-input system. That is to say, we can treat our input matrix $B$ as a single vector $\vec{b}$, and our input as a scalar $u$. Since our system is controllable, we know that the controllability matrix
+\[
+    \mathscr{C} = \mat{\vec{b} & A\vec{b} & A^2\vec{b} & \cdots & A^{n - 1}\vec{b}}
+\]
+is square and of full rank, where $n$ is the dimension of our state vector. Since our input is one-dimensional, we can write the matrix $K$ representing the dependence of our input on the state in terms of a column vector $\vec{f}$, such that
+\[
+    K = -\vec{f}^T = -\mat{f_0 & f_1 & \cdots & f_{n - 1}},
+\]
+where the scalar components $f_i$ of $\vec{f}$ are known as the \emph{feedback gains} of our input. Notice the negative sign in the relation $K = -\vec{f}^T$ - this is to emphasize that our feedback is, at least intuitively, ``cancelling out'' the state at any given time.
+
+Therefore, we find that
+\[
+    A + BK = A - \vec{b} \vec{f}^T.
+\]
+Our problem reduces to choosing an $\vec{f}$ such that $A - \vec{b}\vec{f}^T$ has a particular set of desired eigenvalues (which would allow us to make it stable).
+
+\section{Scalar Case}
+As we have done many times before, we will first try to solve this problem in the scalar case, before trying to generalize. The most natural scalar system is
+\[
+    x[i + 1] = ax[i] + u[i] + \omega.
+\]
+However, we saw last time that this system is extremely easy to stabilize, by applying the input $u[i] = -ax[i]$. Intuitively, this model does not capture all the characteristics of a higher-dimensional system - specifically, when working with more than one dimension, a scalar input cannot in a single timestep completely alter the evolution of the system.
+
+Instead, we will take inspiration from the observable canonical form from our study of observability, and consider the following alternative scalar model:
+\[
+    z[i + 1] = a_{n - 1}z[i] + a_{n - 2}z[i-1] + \ldots + a_0z[i - n + 1] + u[i] + \omega,
+\]
+where the $a_j$ are all scalars. Notice the change in notation from $x$ to $z$. Since each $z[i + 1]$ no longer depends on just the immediately previous $z[i]$ and the input, but rather depends on all of the $n$ previous states as well as the input, we use a different letter to remind ourselves of this difference in behavior.
+
+We see that any control input at a single time step cannot drastically alter the behavior of the system, as we expect. For instance, imagine applying some arbitrary input $u[i]$ at timestep $i$. While this can affect $z[i + 1]$ arbitrarily, the fact that $z[i + 2]$ (and subsequent states) depend not only on $z[i + 1]$, but also $z[i]$, $z[i - 1]$, and so on suggests that any single input cannot arbitrarily modify the evolution of the system.
+
+Despite this slight complexity, it should still be clear that this model can still be made to become stable. By letting our input be
+\[
+    u[i] = -a_{n-1}z[i] - a_{n-2}z[i - 1] - \ldots - a_0z[i - n + 1],
+\]
+our state equation becomes
+\[
+    z[i + 1] = (a_{n-1}-a_{n-1})z[i] + (a_{n-2}-a_{n-2})z[i-1] + \ldots + (a_0-a_0)z[i - n + 1] + \omega = \omega,
+\]
+meaning that any noise cannot build up over time, so our error cannot grow in an unbounded manner.
+
+More generally, we can always choose our $u[i]$ to make our state equation become whatever we want. Specifically, for arbitrary parameters $d_0$ through $d_{n-1}$, we can set
+\[
+    u[i] = (d_{n-1} - a_{n-1})z[i] - (d_{n-2} - a_{n-2})z[i - 1] - \ldots - (d_0 - a_0)z[i - n + 1],
+\]
+so our state equation becomes
+\[
+    z[i+1] = d_{n-1}z[i] + d_{n-2}z[i-1] + \ldots + d_0z[i - n + 1] + \omega.
+\]
+Since we could set the $d_i$ to whatever we want, we see here that we can arbitrarily adjust the evolution of our system over time by applying an input at very timestep.
+
+\section{Controllable Canonical Form}
+The scalar model from the previous section sounds pretty good! It has the ``vector-like'' behavior we expect, due to its dependence on the previous $n$ states, but a one-dimensional input can still be used to stabilize it. However, it still has the slightly unusual behavior of depending on the past $n$ states, not just the most recent one.
+
+It would be nice if we could design a vector system that behaved just like our scalar case, but depended only on the most recent state. Intuitively, we can think of our scalar system as having a ``memory'' of sorts, since it needs to ``remember'' the previous $n$ states in order to determine the next state. A natural thing to try would be to treat this ``memory'' itself as our vector state. 
+
+We can represent this memory as
+\[
+    \vec{z}[i] = \mat{z[i - n + 1] \\ \vdots \\ z[i - 1] \\ z[i]}.
+\]
+We now wish to find the matrix $A_z$ and the vector $\vec{b}$, such that
+\[
+    \vec{z}[i + 1] = A_z \vec{z}[i] + \vec{b}u[i],
+\]
+so then we'd obtain a vector system in a form we're used to with our desired properties. From the definition of $\vec{z}$ and using basic matrix multiplication, we immediately see that
+\[
+    \vec{z}[i + 1] = \mat{z[i - n + 2] \\ \vdots \\ z[i] \\ z[i + 1]} = 
+    \mat{
+    0 & 1 & 0 & \cdots & 0 \\ 
+    0 & 0 & 1 & \cdots & 0 \\
+    \vdots & \vdots & \vdots & \ddots & \vdots \\
+    0 & 0 & 0 & \cdots & 1 \\
+    a_0 & a_1 & a_2 & \cdots & a_{n - 1}
+    } \mat{z[i - n + 1] \\ \vdots \\ z[i - 1] \\ z[i]} + \mat{0 \\ 0 \\ \vdots \\ 0 \\ 1}u[t],
+\]
+so
+\eqn{
+    && A_z &= \mat{
+    0 & 1 & 0 & \cdots & 0 \\ 
+    0 & 0 & 1 & \cdots & 0 \\
+    \vdots & \vdots & \vdots & \ddots & \vdots \\
+    0 & 0 & 0 & \cdots & 1 \\
+    a_0 & a_1 & a_2 & \cdots & a_{n - 1}
+    } \\
+    && b_z &= \mat{0 \\ 0 \\ \vdots \\ 0 \\ 1}.
+}
+
+At this stage, a natural question to ask would be: is this vector system controllable? We should expect the answer to be yes - after all, we can clearly provide inputs $\vec{u}[i]$ to arbitrarily determine the value of $\vec{z}[i + 1]$, so after $n$ timesteps, we should be able to arbitrarily set values for the full state $\vec{z}[i + n]$ (since $\vec{z}[i + n]$ depends only on the scalar states between $z[i + 1]$ and $z[i + n]$).
+
+Still, though, it can't hurt to briefly forget about our scalar interpretation of this system, and instead look at the controllability matrix. Notice that we may imagine $A_z$ as ``sliding up`` the components of the vector on which it is applied. In other words,
+\[
+    A_z\mat{z_0 \\ z_1 \\ \vdots \\ z_{n-2} \\ z_{n-1}} = \mat{z_1 \\ z_2 \\ \vdots \\ z_{n-1} \\ a_0z_0 + a_1z_1 + \ldots + a_{n-1}z_{n-1}},
+\]
+Thus, we may express the columns of our controllability matrix $\mathscr{C}$ as
+\eqn{
+    && \vec{b} &= \mat{0 & 0 & \cdots & 0 & 0 & 1}^T \\
+    && A\vec{b} &= \mat{0 & 0 & \cdots & 0 & 1 & ?} \\
+    && A^2\vec{b} &= \mat{0 & 0 & \cdots & 1 & ? & ?} \\
+    && \vdots & \\
+    && A^{n-1}\vec{b} &= \mat{1 & ? & \cdots & ? & ? & ?}.
+}
+Note that we are not filling in the $?$ elements of these columns, since we will shortly see that they do not matter. Therefore, our final controllability matrix will be as follows:
+\[
+    \mathscr{C} = \mat{\vec{b} & A\vec{b} & \cdots & A^{n-1}\vec{b}} = 
+    \mat{
+    0 & 0 & 0 & \cdots & 1 \\
+    0 & 0 & 0 & \cdots & ? \\
+    \vdots & \vdots & \vdots & \ddots & \vdots \\
+    0 & 0 & 1 & \cdots & ? \\
+    0 & 1 & ? & \cdots & ? \\
+    1 & ? & ? & \cdots & ?
+    }.
+\]
+Since $\mathscr{C}$ is a triangular matrix with a full set of pivots, it is clearly of full rank. Thus, our vector system is controllable, just as we expected.
+
+Recall that we are interested not only in controllability, but in stability. We demonstrated earlier that our scalar system was stable when supplied with input feedback, in the sense that we could supply input that would bound the maximum deviation of $z[i]$. However, our ultimate goal is to obtain feedback gains that can place the eigenvalues of our state matrix wherever we want. A step towards this is to compute the eigenvalues of $A_z$ in the absence of input feedback, to understand how they change as we introduce feedback.
+
+However, our standard method of computing the determinant of $A_z - \lambda I$ seems to fail here, since computing the determinant of an $n\times n$ matrix is a tedious procedure. Another option would be to perform Gaussian elimination to try and produce a zero row, but again this seems computationally tricky and error prone (though it apparently can be done!). 
+
+Instead, rather than just computing an eigenvalue, we will try to solve for an eigenvector-eigenvalue pair simultaneously. Let such a pair be $(\lambda, \vec{v}_\lambda)$, so we have $A_z\vec{v}_\lambda = \lambda \vec{v}_\lambda$. Let the components of our eigenvector be $v_i$, such that
+\[
+    \vec{v}_\lambda = \mat{v_0 & v_1 & \cdots & v_{n-1}}^T.
+\]
+Therefore, since $\vec{v}_\lambda$ is an eigenvector,
+\eqn{
+    && A_z\mat{v_0 \\ v_1 \\ \vdots \\ v_{n-2} \\ v_{n-1}} = \lambda \mat{v_0 \\ v_1 \\ \vdots \\ v_{n-2} \\ v_{n-1}} \\
+    \thus \mat{v_1 \\ v_2 \\ \vdots \\ v_n \\ a_0v_0 + a_1v_1 + \ldots + a_{n-1}v_{n-1} } &= \mat{\lambda v_0 \\ \lambda v_1 \\ \vdots \\ \lambda v_{n-2} \\ \lambda v_{n-1}}.
+}
+Equating the first $n - 1$ components, we find that
+\eqn{
+    && v_1 &= \lambda v_0 \\
+    \thus v_2 &= \lambda^2 v_0 \\
+    \thus v_3 &= \lambda^3 v_0 \\
+    && \vdots \\
+    \thus v_{n-1} &= \lambda^{n-1} v_0.
+}
+
+Now, by substituting these values into the equality for the last component, we obtain
+\eqn{
+    && a_0v_0 + a_1v_1 + \ldots + a_{n-1}v_{n-1} &= \lambda v_{n-1} \\
+    \thus a_0v_0 + \lambda a_1v_0 + \ldots + \lambda^{n-1}a_{n1}v_0 &= \lambda^nv_0 \\
+    \thus v_0(\lambda^n - a_{n-1}\lambda^{n-1} - \ldots - a_1\lambda_1 - a_0) &= 0.
+}
+We've almost got an equation for $\lambda$ - there's just that factor of $v_0$ at the front, which we can't cancel out unless we know $v_0 \ne 0$. However, notice that if $v_0 = 0$, then all the other $v_i$ will also equal $0$, so the eigenvector $v_\lambda = \vec{0}$. But by definition, the zero vector can never be an eigenvector. Therefore, $v_0 \ne 0$, so we can cancel it to obtain
+\[
+    \lambda^n - a_{n-1}\lambda^{n-1} - \ldots - a_1\lambda_1 - a_0 = 0,
+\]
+the characteristic polynomial for $A_z$. Notice that this polynomial's coefficients are basically written out for us in the bottom row of $A_z$ - if we can manipulate those coefficients arbitrarily, then we have full control over the eigenvectors of $A_z$.
+
+But in the scalar case, we showed that we could choose inputs that would make our state equation have the coefficients $d_i$, regardless of the initial coefficients $a_i$. This approach should still work in the matrix form, but we should verify it nevertheless.
+
+Before, we chose to set
+\[
+    u[i] = (d_{n-1} - a_{n-1})z[i] - (d_{n-2} - a_{n-2})z[i - 1] - \ldots - (d_0 - a_0)z[i - n + 1].
+\]
+This seems a bit worrying, since we'd like $u[i]$ to linearly depend on $\vec{z}[i]$, not on all the scalar components in some arbitrary manner. But we can rearrange this equation in vector form to obtain
+\[
+    u[i] = \mat{d_0 - a_0 & d_1 - a_1 & \cdots & d_{n-1} - a_{n-1}} \vec{z}[i],
+\]
+so our feedback terms are $f_j = a_j - d_j$ for all $0 \le j < n$.
+
+Substituting this input into our vector state equation, we obtain
+\eqn{
+    && \vec{z}[i + 1] &= A_z \vec{z}[i] + \vec{b}u[i] \\
+    &&&= \mat{
+    0 & 1 & 0 & \cdots & 0 \\ 
+    0 & 0 & 1 & \cdots & 0 \\
+    \vdots & \vdots & \vdots & \ddots & \vdots \\
+    0 & 0 & 0 & \cdots & 1 \\
+    a_0 & a_1 & a_2 & \cdots & a_{n - 1}
+    } \vec{z}[i] + \mat{0 \\ 0 \\ \vdots \\ 0 \\ 1} \mat{d_0 - a_0 & d_1 - a_1 & \cdots & d_{n-1} - a_{n-1}} \vec{z}[i] \\
+    &&&= \left(
+    \mat{
+    0 & 1 & 0 & \cdots & 0 \\ 
+    0 & 0 & 1 & \cdots & 0 \\
+    \vdots & \vdots & \vdots & \ddots & \vdots \\
+    0 & 0 & 0 & \cdots & 1 \\
+    a_0 & a_1 & a_2 & \cdots & a_{n - 1}
+    } + \mat{0 \\ 0 \\ \vdots \\ 0 \\ 1} \mat{d_0 - a_0 & d_1 - a_1 & \cdots & d_{n-1} - a_{n-1}} \right) \vec{z}[i]\\
+    &&&= \left(
+    \mat{
+    0 & 1 & 0 & \cdots & 0 \\ 
+    0 & 0 & 1 & \cdots & 0 \\
+    \vdots & \vdots & \vdots & \ddots & \vdots \\
+    0 & 0 & 0 & \cdots & 1 \\
+    a_0 & a_1 & a_2 & \cdots & a_{n - 1}
+    } + 
+    \mat{
+    0 & 0 & \cdots & 0 \\
+    0 & 0 & \cdots & 0 \\
+    \vdots & \vdots & \ddots & \vdots \\
+    0 & 0 & \cdots & 0 \\
+    d_0 - a_0 & d_1 - a_1 & \cdots & d_{n-1} - a_{n-1}
+    }
+    \right) \vec{z}[i] \\
+    &&&= \left(
+    \mat{
+    0 & 1 & 0 & \cdots & 0 \\ 
+    0 & 0 & 1 & \cdots & 0 \\
+    \vdots & \vdots & \vdots & \ddots & \vdots \\
+    0 & 0 & 0 & \cdots & 1 \\
+    d_0 & d_1 & d_2 & \cdots & d_{n - 1}
+    } \right) \vec{z}[i],
+}
+so we have successfully chosen our feedback gains that can arbitrarily modify the eigenvalues of our state matrix.
+
+\section{General Controllable Systems}
+Let's review what we've seen so far. We have developed our earlier scalar model into a vector state equation in our standard form, known as the \emph{controllable canonical form}. We have demonstrated that all systems with state equations of this form are stable, and that input feedback can be set up in such a way that they are controllable.
+
+But all these results only apply to a very specific type of system - those which are essentially scalar systems ``in disguise'', except that each state depends on the past $n$ states, not just on the most recent one. We will now make the counter-intuitive assertion that \emph{any} controllable system with a scalar input can be viewed in this form, after applying a change of coordinates. Let this controllable system be
+\[
+    \vec{x}[i + 1] = A\vec{x}[i] + \vec{b}u[i] + \omega,
+\]
+as before.
+
+To understand this, recall that since this system is controllable, the sequence
+\[
+    \vec{b}, A\vec{b}, A^2\vec{b}, \ldots, A^{n-1}\vec{b}
+\]
+forms a basis for the state space. We will horizontally concatenate the vectors in this sequence to form the matrix $G$, that is clearly of full rank.
+
+Thus, the state at any time can be written as
+\[
+    \vec{x}[i] = G\mat{\tilde{x}_0[i] \\ \tilde{x}_1[i] \\ \vdots \\ \tilde{x}_{n-1}[i]} = \sum_{j = 0}^{n - 1} \tilde{x}_j[i] A^j \vec{b},
+\]
+for some suitable constants $\tilde{x}_j[i]$. We may obtain these constants in vector form $\tilde{x}[i]$ by evaluating $G^{-1}\vec{x}[i]$.
+
+Intuitively, we should expect that applying $A$ ``slides down'' our representation of the state in the basis $G$, since the coefficient for $\vec{b}$ becomes the coefficient for $A\vec{b}$, the coefficient for $A\vec{b}$ becomes the coefficient for $A^2\vec{b}$, and so on. This behavior sounds very similar to what we saw in canonical form (except there our state kept ``sliding up''), so we should investigate and see whether our system in fact behaves like that.
+
+Applying our state equation, we find that
+\eqn{
+    && \vec{x}[i + 1] &= \left(A\sum_{j = 0}^{n - 1} \tilde{x}_j[i] A^j \vec{b}\right) + \vec{b}u[i] \\
+    &&&= \left(\sum_{j = 0}^{n - 1} \tilde{x}_j[i] A^{j + 1} \vec{b}\right) + \vec{b}u[i] \\
+    &&&= \left(\sum_{j = 1}^{n - 1} \tilde{x}_{j-1}[i] A^{j} \vec{b}\right) + \tilde{x}_{n-1}[i]A^n\vec{b} + \vec{b}u[i]
+}
+Now, recall that $A^n\vec{b}$ must lie in the span of the vectors in our basis, so we may represent it as
+\[
+    A^n\vec{b} = \sum_{j=0}^{n-1} \alpha_jA^j\vec{b}
+\]
+for some constants $\alpha_j$.
+
+Thus, substituting our representation for $A^n\vec{b}$ into our expression for $\vec{x}[i + 1]$, we obtain
+\eqn{
+    && \vec{x}[i + 1] &= \left(\sum_{j = 1}^{n - 1} \tilde{x}_{j-1}[i] A^{j} \vec{b}\right) + \tilde{x}_{n-1}[i]\left(\sum_{j=0}^{n-1} \alpha_jA^j\vec{b}\right) + \vec{b}u[i] \\
+    &&&= (\alpha_0 \tilde{x}_{n-1}[i] + u[i])\vec{b} + \sum_{j = 1}^{n - 1} (\tilde{x}_{j-1}[i] + \alpha_j \tilde{x}_{n-1}[i]) A^{j} \vec{b},
+}
+so we can express $\vec{x}[i+1]$ as a linear combination of our basis vectors as well. Writing this representation in matrix-vector form, we obtain
+\[
+    \vec{x}[i + 1] = G\mat{u[i] + \alpha_0 \tilde{x}_{n-1}[i] \\ x_0[i] + \alpha_1 \tilde{x}_{n-1}[i] \\ x_1[i] + \alpha_2 \tilde{x}_{n-1}[i] \\ \vdots \\ x_{n-2}[i] + \alpha_{n-1} \tilde{x}_{n-1}[i]}.
+\]
+Therefore, we may express $\vec{x}[i+1]$ in this new basis as
+\[
+    \tilde{x}[i + 1] = G^{-1}\vec{x}[i + 1] = \mat{u[i] + \alpha_0 \tilde{x}_{n-1}[i] \\ x_0[i] + \alpha_1 \tilde{x}_{n-1}[i] \\ x_1[i] + \alpha_2 \tilde{x}_{n-1}[i] \\ \vdots \\ x_{n-2}[i] + \alpha_{n-1} \tilde{x}_{n-1}[i]} = \mat{\alpha_0 \tilde{x}_{n-1}[i] \\ x_0[i] + \alpha_1 \tilde{x}_{n-1}[i] \\ x_1[i] + \alpha_2 \tilde{x}_{n-1}[i] \\ \vdots \\ x_{n-2}[i] + \alpha_{n-1} \tilde{x}_{n-1}[i]} + \mat{u[i] \\ 0 \\ 0 \\ \vdots \\ 0}.
+\]
+You might notice that this equation looks suspiciously familiar to our old scalar system.
+
+We can see these similarities more closely by rearranging this expression, to obtain
+\eqn{
+    && \tilde{x}[i + 1] &= \mat{\alpha_0 \tilde{x}_{n-1}[i] \\ x_0[i] + \alpha_1 \tilde{x}_{n-1}[i] \\ x_1[i] + \alpha_2 \tilde{x}_{n-1}[i] \\ \vdots \\ x_{n-2}[i] + \alpha_{n-1} \tilde{x}_{n-1}[i]} + \mat{u[i] \\ 0 \\ 0 \\ \vdots \\ 0} \\
+    &&&= \mat{
+    0 & 0 & 0 & \cdots & \alpha_0 \\
+    1 & 0 & 0 & \cdots & \alpha_1 \\
+    0 & 1 & 0 & \cdots & \alpha_2 \\
+    \vdots & \vdots & \vdots & \ddots & \vdots \\
+    0 & 0 & 0 & \cdots & \alpha_{n-1}} \mat{\tilde{x}_0[i] \\ \tilde{x}_1[i] \\ \tilde{x}_2[i] \\ \vdots \\ \tilde{x}_{n-1}[i]} + u[i] \mat{1 \\ 0 \\ 0 \\ \vdots \\ 0} \\
+    &&&= \tilde{A} \tilde{x}[i] + u[i] \tilde{b},
+}
+where
+\eqn{
+    && \tilde{A}  &= \mat{
+    0 & 0 & 0 & \cdots & \alpha_0 \\
+    1 & 0 & 0 & \cdots & \alpha_1 \\
+    0 & 1 & 0 & \cdots & \alpha_2 \\
+    \vdots & \vdots & \vdots & \ddots & \vdots \\
+    0 & 0 & 0 & \cdots & \alpha_{n-1}}  \\
+    && \tilde{b} &= \mat{1 \\ 0 \\ 0 \\ \vdots \\ 0}.
+}
+
+Notice that all we have really done is performed a change of basis, since $\tilde{x} = G^{-1}\vec{x}$. That is to say, starting with our original state equation, we have simply pre-multiplied by $G^{-1}$, to obtain
+\eqn{
+    && \vec{x}[i + 1] &= A\vec{x}[i] + \vec{b} u[i] \\
+    \thus G^{-1}\vec{x}[i + 1] &= G^{-1}A(GG^{-1})\vec{x}[i] + G^{-1}\vec{b} u[i] \\
+    \thus \tilde{x}[i + 1] &= (G^{-1}AG)\tilde{x}[i] + G^{-1}\vec{b} u[i].
+}
+Therefore, it should be clear that $\tilde{A} = G^{-1}AG$ and $\tilde{b} = G^{-1}\vec{b}$.
+
+One question that could be asked at this stage is - why go through all that complicated matrix algebra, when all we were doing was pre-multiplying by $G^{-1}$? The reason for all that algebra was to establish the form for $\tilde{A}$ and $\tilde{b}$. Unlike with diagonalization, where we knew we would obtain a diagonal matrix in the eigenbasis, here we had no idea what our state matrix would look like in the new basis $G$, so we had to algebraically work it out.
+
+Unfortunately, despite all this computation, we aren't quite there yet! Our controller canonical form, with all of its nice properties, had a \emph{row} of constants at the bottom - but here, we've got a column! 
+
+\end{document}
