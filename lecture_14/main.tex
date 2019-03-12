@@ -176,7 +176,7 @@ we demonstrated that by making our inputs linearly depend on the state as $\vec{
 \]
 By appropriately choosing $K$, we can sometimes drive the eigenvalues of $A + BK$ to zero, even when the eigenvalues of the original state matrix $A$ are large.
 
-In this lecture, we will demonstrate that when our original system is controllable, we can set the eigenvalues of $A + BK$ to whatever we like, via an appropriate choice of $K$. In particular, a trivial corollary of this result is that any unstable controllable system can be made controllable through an appropriate choice of input feedback.
+In this lecture, we will demonstrate that when our original system is controllable, we can set the eigenvalues of $A + BK$ to whatever we like, via an appropriate choice of $K$. In particular, an important corollary of this result is that any unstable controllable system can be made controllable through an appropriate choice of input feedback.
 
 \section{Feedback}
 For simplicity, we will only address the problem of a single-input system. That is to say, we can treat our input matrix $B$ as a single vector $\vec{b}$, and our input as a scalar $u$. Since our system is controllable, we know that the controllability matrix
@@ -374,18 +374,18 @@ Substituting this input into our vector state equation, we obtain
     d_0 - a_0 & d_1 - a_1 & \cdots & d_{n-1} - a_{n-1}
     }
     \right) \vec{z}[i] \\
-    &&&= \left(
+    &&&=
     \mat{
     0 & 1 & 0 & \cdots & 0 \\ 
     0 & 0 & 1 & \cdots & 0 \\
     \vdots & \vdots & \vdots & \ddots & \vdots \\
     0 & 0 & 0 & \cdots & 1 \\
     d_0 & d_1 & d_2 & \cdots & d_{n - 1}
-    } \right) \vec{z}[i],
+    } \vec{z}[i],
 }
 so we have successfully chosen our feedback gains that can arbitrarily modify the eigenvalues of our state matrix.
 
-\section{General Controllable Systems}
+\section{Simplifying General Controllable Systems}
 Let's review what we've seen so far. We have developed our earlier scalar model into a vector state equation in our standard form, known as the \emph{controllable canonical form}. We have demonstrated that all systems with state equations of this form are stable, and that input feedback can be set up in such a way that they are controllable.
 
 But all these results only apply to a very specific type of system - those which are essentially scalar systems ``in disguise'', except that each state depends on the past $n$ states, not just on the most recent one. We will now make the counter-intuitive assertion that \emph{any} controllable system with a scalar input can be viewed in this form, after applying a change of coordinates. Let this controllable system be
@@ -467,6 +467,84 @@ Therefore, it should be clear that $\tilde{A} = G^{-1}AG$ and $\tilde{b} = G^{-1
 
 One question that could be asked at this stage is - why go through all that complicated matrix algebra, when all we were doing was pre-multiplying by $G^{-1}$? The reason for all that algebra was to establish the form for $\tilde{A}$ and $\tilde{b}$. Unlike with diagonalization, where we knew we would obtain a diagonal matrix in the eigenbasis, here we had no idea what our state matrix would look like in the new basis $G$, so we had to algebraically work it out.
 
-Unfortunately, despite all this computation, we aren't quite there yet! Our controller canonical form, with all of its nice properties, had a \emph{row} of constants at the bottom - but here, we've got a column! 
+\section{Achieving Controllable Canonical Form}
+Unfortunately, despite all this computation, we aren't quite there yet! Our controller canonical form, with all of its nice properties, had a \emph{row} of constants at the bottom - but so far, we've only managed to get these constants into a column! 
+
+To resolve this, we will make the \emph{conjecture} that there exists a controllable canonical form for our system with a \emph{particular} state transition matrix. Specifically, we will hypothesize that the state equation:
+\[
+    \vec{z}[i+1] = \mat{
+    0 & 1 & 0 & \cdots & 0 \\ 
+    0 & 0 & 1 & \cdots & 0 \\
+    \vdots & \vdots & \vdots & \ddots & \vdots \\
+    0 & 0 & 0 & \cdots & 1 \\
+    \alpha_0 & \alpha_1 & \alpha_2 & \cdots & \alpha_{n - 1}
+    } \vec{z}[i] + \mat{0 \\ 0 \\ 0 \\ \vdots \\ 1} u[i] = \tilde{A}^T\vec{z}[i] + \mat{0 \\ 0 \\ \vdots \\ 0 \\ 1} u[i]
+\]
+models the behavior of our system under a further change of basis $\tilde{x} = H\vec{z}$. We will aim to demonstrate both the correctness of this hypothesis, and to compute the change of basis matrix $H$ itself.
+
+In the previous section, we demonstrated that any controllable system can be rewritten in a simpler form, via a change of basis. At the moment, the system with state matrix $\tilde{A}$ is in that simplified form, though our target state equation with state matrix $\tilde{A}^T$ is not. Rather than trying to convert the former system into the latter, it might be easier to try and convert the latter system into the former, since we can always reverse our change of basis transformation later.
+
+In particular, recall that the change of basis represented by the matrix
+\[
+    G = \mat{\vec{b} & A\vec{b} & \cdots & A^{n-1}\vec{b}}
+\]
+converted the system involving $A$ (an arbitrary state matrix) into a simplified form with state matrix $\tilde{A}$. Similarly, we know that choosing the change of basis matrix
+\[
+    H = \mat{ \mat{0 \\ 0 \\ \vdots \\ 0 \\ 1} & \tilde{A}^T \mat{0 \\ 0 \\ \vdots \\ 0 \\ 1} & \cdots & (\tilde{A}^T)^{n-1} \mat{0 \\ 0 \\ \vdots \\ 0 \\ 1}}
+\]
+will convert the system involving $\tilde{A}^T$ into a simplified form. We will represent the state equation of this simplified form as
+\[
+    \vec{z'}[i+1] = A'\vec{z'} + \mat{1 \\ 0 \\ 0 \\ \vdots \\ 0}u[t],
+\]
+where $A'$ is of the same form as $\tilde{A}$, except with potentially different constants in the last column. Let these constants be $\beta_i$, so
+\[
+    A' = H^{-1}\tilde{A}^TH = 
+    \mat{
+    0 & 0 & 0 & \cdots & \beta_0 \\
+    1 & 0 & 0 & \cdots & \beta_1 \\
+    0 & 1 & 0 & \cdots & \beta_2 \\
+    \vdots & \vdots & \vdots & \ddots & \vdots \\
+    0 & 0 & 0 & \cdots & \beta_{n-1}
+    }.
+\]
+We will now aim to determine what these constants $\beta_i$ are. 
+
+To do so, we will consider the characteristic polynomial of $A'$. Recall that the characteristic polynomial of a matrix in controllable canonical form depends only on the coefficients on the bottom row. Specifically, for the matrix $\tilde{A}^T$ (which is clearly in that form), we know that its characteristic polynomial in reduced form is
+\[
+    \abs{\lambda I - \tilde{A}^T} = \lambda^n - \alpha_{n-1}\lambda^{n-1} - \ldots - \alpha_1\lambda_1 - \alpha_0.
+\]
+Using elementary properties of the determinant, we also know that the characteristic polynomial of $A'$ is the same as the characteristic polynomial of its transpose $(A')^T$. Since $(A')^T$ is in controllable canonical form, we know that its characteristic polynomial in reduced form is
+\[
+    \abs{\lambda I - A'} = \abs{\lambda I - (A')^T} = \lambda^n - \beta_{n-1}\lambda^{n-1} - \ldots - \beta_1\lambda_1 - \beta_0.
+\]
+
+Why does all this matter? Well, at an intuitive level, the characteristic polynomial ``captures'' some sort of intrinsic property of a linear transformation - specifically, its eigenvalues and their multiplicities. More formally, we can show using elementary properties of the determinant that the characteristic polynomials of two matrices related by a change of basis (known as \emph{similar matrices}) are the same, as follows:
+\eqn{
+    && A' &= H^{-1}\tilde{A}^TH \\
+    \thus A' - \lambda I &= H^{-1}\tilde{A}^TH - \lambda I \\
+    &&&= H^{-1}\tilde{A}^TH - \lambda H^{-1}H \\
+    &&&= H^{-1}(\tilde{A}^T - \lambda I)H \\
+    \thus \abs{A' - \lambda I} &= \abs{H^{-1}(\tilde{A}^T - \lambda I)H} \\
+    &&&= \abs{H^{-1}}\abs{\tilde{A}^T - \lambda I}\abs{H} \\
+    &&&= \abs{H}^{-1}\abs{\tilde{A}^T - \lambda I}\abs{H} \\
+    &&&= \abs{\tilde{A}^T - \lambda I}.
+}
+Therefore, we have the equality
+\[
+\lambda^n - \alpha_{n-1}\lambda^{n-1} - \ldots - \alpha_1\lambda_1 - \alpha_0 = \lambda^n - \beta_{n-1}\lambda^{n-1} - \ldots - \beta_1\lambda_1 - \beta_0,
+\]
+for all $\lambda$. Consequently, it is clear that $\alpha_i = \beta_i$ for all valid values of $i$.
+
+Looking back at the form of $A'$, we see that $A' = \tilde{A}$! Therefore, the state equations describing the behavior of $\tilde{x}$ and $\vec{z'}$ are the same! In other words, given appropriate initial conditions, we have that $\tilde{x}[i] = \vec{z'}[i]$ for all timesteps $i$!\footnote{Yes, these exclamation marks are important! This is a fantastic result!}
+
+Recall that we had defined $\tilde{x} = G^{-1}\vec{x}$ and $\vec{z'} = H^{-1}\vec{z}$. So we can trivially relate $\vec{x}$ and $\vec{z}$ with the change of basis
+\[
+    \vec{z} = HG^{-1}\vec{x}.
+\]
+But whereas $\vec{x}$ was governed by an arbitrary controllable state equation, the state equation describing the behavior of $\vec{z}$ was in controllable canonical form!
+
+Therefore, we have successfully proved that \emph{any} controllable system can be rewritten in controllable canonical form through a change of basis. But rather than considering some ``magic'' change of basis, we were able to derive the change of basis $HG^{-1}$, by first converting our system of $\vec{x}$ into an intermediate ``simplified'' form, then considering an unrelated system $\vec{z}$ in controllable canonical form, converting \emph{that} into the same intermediate simplified form, and demonstrating equality.
+
+As a consequence, we now can apply our results for controllable canonical form to arbitrary controllable systems. Specifically, we know that with an appropriate change of basis, any controllable vector system with a single scalar input can be treated as a higher-order discrete-time scalar system (where each state depended on the past $n$ states). Thus, we can choose appropriate feedback gains to arbitrarily place the eigenvalues of our original system, so every controllable system can be stabilized through feedback!
 
 \end{document}
