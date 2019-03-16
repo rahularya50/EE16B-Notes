@@ -239,13 +239,13 @@ Now, we will look at the general case, with the state equation
 \]
 We will assume that we start at the target state $\vec{x}[0] = \vec{0}$, and that we supply no inputs thereafter, so all $\vec{u} = \vec{0}$. Note that this means that $B$ cannot affect the stability of our system, so we will disregard it.
 
-Now, recall that when we considered continuous-time systems with coupled differential equations, we were able to separate them into a set of decoupled differential equations by diagonalizing their state matrix. We can do something similar here, by letting $A = V\Lambda V^{-1}$\footnote{We will discuss the case when $A$ is not diagonalizable later in the course.}, and rearranging to obtain
+Now, recall that when we considered continuous-time systems with coupled differential equations, we were able to separate them into a set of decoupled differential equations by diagonalizing their state matrix. We can do something similar here, by letting $A = V\Lambda V^{-1}$, and rearranging to obtain
 \eqn{
     && \vec{x}[t + 1] = V\Lambda V^{-1}\vec{x}[t] + \vec{\omega} \\
     \thus V^{-1}\vec{x}[t + 1] = \Lambda V^{-1}\vec{x}[t] + V^{-1}\vec{\omega} \\
     \thus \tilde{x}[t + 1] = \Lambda \tilde{x}[t] + \tilde{\omega},
 }
-where $\tilde{x} = V^{-1}\vec{x}$ and $\tilde{\omega}$ = $V^{-1}\vec{\omega}.
+where $\tilde{x} = V^{-1}\vec{x}$ and $\tilde{\omega}$ = $V^{-1}\vec{\omega}\footnote{We will discuss the case when $A$ is not diagonalizable later in the course.}.
 
 Clearly, if a single component of $\tilde{x}$ is bounded, then the system as a whole is unstable. So all we have to do is consider each of the components of $\tilde{x}$, each of which gives us the scalar state equation
 \[
@@ -288,7 +288,7 @@ Since $\abs{m}$ is a constant that does not depend on $\vec{\omega}$, and $\omeg
 Therefore, we can indeed apply our original result in the eigenbasis. Consequently, our system as a whole is stable exactly when $\abs{\lambda_j} < 1$ for all the eigenvalues $\lambda_j$ of $A$.
 
 \section{Closed-Loop Control}
-Now, we know (at least to some extent) when a system is stable in the absence of input. That is to say, any bounded perturbations when applied over time can never lead to unbounded deviations from the stable state. However, many real-world systems are not stable in this manner, instead relying on continuous input to keep them near a stable state. We will now begin to explore how we may choose inputs that achieve our goal of stability.
+Now, we know (at least to some extent) when a system is stable in the absence of input. That is to say, we can determine when a system is such that any bounded perturbations when applied over time can never lead to unbounded deviations from the stable state. However, many real-world systems are not stable in this manner, instead relying on continuous input to keep them near a stable state. We will now begin to explore how we may choose inputs that achieve our goal of stability.
 
 In particular, imagine choosing inputs that linearly depend on the state vector. Specifically, let
 \[
@@ -339,7 +339,7 @@ Computing the eigenvalues $\lambda$, we see that they must satisfy the character
 \[
 (-\lambda)(2 + k_2 - \lambda) - (3 + k_1) = 0 \implies \lambda^2 - (k_2 + 2)\lambda - (k_1+3) = 0.
 \]
-Notice that we have full control over both coefficients of the characteristic polynomial, even though we can't fully control the state matrix. Therefore, we can place the state matrix's eigenvalues wherever we like, so we can still provide inputs to make our system.
+Notice that we have full control over both coefficients of the characteristic polynomial, even though we can't fully control the state matrix. Therefore, we can place the state matrix's eigenvalues wherever we like, so we can still provide inputs to make our system stable.
 
 Next lecture, we will explore the condition that determines whether a $K$ that stabilizes a system exists.
 
