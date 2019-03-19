@@ -1,0 +1,314 @@
+\documentclass[letterpaper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[parfill]{parskip}    % Activate to begin paragraphs with an empty line rather than an indent
+\usepackage{graphicx}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{mathtools}
+\usepackage{mathrsfs}
+
+\usepackage{afterpage}
+
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+
+\usepackage{verse}
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{corollary}{Corollary}[theorem]
+\newtheorem{lemma}[theorem]{Lemma}
+
+\theoremstyle{remark}
+\newtheorem*{remark}{Remark}
+
+\usepackage{epstopdf}
+\usepackage{circuitikz}
+\usepackage[separate-uncertainty = true,multi-part-units=single]{siunitx}
+\usepackage{booktabs}
+\usepackage{enumitem}
+\usepackage[toc,page]{appendix}
+\usepackage{color}
+\usepackage{pgfplots}
+\usepackage{pgfplotstable}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{url}
+\usepackage{multirow}
+\usepackage{makecell}
+\usepackage[round]{natbib}   % omit 'round' option if you prefer square brackets
+\usepackage{titling}
+\usepackage{siunitx}
+\usepackage{physics}
+
+\usepackage{setspace}
+% \doublespacing
+\usepackage{float}
+
+
+\pgfplotsset{compat=1.14}
+
+%  Special math symbols
+%       floor, ceiling, angled brackets
+%-----------------------------------------------------------------------
+\newcommand{\floor}[1]{\left\lfloor #1\right\rfloor}
+\newcommand{\ceil}[1]{\left\lceil #1\right\rceil}
+\newcommand{\etal}{\textit{et al.}}
+\newcommand{\RE}{\mathbb{R}}        % real space
+\newcommand{\ZZ}{\mathbb{Z}}        % integers
+\newcommand{\NN}{\mathbb{N}}        % natural numbers
+\newcommand{\eps}{{\varepsilon}}    % prettier epsilon
+%-----------------------------------------------------------------------
+%  Tighter lists
+%-----------------------------------------------------------------------
+\newenvironment{itemize*}% Tighter itemized list
+  {\begin{itemize}%
+    \setlength{\itemsep}{-0.5ex}%
+    \setlength{\parsep}{0pt}}%
+  {\end{itemize}}
+\newenvironment{description*}% Tighter description list
+  {\begin{description}%
+    \setlength{\itemsep}{-0.5ex}%
+    \setlength{\parsep}{0pt}}%
+  {\end{description}}
+\newenvironment{enumerate*}% Tighter enumerated list
+  {\begin{enumerate}%
+    \setlength{\itemsep}{-0.5ex}%
+    \setlength{\parsep}{0pt}}%
+  {\end{enumerate}}
+%-----------------------------------------------------------------------
+% Typing shortcuts
+%-----------------------------------------------------------------------
+\newcommand{\X}{\mathbb{X}}
+\newcommand{\SG}{\mathbf{S}}
+\newcommand{\GE}{\mathcal{G}}
+\newcommand{\ST}{\,:\,}
+\renewcommand{\tilde}[1]{\widetilde{#1}}
+\newcommand{\diam}{\mathrm{diam}}
+\newcommand{\sq}{\square}
+\newcommand{\half}[1]{\frac{#1}{2}}
+\newcommand{\inv}[1]{\frac{1}{#1}}
+\newcommand{\alg}{\textsf{SplitReduce}}
+\newcommand{\sz}[1]{\sigma_{#1}}
+\newcommand{\LL}{\mathcal{L}}
+\newcommand{\softOmega}{\widetilde{\Omega}} 
+\newcommand{\softO}{\widetilde{O}}
+\newcommand{\OO}{O^*}  %or \widetilde{O}?
+
+\newcommand{\dx}{\mathrm{d}x}
+\newcommand{\dy}{\mathrm{d}y}
+\newcommand{\dz}{\mathrm{d}z}
+\newcommand{\dt}{\mathrm{d}t}
+\newcommand{\du}{\mathrm{d}u}
+\newcommand{\dtheta}{\mathrm{d}\theta}
+\newcommand{\dq}{\mathrm{d}q}
+\newcommand{\diff}{\mathrm{d}}
+\newcommand{\dV}{\mathrm{d}V}
+\newcommand{\dL}{\mathrm{d}L}
+\newcommand{\dA}{\mathrm{d}A}
+\newcommand{\dH}{\mathrm{d}H}
+\newcommand{\df}{\mathrm{d}f}
+\newcommand{\dg}{\mathrm{d}g}
+\newcommand{\dr}{\mathrm{d}r}
+\newcommand{\dw}{\mathrm{d}w}
+\newcommand{\dI}{\mathrm{d}I}
+
+\newcommand*\len[1]{\overline{#1}}
+
+
+\newcommand\note[1]{\marginpar{\textcolor{red}{#1}}}
+\newcommand*{\tageq}{\refstepcounter{equation}\tag{\theequation}}
+
+\newcommand*{\equals}{=}
+
+\usepackage{fancyhdr}
+
+\pgfplotscreateplotcyclelist{grayscale}{
+    thick,white!10!black,mark=x,mark options=solid, dashed\\%
+    thick,white!20!black,mark=o,mark options=solid\\%
+}
+
+\newcommand{\mat}[1]{\ensuremath{\begin{bmatrix}#1\end{bmatrix}}}
+\newcommand{\cat}[1]{\ensuremath{\begin{vmatrix}#1\end{vmatrix}}}
+\newcommand{\eqn}[1]{\begin{alignat*}{2}#1\end{alignat*}}
+\newcommand{\p}[2]{\frac{\partial #1}{\partial #2}}
+\newcommand*{\thus}{&\implies\quad&}
+
+\newcommand{\answer}[1]{\framebox{$\displaystyle #1 $}}
+
+\newcommand{\shrug}[1][]{%
+\begin{tikzpicture}[baseline,x=0.8\ht\strutbox,y=0.8\ht\strutbox,line width=0.125ex,#1]
+\def\arm{(-2.5,0.95) to (-2,0.95) (-1.9,1) to (-1.5,0) (-1.35,0) to (-0.8,0)};
+\draw \arm;
+\draw[xscale=-1] \arm;
+\def\headpart{(0.6,0) arc[start angle=-40, end angle=40,x radius=0.6,y radius=0.8]};
+\draw \headpart;
+\draw[xscale=-1] \headpart;
+\def\eye{(-0.075,0.15) .. controls (0.02,0) .. (0.075,-0.15)};
+\draw[shift={(-0.3,0.8)}] \eye;
+\draw[shift={(0,0.85)}] \eye;
+% draw mouth
+\draw (-0.1,0.2) to [out=15,in=-100] (0.4,0.95); 
+\end{tikzpicture}}
+
+
+\pagestyle{fancy}
+\fancyhf{}
+\rhead{Rahul Arya}
+\lhead{EE 16B}
+\cfoot{\thepage}
+
+\title{Lecture 16 - Notes}
+\author{Rahul Arya}
+\date{March 2019}
+\begin{document}
+
+\maketitle
+
+\section{Overview}
+Last time, we saw how to linearize scalar systems of a particular form - specifically, systems of the form
+\[
+    \frac{\dx}{\dt} = f(x(t)) + bu(t).
+\]
+We will now complete our discussion of linearization, by discovering how to linearize arbitrry vector systems of the most general form
+\[
+    \frac{\diff \vec{x}}{\dt} = \vec{f}(\vec{x}(t), \vec{u}(t)).
+\]
+
+\section{Linearizing Multivariate Scalar Functions}
+Last time, we saw how to use the linearization of a scalar function $f(x)$ in order to linearize its associated scalar system. It would make sense to do something similar, linearly approximating $\vec{f}(\vec{x}, \vec{u})$ in order to linearize its associated vector system.
+
+A key difference between $\vec{f}(\vec{x}, \vec{u})$ and the functions $f(x)$ that we have seen before is that $\vec{f}$ takes in multiple scalar parameters (contained within the two vector inputs), rather than just a single one. So a good first step would be to figure out how to linearly approximate a scalar function of two variables, before generalizing to functions of vectors of arbitrary dimension.
+
+Consider some $g(a, b)$, and imagine approximating $g$ near $a = a^*$ and $b = b^*$. Intuitively, we can imagine starting at $g(a^*, b^*)$, moving by some $\delta g_a$ to $g(a, b^*)$, and then by some further $\delta g_b$ to $g(a, b)$. 
+
+Expressed algebraically, let
+\eqn{
+    && \delta g_a &= g(a, b^*) - g(a^*, b^*) = g(a^* + \delta a, b^*) - g(a^*, b^*) \\
+    && \delta g_b &= g(a, b) - g(a, b^*) = g(a, b + \delta b) - g(a, b^*).
+}
+Notice that the sum of $\delta g_a$ and $\delta g_b$ represents the total change in $g$ from $(a^*, b^*)$ to $(a, b)$.
+
+But since both $\delta g_a$ and $\delta g_b$ express the change in $g$ as we vary just one parameter, we can construct their linear approximations using the same techniques we saw previously, for functions taking in a single scalar input! Specifically, consider the scalar functions
+\eqn{
+    && g_a(x) = g(x, b^*) \\
+    && g_b(x) = g(a, x).
+}
+By definition, we have that
+\eqn{
+    && \delta g_a &= g_a(a) - g_a(a^*) \\
+    && \delta g_b &= g_b(b) - g_b(b^*).
+}
+But since $g_a(x)$ and $g_b(x)$ are both scalar functions, we have the linear approximations
+\eqn{
+    && \delta g_a &\approx (a - a^*) \frac{\diff g_a}{\dt}\Bigr|_{\substack{x=a^*}} \\
+    && \delta g_b &\approx (b - b^*) \frac{\diff g_b}{\dt}\Bigr|_{\substack{x=b^*}}.
+}
+Therefore, we can write
+\[
+    \delta g = \delta g_a + \delta g_b \approx \frac{\diff g_a}{\dt}(x=a^*) + \frac{\diff g_b}{\dt}(x=b^*).
+\]
+So, are we done? We've certainly expressed our $\delta g$ as an approximation of some kind. But what are these derivatives of $g_a$ and $g_b$ doing here? How do they relate to $g$ itself, as a function of two scalar parameters?
+
+First, let's look at $g_a(x)$. Intuitively, $g_a(x)$ describes the behavior of $g(a, b)$ as we vary $a$ and hold $b$ constant at $b^*$. So its derivative at $x = a$ should express the rate of change of $g$ at $(a^*, b^*)$ as we vary $a$, treating $b = b^*$ as a constant. This quantity is more conventionally referred to as the \emph{partial derivative} of $g(a, b)$ at $(a^*, b^*)$ with respect to $a$, and is written as
+\[
+    \frac{\partial g}{\partial a}\Bigr|_{\substack{a=a^*\\b=b^*}}.
+\]
+In a similar manner, $g_b(x)$ describes the behavior of $g(a, b)$ as we vary $b$ and hold $a$ constant. But whereas $g_a(x)$ held $b$ constant at the starting point $b^*$, $g_b(x)$ holds $a$ constant at our final value of $a$! So taking the derivative of $g_b(x)$ at $x = b^*$ can be written as the partial derivative
+\[
+    \frac{\partial g}{\partial b}\Bigr|_{\substack{a=a\\b=b^*}}
+\]
+evaluated at $a = a$, not $a = a^*$.
+Putting these partial derivatives into our approximations, we find that
+\[
+    \delta g \approx \frac{\partial g}{\partial a}\Bigr|_{\substack{a=a^*\\b=b^*}} \delta a + \frac{\partial g}{\partial b}\Bigr|_{\substack{a=a\\b=b^*}} \delta b.
+\]
+This approximation seems pretty good! There's only one lingering issue - it isn't actually linear! Notice that the partial derivative acting as the coefficient of $\delta b$ is not a constant, but actually varies with $a$. This is undesirable, since it introduces some nasty nonlinearities. To address this, notice that $\frac{\partial g}{\partial b}$ is typically nonzero at $(a^*, b^*)$. So when we move to $(a, b^*)$, its small variation will be insignificant, relative to its original value, if $\delta a$ is small (since this is a second-order effect). Thus, we can approximate its value as
+\[
+    \frac{\partial g}{\partial b}\Bigr|_{\substack{a=a\\b=b^*}} \approx \frac{\partial g}{\partial b}\Bigr|_{\substack{a=a^*\\b=b^*}},
+\]
+to finally obtain the purely linear approximation
+\[
+    \delta g \approx \frac{\partial g}{\partial a}\Bigr|_{\substack{a=a^*\\b=b^*}} \delta a + \frac{\partial g}{\partial b}\Bigr|_{\substack{a=a^*\\b=b^*}} \delta b.
+\]
+The above approximation is known as the \emph{total derivative} of $g$, and generalizes in the natural manner to functions $g$ taking in arbitrarily many arguments.
+
+\section{Linearizing Vector-Valued Functions}
+Now we know how to linearize functions producing scalar outputs, we can go further and linearize functions with vector inputs and outputs. Consider some function $\vec{f}(\vec{x})$. Let $\vec{x}$ have $k$ components, and let the output of $\vec{f}$ have $n$ components. Thus, we can express any input as
+\[
+    \vec{x} = \mat{x_1 & x_2 & \cdots & x_k}^T,
+\]
+where all these $x_i$ are scalars. Saying that $\vec{x}$ is provided as a vector input to $\vec{f}(\vec{x})$ is the same thing as stating that $\vec{f}$ takes $k$ scalar inputs $x_1$ through $x_k$. Thus, we will treat the two representations below of $\vec{f}$ as equivalent:
+\[
+    \vec{f}(\vec{x}) \text{ and } \vec{f}(x_1, x_2, \ldots, x_k).
+\]
+Similarly, the output of $\vec{f}$ can be thought of as a set of $n$ scalars $f_1$ through $f_n$. Thus, we can represent $\vec{f}(\vec{x})$ in terms of multivariate scalar functions as follows:
+\[
+    \vec{f}(\vec{x}) = \mat{f_1(x_1, x_2, \ldots, x_k) \\ f_2(x_1, x_2, \ldots, x_k) \\ \vdots \\ f_n(x_1, x_2, \ldots, x_k)}.
+\]
+
+Now, we can apply our known linear approximations for scalar functions near a DC operating point $\vec{x}^* = \mat{x^*_1 & x^*_2 & \cdots & x^*_k}^T$, to obtain
+\[
+    \delta \vec{f} \approx \mat{
+    \p{f_1}{x_1} \delta x_1 + \p{f_1}{x_2} \delta x_2 + \ldots \p{f_1}{x_k} \delta x_k \\
+    \p{f_2}{x_1} \delta x_1 + \p{f_2}{x_2} \delta x_2 + \ldots \p{f_2}{x_k} \delta x_k \\
+    \vdots \\
+    \p{f_n}{x_1} \delta x_1 + \p{f_n}{x_2} \delta x_2 + \ldots \p{f_n}{x_k} \delta x_k}.
+\]
+This complicated matrix can be simplified somewhat as the product of a matrix and a vector, so we obtain
+\[
+    \delta \vec{f} \approx \mat{
+    \p{f_1}{x_1} & \p{f_1}{x_2} & \ldots \p{f_1}{x_k} \\
+    \p{f_2}{x_1} & \p{f_2}{x_2} & \ldots \p{f_2}{x_k} \\
+    \vdots \\
+    \p{f_n}{x_1} & \p{f_n}{x_2} & \ldots \p{f_n}{x_k}} \mat{\delta x_1 \\ \delta x_2 \\ \vdots \\ \delta x_k}.
+\]
+We refer to the column vector on the right as $\delta \vec{x}$, and the matrix on the right as the \emph{Jacobian matrix} of $f$ and $\vec{x}$, expressed using the notation $J_{\vec{x}}$ or $\nabla_{\vec{x}}\vec{f}$. Thus, we may express
+\[
+    \delta \vec{f} = J_{\vec{x}}\delta\vec{x}.
+\]
+
+\section{Linearizing a General System}
+Finally, we can put all this machinery together, and linearize a general system, of the form
+\[
+    \frac{\diff \vec{x}}{\dt} = \vec{f}(\vec{x}, \vec{u}).
+\]
+As before, given a DC input $\vec{u}^*$, we can solve for the DC operating point $\vec{x}^*$, by solving for the equilibrium point where $\vec{f}(\vec{x}^*, \vec{u}^*) = \vec{0}$. Then, treating $\vec{f}$ as a function of the parameters $x_1, x_2, \ldots, x_n$ and $u_1, u_2, \ldots, u_k$, we may express
+\[
+    \delta \vec{f} \approx \mat{
+    \p{f_1}{x_1} \delta x_1 + \p{f_1}{x_2} \delta x_2 + \ldots \p{f_1}{x_n} \delta x_n + 
+    \p{f_1}{u_1} \delta u_1 + \p{f_1}{u_2} \delta u_2 + \ldots \p{f_1}{u_k} \delta u_k \\
+    \p{f_2}{x_1} \delta x_1 + \p{f_2}{x_2} \delta x_2 + \ldots \p{f_2}{x_n} \delta x_n + 
+    \p{f_2}{u_1} \delta u_1 + \p{f_2}{u_2} \delta u_2 + \ldots \p{f_2}{u_k} \delta u_k \\
+    \vdots \\
+    \p{f_n}{x_1} \delta x_1 + \p{f_n}{x_2} \delta x_2 + \ldots \p{f_n}{x_n} \delta x_n + 
+    \p{f_2}{u_1} \delta u_1 + \p{f_2}{u_2} \delta u_2 + \ldots \p{f_2}{u_k} \delta u_k}. 
+\]
+
+Rearranging this using matrix-vector form and the Jacobian, we obtain
+\eqn{
+    && \delta \vec{f} &\approx \mat{
+    \p{f_1}{x_1} & \p{f_1}{x_2} & \ldots \p{f_1}{x_n} \\
+    \p{f_2}{x_1} & \p{f_2}{x_2} & \ldots \p{f_2}{x_n} \\
+    \vdots \\
+    \p{f_n}{x_1} & \p{f_n}{x_2} & \ldots \p{f_n}{x_n}} \mat{\delta x_1 \\ \delta x_2 \\ \vdots \\ \delta x_n} + \mat{
+    \p{f_1}{u_1} & \p{f_1}{u_2} & \ldots \p{f_1}{u_k} \\
+    \p{f_2}{u_1} & \p{f_2}{u_2} & \ldots \p{f_2}{u_k} \\
+    \vdots \\
+    \p{f_n}{u_1} & \p{f_n}{u_2} & \ldots \p{f_n}{u_k}} \mat{\delta u_1 \\ \delta u_2 \\ \vdots \\ \delta u_k} \\
+    &&&= J_{\vec{x}} \delta \vec{x} + J_{\vec{u}} \delta \vec{u}.
+}
+
+Thus, we can approximate our state transition equation as
+\[
+    \frac{\diff \vec{x}}{\dt} \approx \vec{f}(\vec{x}^*, \vec{u}^*) + \delta\vec{f} = \vec{f}(\vec{x}^*, \vec{u}^*) + J_{\vec{x}} \delta \vec{x} + J_{\vec{u}} \delta \vec{u}.
+\]
+But since we chose our DC operating point to be such that $\vec{f}(\vec{x}^*, \vec{u}^*) = \vec{0}$, we have that
+\[
+    \frac{\diff}{\dt}(\delta \vec{x}) \approx J_{\vec{x}} \delta \vec{x} + J_{\vec{u}} \delta \vec{u},
+\]
+so we can now obtain a fully linearized approximation of any general nonlinear system near an equilibrium $(\vec{x}^*, \vec{u}^*)$, which was our original goal.
+
+Next lecture, we will discuss more rigorously how we can ensure that our linearization remains valid as time passes, by appropriately choosing feedback gains.
+
+\end{document}

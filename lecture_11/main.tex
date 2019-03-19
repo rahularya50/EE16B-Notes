@@ -190,8 +190,8 @@ would mean that our input can only directly affect the second state. For now, we
 Before, we were always able to choose a $\vec{u}[0]$ to get to our target state in a single time step, no matter what the initial state $\vec{x}[0]$ was. Let's try doing the same thing now for arbitrary $B$:
 \eqn{
     && \vec{x}[1] &= \vec{x}^* \\
-    \thus A\vec{x}[0] + B\vec{x}[0] &= \vec{x}^* \\
-    \thus B\vec{x}[0] &= \vec{x}^* - A\vec{x}[0].
+    \thus A\vec{x}[0] + B\vec{u}[0] &= \vec{x}^* \\
+    \thus B\vec{u}[0] &= \vec{x}^* - A\vec{x}[0].
 }
 Observe here that we can only achieve our desired state if $\vec{x}^* - A\vec{x}[0] \in \text{range}(B)$, which is not always the case (since $B$ is may be a ``tall'' matrix). Let $n$ be the dimension of $\vec{x}$ - in other words, let $\vec{x}$ be made up of $n$ scalar components. For \emph{any} desired state to be reachable, $B$ would have to span all of $\mathbb{R}^n$, and so be of rank $n$.
 
