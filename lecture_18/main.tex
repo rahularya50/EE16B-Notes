@@ -1,0 +1,348 @@
+\documentclass[letterpaper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[parfill]{parskip}    % Activate to begin paragraphs with an empty line rather than an indent
+\usepackage{graphicx}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{mathtools}
+\usepackage{mathrsfs}
+
+\usepackage{afterpage}
+
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+
+\usepackage{verse}
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{corollary}{Corollary}[theorem]
+\newtheorem{lemma}[theorem]{Lemma}
+
+\theoremstyle{remark}
+\newtheorem*{remark}{Remark}
+
+\usepackage{epstopdf}
+\usepackage{circuitikz}
+\usepackage[separate-uncertainty = true,multi-part-units=single]{siunitx}
+\usepackage{booktabs}
+\usepackage{enumitem}
+\usepackage[toc,page]{appendix}
+\usepackage{color}
+\usepackage{pgfplots}
+\usepackage{pgfplotstable}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{url}
+\usepackage{multirow}
+\usepackage{makecell}
+\usepackage[round]{natbib}   % omit 'round' option if you prefer square brackets
+\usepackage{titling}
+\usepackage{siunitx}
+\usepackage{physics}
+
+\usepackage{setspace}
+% \doublespacing
+\usepackage{float}
+
+
+\pgfplotsset{compat=1.14}
+
+%  Special math symbols
+%       floor, ceiling, angled brackets
+%-----------------------------------------------------------------------
+\newcommand{\floor}[1]{\left\lfloor #1\right\rfloor}
+\newcommand{\ceil}[1]{\left\lceil #1\right\rceil}
+\newcommand{\etal}{\textit{et al.}}
+\newcommand{\RE}{\mathbb{R}}        % real space
+\newcommand{\ZZ}{\mathbb{Z}}        % integers
+\newcommand{\NN}{\mathbb{N}}        % natural numbers
+\newcommand{\eps}{{\varepsilon}}    % prettier epsilon
+%-----------------------------------------------------------------------
+%  Tighter lists
+%-----------------------------------------------------------------------
+\newenvironment{itemize*}% Tighter itemized list
+  {\begin{itemize}%
+    \setlength{\itemsep}{-0.5ex}%
+    \setlength{\parsep}{0pt}}%
+  {\end{itemize}}
+\newenvironment{description*}% Tighter description list
+  {\begin{description}%
+    \setlength{\itemsep}{-0.5ex}%
+    \setlength{\parsep}{0pt}}%
+  {\end{description}}
+\newenvironment{enumerate*}% Tighter enumerated list
+  {\begin{enumerate}%
+    \setlength{\itemsep}{-0.5ex}%
+    \setlength{\parsep}{0pt}}%
+  {\end{enumerate}}
+%-----------------------------------------------------------------------
+% Typing shortcuts
+%-----------------------------------------------------------------------
+\newcommand{\X}{\mathbb{X}}
+\newcommand{\SG}{\mathbf{S}}
+\newcommand{\GE}{\mathcal{G}}
+\newcommand{\ST}{\,:\,}
+\renewcommand{\tilde}[1]{\widetilde{#1}}
+\newcommand{\diam}{\mathrm{diam}}
+\newcommand{\sq}{\square}
+\newcommand{\half}[1]{\frac{#1}{2}}
+\newcommand{\inv}[1]{\frac{1}{#1}}
+\newcommand{\alg}{\textsf{SplitReduce}}
+\newcommand{\sz}[1]{\sigma_{#1}}
+\newcommand{\LL}{\mathcal{L}}
+\newcommand{\softOmega}{\widetilde{\Omega}} 
+\newcommand{\softO}{\widetilde{O}}
+\newcommand{\OO}{O^*}  %or \widetilde{O}?
+
+\newcommand{\dx}{\mathrm{d}x}
+\newcommand{\dy}{\mathrm{d}y}
+\newcommand{\dz}{\mathrm{d}z}
+\newcommand{\dt}{\mathrm{d}t}
+\newcommand{\du}{\mathrm{d}u}
+\newcommand{\dtheta}{\mathrm{d}\theta}
+\newcommand{\dq}{\mathrm{d}q}
+\newcommand{\diff}{\mathrm{d}}
+\newcommand{\dV}{\mathrm{d}V}
+\newcommand{\dL}{\mathrm{d}L}
+\newcommand{\dA}{\mathrm{d}A}
+\newcommand{\dH}{\mathrm{d}H}
+\newcommand{\df}{\mathrm{d}f}
+\newcommand{\dg}{\mathrm{d}g}
+\newcommand{\dr}{\mathrm{d}r}
+\newcommand{\dw}{\mathrm{d}w}
+\newcommand{\dI}{\mathrm{d}I}
+
+\newcommand*\len[1]{\overline{#1}}
+
+
+\newcommand\note[1]{\marginpar{\textcolor{red}{#1}}}
+\newcommand*{\tageq}{\refstepcounter{equation}\tag{\theequation}}
+
+\newcommand*{\equals}{=}
+
+\usepackage{fancyhdr}
+
+\pgfplotscreateplotcyclelist{grayscale}{
+    thick,white!10!black,mark=x,mark options=solid, dashed\\%
+    thick,white!20!black,mark=o,mark options=solid\\%
+}
+
+\newcommand{\mat}[1]{\ensuremath{\begin{bmatrix}#1\end{bmatrix}}}
+\newcommand{\cat}[1]{\ensuremath{\begin{vmatrix}#1\end{vmatrix}}}
+\newcommand{\eqn}[1]{\begin{alignat*}{2}#1\end{alignat*}}
+\newcommand{\p}[2]{\frac{\partial #1}{\partial #2}}
+\newcommand*{\thus}{&\implies\quad&}
+
+\newcommand{\answer}[1]{\framebox{$\displaystyle #1 $}}
+
+\newcommand{\shrug}[1][]{%
+\begin{tikzpicture}[baseline,x=0.8\ht\strutbox,y=0.8\ht\strutbox,line width=0.125ex,#1]
+\def\arm{(-2.5,0.95) to (-2,0.95) (-1.9,1) to (-1.5,0) (-1.35,0) to (-0.8,0)};
+\draw \arm;
+\draw[xscale=-1] \arm;
+\def\headpart{(0.6,0) arc[start angle=-40, end angle=40,x radius=0.6,y radius=0.8]};
+\draw \headpart;
+\draw[xscale=-1] \headpart;
+\def\eye{(-0.075,0.15) .. controls (0.02,0) .. (0.075,-0.15)};
+\draw[shift={(-0.3,0.8)}] \eye;
+\draw[shift={(0,0.85)}] \eye;
+% draw mouth
+\draw (-0.1,0.2) to [out=15,in=-100] (0.4,0.95); 
+\end{tikzpicture}}
+
+
+\pagestyle{fancy}
+\fancyhf{}
+\rhead{Rahul Arya}
+\lhead{EE 16B}
+\cfoot{\thepage}
+
+\title{Lecture 18 - Notes}
+\author{Rahul Arya}
+\date{March 2019}
+\begin{document}
+
+\maketitle
+
+\emph{Note that the derivation I present is somewhat different from what Professor Sahai demonstrated in lecture, though the fundamental principles are the same. While my version of the proof is likely a bit simpler to read, Professor Sahai's proof offers additional insight into block matrix multiplication as well as the computation of the Schur decomposition, so I recommend reading this proof in addition to watching the lecture. (Well, you should read all of these notes in addition to watching lecture, but watching this lecture is particularly important given that the content in this note is different!)}
+
+\section{Overview}
+Last lecture, we discussed the benefits of an upper-triangular matrix representation, in order to analyze systems with defective state matrices. In particular, we saw that such a representation would be useful in analyzing the stability of such systems. Additionally, in homework, we saw that writing a system of coupled differential equations in upper-triangular form allowed us to obtain homogeneous solutions for all such systems, again without requiring diagonalizability.
+
+Now, we will demonstrate how to construct a change of basis in order to obtain such a representation.
+
+\section{Upper Triangular Bases}
+Recall that we wish to find a change of basis that converts an arbitrary $n\times n$ square matrix $A$ into the form $\tilde{A}$:
+\[
+    \tilde{A} = \mat{
+    \lambda_1 & ? & ? & \cdots & ? \\ 
+    0 & \lambda_2 & ? & \cdots & ? \\
+    0 & 0 & \lambda_3 & \cdots & ? \\
+    \vdots & \vdots & \vdots & \ddots & \vdots \\
+    0 & 0 & 0 & \cdots & \lambda_n}.
+\]
+Let this change of basis be represented by the columns $\vec{b}_i$ of the matrix $B$, such that
+\[
+    A = B\tilde{A}B^{-1} = \mat{| & & | \\ \vec{b}_1 & \cdots & \vec{b}_n \\ | & & |}\mat{
+    \lambda_1 & ? & ? & \cdots & ? \\ 
+    0 & \lambda_2 & ? & \cdots & ? \\
+    0 & 0 & \lambda_3 & \cdots & ? \\
+    \vdots & \vdots & \vdots & \ddots & \vdots \\
+    0 & 0 & 0 & \cdots & \lambda_n}\mat{| & & | \\ \vec{b}_1 & \cdots & \vec{b}_n \\ | & & |}^{-1}.
+\]
+Rearranging to get rid of the inverse, we obtain
+\[
+    A\mat{| & & | \\ \vec{b}_1 & \cdots & \vec{b}_n \\ | & & |} = \mat{| & & | \\ \vec{b}_1 & \cdots & \vec{b}_n \\ | & & |}\mat{
+    \lambda_1 & ? & ? & \cdots & ? \\ 
+    0 & \lambda_2 & ? & \cdots & ? \\
+    0 & 0 & \lambda_3 & \cdots & ? \\
+    \vdots & \vdots & \vdots & \ddots & \vdots \\
+    0 & 0 & 0 & \cdots & \lambda_n}.
+\]
+Now, breaking this matrix down into a series of vector equations, we obtain the system
+\eqn{
+    && A\vec{b}_1 &= \lambda_1 \vec{b}_1 \\
+    && A\vec{b}_2 &= (?)\vec{b}_1 + \lambda_2 \vec{b}_2 \\
+    && A\vec{b}_3 &= (?)\vec{b}_1 + (?)\vec{b}_2 + \lambda_3 \vec{b}_3 \\
+    &&& \vdots \\
+    && A\vec{b}_n &= (?)\vec{b}_1 + (?)\vec{b}_2 + \ldots +  (?)\vec{b}_{n-1} + \lambda_n \vec{b}_n.
+}
+Note that we use the symbol $?$ to represent \emph{different} unknown quantities each time it is written, not always the same value. Let's also temporarily forget that the $\lambda_i$ are meant to be the eigenvalues of our system, and instead just treat them as arbitrary scalar coefficients.
+
+Thus, we see that a change of basis that puts a matrix $A$ into upper-triangular form is equivalent to constructing a basis $\{ \vec{b}_i \}$ such that $A\vec{b}_i$ can be written as a linear combination of the vectors $\{\vec{b}_1, \vec{b}_2, \ldots, \vec{b}_i\}$, for all $i$.
+
+One of these equations should immediately stand out - specifically, $A\vec{b}_1 = \lambda_1 \vec{b}_1$, since this is of course an equation defining $\vec{b}_1$ to be an eigenvector of $A$ with eigenvalue $\lambda_1$. So if any square matrix can be written in an upper-triangular form, then any square matrix must have at least one eigenvector, even if the matrix isn't diagonalizable. 
+
+\section{Existence of at least one eigenvector}
+Let's try to prove that any square matrix $A$ has at least one eigenvector\footnote{This is actually a result from EE16A, so if you remember it, feel free to skip this section.}. Recall that we solve for eigenvalues and eigenvectors by considering the matrix $A - \lambda I$, and searching for eigenvalues $\lambda$ that caused $A - \lambda I$ to have a nontrivial nullspace. To do so, we viewed the determinant $\abs{A - \lambda I}$ as a polynomial $P(\lambda)$ in $\lambda$, and searched for its roots. 
+
+However, the Fundamental Theorem of Algebra tells us that every polynomial must have at least one distinct (possibly complex) root! Thus, we will obtain at least one eigenvalue $\lambda$ such that $A - \lambda I$ has a nontrivial nullspace. By considering an element $\vec{v} \in \text{Null}(A - \lambda I)$, we see immediately that
+\eqn{
+    && (A - \lambda I) \vec{v} &= \vec{0} \\
+    \thus A\vec{v} &= \lambda \vec{v},
+}
+so we have obtained an eigenvalue-eigenvector pair $(\lambda, \vec{v})$ for our matrix $A$, despite never having assumed it to be diagonalizable!
+
+\section{Projections}
+So we now know how to choose the first element $\vec{b}_1$ of our basis. Now what? We still have the remaining equations
+\eqn{
+    && A\vec{b}_2 &= (?)\vec{b}_1 + \lambda_2 \vec{b}_2 \\
+    && A\vec{b}_3 &= (?)\vec{b}_1 + (?)\vec{b}_2 + \lambda_3 \vec{b}_3 \\
+    &&& \vdots \\
+    && A\vec{b}_n &= (?)\vec{b}_1 + (?)\vec{b}_2 + \ldots +  (?)\vec{b}_{n-1} + \lambda_n \vec{b}_n
+}
+and can't do anything with them. Even though we now know $\vec{b}_1$, we don't know its coefficients in the representations of all the other $A\vec{b}_i$, so there is no obvious next step. Ideally, we'd somehow be able to ``remove'' $\vec{b}_1$ from all our equations entirely, since then we could maybe use the first equation to solve for $\vec{b}_2$.
+
+At this point, you may be reminded of projections from EE16A, where we projected vectors onto a lower dimensional subspace, removing their component in the directions orthogonal to that subspace\footnote{\emph{May?} It's in the section title! It says ``Projections'' right there!}. Let's try doing something similar here.
+
+Specifically, consider the new transformation $T$, which behaves in the following manner: To evaluate $T\vec{x}$, first apply $A$ to obtain $A\vec{x}$, then project it onto the subspace $S = (\vec{b}_1)^{\perp}$ (i.e. the subspace of vectors orthogonal to $\vec{b}_1$). It is straightforward to show that the set of vectors orthogonal to $\vec{b}_1$ is in fact a subspace, and that $T$ is a linear transformation. From our earlier system, we now have that
+\eqn{
+    && T\vec{b}_2 &= \lambda_2 \mathrm{proj}_{S}(\vec{b}_2) \\
+    && T\vec{b}_3 &= (?)\mathrm{proj}_{S}(\vec{b}_2) + \lambda_3 \mathrm{proj}_{S}(\vec{b}_3) \\
+    &&& \vdots \\
+    && T\vec{b}_n &= (?)\mathrm{proj}_{S}(\vec{b}_2) + \ldots +  (?)\mathrm{proj}_{S}(\vec{b}_{n-1}) + \lambda_n \mathrm{proj}_{S}(\vec{b}_n),
+}
+since of course $\mathrm{proj}_S(\vec{b}_1) = \vec{0}$. 
+
+Even this doesn't help us, however. In projecting each of our $\vec{b}_i$ onto the subspace $S$ orthogonal $\vec{b}_1$, we must subtract out the component of $\vec{b}_1$ originally present in each of the $\vec{b}_i$. But in doing so, we reintroduce that component into our equations! Ideally, no such component would exist in the first place, so we could simply write $\mathrm{proj}_S(\vec{b}_i) = \vec{b}_i$ for all valid $i \ge 2$.
+
+The trick here is to just assume that to be true. In other words, assume that all the other basis vectors are orthogonal to $\vec{b}_1$, and see what equations they would have to satisfy. Substituting, we obtain
+\eqn{
+    && T\vec{b}_2 &= \lambda_2 \vec{b}_2 \\
+    && T\vec{b}_3 &= (?)\vec{b}_2 + \lambda_3 \vec{b}_3 \\
+    &&& \vdots \\
+    && T\vec{b}_n &= (?)\vec{b}_2 + \ldots +  (?)\vec{b}_{n-1} + \lambda_n \vec{b}_n.
+}
+
+\section{Induction}
+Don't these equations look familiar? They're basically the same thing as what we originally had, except in $n - 1$ dimensions, and with the transformation $T$ rather than $A$. This problem is practically crying out for induction to be used, so it makes sense to try and apply it here.
+
+The only issue is that $\{ \vec{b}_2, \vec{b}_3, \ldots, \vec{b}_n \}$ do not actually form a basis for our $n$-dimensional vector space. Notice, however, that they are linearly independent, and all lie in the subspace $S$. Thus, they do form a basis for $S$. Since the range of $T$ is clearly $S$ (since the projection step zeros out any component in the direction $\vec{b}_1$), we can just imagine $S$, rather than $\mathbb{R}^n$, to be our full vector space. Intuitively, some sort of inductive step should provide us with these $\vec{b}_i$ for $i \ge 2$, which we can then combine with our known $\vec{b}_1$ to obtain a full upper-triangular basis for $A$.
+
+Let's make this more rigorous. Let our inductive hypothesis $P(n)$ be the assertion that, for any linear operator\footnote{A linear operator is just a linear transformation whose domain and codomain subspaces are the same. For instance, all square matrices can be thought of a linear operators, and all linear operators over a finite-dimensional vector space can be represented as a square matrix with respect to some basis.} $A$ over an $n$-dimensional vector space $S$, there exist a set of vectors $\vec{b}_1$ through $\vec{b}_n$ that form a basis for $S$, and satisfy the upper-triangular property. Specifically, for all valid $i$, $A\vec{b}_i$ can be written as a linear combination of the vectors $\{\vec{b}_1, \vec{b}_2, \ldots, \vec{b}_i\}$.
+
+Consider the base case where $n = 1$. Let the basis of our $1$-dimensional subspace $S$ be $\{ \vec{x} \}$, and let our linear operator over $S$ be $A$. By definition, $A\vec{x} \in S$, so it can be written as a multiple of $\vec{x}$. Thus, $\{ \vec{x} \}$ satisfies the upper triangular property, so we know our base case $P(1)$ to be true.
+
+Now, let's look at the inductive step. Assuming $P(n-1)$ is true, we will try to prove $P(n)$. 
+
+To do so, consider a linear operator $A$ over some $n$-dimensional subspace $S$. We showed earlier that there exists some vector $\vec{b}_1 \in S$ such that $A\vec{b}_1 = \lambda_1 \vec{b}_1$ for some scalar $\lambda_1$. Consider the subspace $S' = (\vec{b}_1)^\perp$ of all vectors within $S$ orthogonal to $\vec{b}_1$, and let the linear operator $T$ over $S'$ be defined such that $T\vec{x} = \mathrm{proj}_{S'}(A\vec{x})$ for all $\vec{x} \in S'$. 
+
+Since $T$ is a linear operator over $S'$, we know from our inductive hypothesis $P(n-1)$ that there will exist $n-1$ basis vectors of $S'$ that satisfy the upper triangular property with respect to $T$. Let them be $\{ \vec{b}_2, \vec{b}_3, \ldots, \vec{b}_n \}$. Consider any one of these vectors $\vec{b}_i$. From the definition of $T$ and the $\{\vec{b}_i\}$, we have that
+\eqn{
+    && T\vec{b}_i &= (?)\vec{b}_2 + (?)\vec{b}_3 + \ldots + (?)\vec{b}_{i} \\
+    \thus \mathrm{proj}_S'(A\vec{b}_i) &= (?)\vec{b}_2 + (?)\vec{b}_3 + \ldots + (?)\vec{b}_{i}.
+}
+From our knowledge of orthogonal projections, since $\vec{b}_1 \perp S'$, we have that
+\eqn{
+    && A\vec{b}_i &= \mathrm{proj}_{\vec{b}_1}(A\vec{b}_i) + \mathrm{proj}_{S'}(A\vec{b}_i) \\
+    &&&= (?)\vec{b}_1 + (?)\vec{b}_2 + (?)\vec{b}_3 + \ldots + (?)\vec{b}_{i}.
+}
+Since this is true for all $i \ge 2$, and $A\vec{b}_1 = \lambda_1\vec{b}_1$, it is clear that the basis vectors $\{\vec{b}_1, \vec{b}_2, \ldots, \vec{b}_n\}$ satisfies the upper triangular property, proving $P(n)$.
+
+Since $P(1)$ is true and $P(n-1) \implies P(n)$ for all integers $n > 1$, we have shown our desired result for all positive integers $n$. In other words, we can construct an upper-triangular basis $\{ \vec{b}_i \}$ for any linear operator $A$ over a finite-dimensional vector space!
+
+\section{Schur Decomposition}
+Actually, it turns out that, in the last section, we have proven a slightly stronger result than what we have hoped for! Notice that at each step, since all the $\vec{b}_i$ produced through induction were in $S'$, $\vec{b}_1 \perp \vec{b}_i$ for all $i \ge 2$. Inspecting the intermediate steps of the induction, it should be clear that each of the $\vec{b}_i$ produced were orthogonal to all the subsequent $\vec{b}_j$ for $j > i$. In other words, the $\vec{b}_i$ together form an orthogonal basis for our initial vector space. This can be made more formal in a straightforward manner by incorporating a requirement that the basis vectors be orthogonal in our induction hypothesis, but we will not do so explicitly here.
+
+There's still one loose end to clear up, however. Recall that we had initially hoped for the elements along the main diagonal of $\tilde{A}$ to be the eigenvalues of $A$. But though our construction made $\lambda_1$ an eigenvalue, the induction prevented us from learning anything more about the other $\lambda_i$. While it is possible to put this requirement in the inductive hypothesis as well, it is simpler to demonstrate this fact afterwards.
+
+To do so, recall that our inductive proof demonstrated that we can write
+\[
+    A = B\tilde{A}B^{-1} = \mat{| & & | \\ \vec{b}_1 & \cdots & \vec{b}_n \\ | & & |}\mat{
+    \lambda_1 & ? & ? & \cdots & ? \\ 
+    0 & \lambda_2 & ? & \cdots & ? \\
+    0 & 0 & \lambda_3 & \cdots & ? \\
+    \vdots & \vdots & \vdots & \ddots & \vdots \\
+    0 & 0 & 0 & \cdots & \lambda_n}\mat{| & & | \\ \vec{b}_1 & \cdots & \vec{b}_n \\ | & & |}^{-1},
+\]
+where the $\lambda_i$ are not necessarily the eigenvalues of $A$. Recall that the characteristic polynomial of a matrix remains invariant after changes of bases. Furthermore, recall from well-known properties of the determinant that the determinant of an upper triangular matrix is simply the product of the elements along its main diagonal. Thus, we see that the characteristic polynomial of $\tilde{A}$ is
+\eqn{
+    && \abs{\tilde{A} - \lambda I} &= \cat{
+    \lambda_1 - \lambda & ? & ? & \cdots & ? \\ 
+    0 & \lambda_2 - \lambda & ? & \cdots & ? \\
+    0 & 0 & \lambda_3 - \lambda & \cdots & ? \\
+    \vdots & \vdots & \vdots & \ddots & \vdots \\
+    0 & 0 & 0 & \cdots & \lambda_n - \lambda} \\
+    &&&= (\lambda_1 - \lambda)(\lambda_2 - \lambda) \cdots (\lambda_n - \lambda),
+}
+so all of the $\lambda_i$ are roots of the characteristic polynomial of $\tilde{A}$, and so are roots of the characteristic polynomial of $A$. Since the roots of the characteristic polynomial of $A$ are exactly its eigenvalues, we have shown that all the $\lambda_i$ along the diagonal of $\tilde{A}$ are the eigenvalues of $A$.
+
+Moreover, since our basis vectors are mutually orthogonal, $B = B^T$. Thus, we obtain the final expression
+\[
+    A = B\tilde{A}B^T = \mat{| & & | \\ \vec{b}_1 & \cdots & \vec{b}_n \\ | & & |}\mat{
+    \lambda_1 & ? & ? & \cdots & ? \\ 
+    0 & \lambda_2 & ? & \cdots & ? \\
+    0 & 0 & \lambda_3 & \cdots & ? \\
+    \vdots & \vdots & \vdots & \ddots & \vdots \\
+    0 & 0 & 0 & \cdots & \lambda_n}\mat{| & & | \\ \vec{b}_1 & \cdots & \vec{b}_n \\ | & & |}^T,
+\]
+known as the \emph{Schur decomposition} of $A$. Typically, it is written as $A = QUQ^{-1} = QUQ^T$, where $Q$ is an orthogonal matrix and $U$ is upper-triangular.
+
+\section{Complex Inner Products}
+There's one subtlety that we skipped over in the above proof. Specifically, we assumed throughout that the notions of projection, orthogonality, and (most generally) inner products were defined on our vector spaces. But how do you take the inner product of two complex-valued vectors? If you try to reuse the definition of the dot product, you'll get some weird results that cause our understanding of these concepts to break down. For instance,
+\[
+    \norm{\mat{i \\ 1}} = \mat{i \\ 1} \cdot \mat{i \\ 1} = -1 + 1 = 0,
+\]
+which doesn't seem to make sense, since only the zero vector should have a norm of zero.
+
+For now, we should assume that we are working in the vector space of reals $\mathbb{R}^n$ using the standard definition of the dot product. This, however, requires all the $\lambda_i$ to be real, which may not always be the case. For now, we will make that assumption, though in future lectures we will see a small generalization of the dot product which will ensure our above result is true in all cases\footnote{Actually, inner products are not in fact needed at all to construct the Schur decomposition of a linear operator. In our inductive step, consider $S' = \mathrm{range}(A - \lambda_1 I)$, and see what else needs to be changed to allow the proof to work. Notice that this choice of $S'$ also gets rid of $\vec{v}_1$, but may not have $n-1$ dimensions, so you might have to use strong induction, depending on your approach. It's not too hard, and will let you get the general result without having to worry about messy projections or orthogonal bases!}.
+
+\section{The Spectral Theorem}
+Finally, we will use our decomposition to obtain some interesting results about when a matrix is diagonalizable. Consider the Schur decomposition of some matrix $A$:
+\[
+    A = QUQ^T.
+\]
+Taking transposes of both sides, we obtain
+\[
+    A^T = QU^TQ^T.
+\]
+Notice that we have now written $A^T$ in lower-triangular form using the same change of basis matrix $Q$. But what if $A$ is symmetric, so $A = A^T$? Then $A = A^T$, so
+\eqn{
+    && QUQ^T &= QU^TQ^T \\
+    \thus (Q^TQ)U(Q^TQ) &= (Q^TQ)U^T(Q^TQ) \\
+    \thus U &= U^T.
+}
+In other words, $U$ is both upper- and lower-triangular, so it is a diagonal matrix. Thus, we have produced a diagonalization of $A$, with orthogonal eigenvectors in the columns of $Q$! So if a symmetric matrix has real eigenvalues, then we know, not only that it will be diagonalizable, but that its eigenvectors will form an orthogonal basis! As it turns out, next time we will show that a real symmetric matrix will always have real eigenvalues, so our above result will always hold, known as the \emph{real spectral theorem}.
+
+\end{document}

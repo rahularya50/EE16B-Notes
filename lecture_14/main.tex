@@ -480,7 +480,7 @@ To resolve this, we will make the \emph{conjecture} that there exists a controll
     \alpha_0 & \alpha_1 & \alpha_2 & \cdots & \alpha_{n - 1}
     } \vec{z}[i] + \mat{0 \\ 0 \\ 0 \\ \vdots \\ 1} u[i] = \tilde{A}^T\vec{z}[i] + \mat{0 \\ 0 \\ \vdots \\ 0 \\ 1} u[i]
 \]
-models the behavior of our system under a further change of basis $\tilde{x} = H\vec{z}$. We will aim to demonstrate both the correctness of this hypothesis, and to compute the change of basis matrix $H$ itself.
+models the behavior of our system under a further change of basis $\tilde{x} = H^{-1}\vec{z}$. We will aim to demonstrate both the correctness of this hypothesis, and to compute the change of basis matrix $H$ itself.
 
 In the previous section, we demonstrated that any controllable system can be rewritten in a simpler form, via a change of basis. At the moment, the system with state matrix $\tilde{A}$ is in that simplified form, though our target state equation with state matrix $\tilde{A}^T$ is not. Rather than trying to convert the former system into the latter, it might be easier to try and convert the latter system into the former, since we can always reverse our change of basis transformation later.
 
