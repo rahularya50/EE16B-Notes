@@ -293,15 +293,15 @@ Let's establish some notation. Let $S[i]$ be the subspace before we add some vec
 However, observe that $\text{proj}_{S[i]}(\vec{u}[i]) = S[i]S[i]^T\vec{u}[i]$, since $S[i]^TS[i] = I$. Thus, observe that
 \eqn{
     && S[i]^T(\vec{u}[i] - \text{proj}_{S[i]}(\vec{u}[i])) &= S[i]^T \vec{u}[i] - S[i]^T\text{proj}_{S[i]}(\vec{u}[i]) \\
-    &&&= S[i]\vec{u}[i] - S[i]^TS[i]S[i]^T\vec{u}[i] \\
-    &&&= S[i]\vec{u}[i] - S[i]^T\vec{u}[i] \\
+    &&&= S[i]^T\vec{u}[i] - S[i]^TS[i]S[i]^T\vec{u}[i] \\
+    &&&= S[i]^T\vec{u}[i] - S[i]^T\vec{u}[i] \\
     &&&= \vec{0},
 }
 so $\vec{u}[i] - \text{proj}_{S[i]}(\vec{u}[i])$ is orthogonal to all the columns of $S$. This should not be a surprise, since the projection of a vector onto a subspace produces an error vector that is orthogonal to all vectors within the subspace.
 
-So now, a good question to ask would be: rather than inserting $\vec{u}[i]$ into our subspace, would it be the same thing to insert $\text{proj}_{S[i]}(\vec{u}[i])$ into the subspace instead? 
+So now, a good question to ask would be: rather than inserting $\vec{u}[i]$ into our subspace, would it be the same thing to insert $\vec{u}[i] - \text{proj}_{S[i]}(\vec{u}[i])$ into the subspace instead? 
 
-From our knowledge of linear combinations, the answer should clearly be yes. To prove this, observe that $\text{proj}_{S[i]}(\vec{u}[i])$ differs from $\vec{u}[i]$ only by some vector that already lies in $S[i]$. Thus, it should be clear that  exactly those vectors reachable by a linear combination of the vectors in $S[i]$ and $\vec{u}[i]$ are reachable by a linear combination of the vectors in $S[i]$ and $\vec{u}[i] - \text{proj}_{S[i]}(\vec{u}[i])$\footnote{Try to prove this yourself, if it's not clear!}.
+From our knowledge of linear combinations, the answer should clearly be yes. To prove this, observe that $\vec{u}[i] - \text{proj}_{S[i]}(\vec{u}[i])$ differs from $\vec{u}[i]$ only by some vector that already lies in $S[i]$. Thus, it should be clear that exactly those vectors reachable by a linear combination of the vectors in $S[i]$ and $\vec{u}[i]$ are reachable by a linear combination of the vectors in $S[i]$ and $\vec{u}[i] - \text{proj}_{S[i]}(\vec{u}[i])$\footnote{Try to prove this yourself, if it's not clear!}.
 
 Similarly, since $\vec{u}[i] \not\in S[i]$, it is clear that the normalized vector 
 \[
@@ -309,7 +309,7 @@ Similarly, since $\vec{u}[i] \not\in S[i]$, it is clear that the normalized vect
 \]
 is defined and can also be added to $S[i]$ instead of $\vec{u}[i]$. Using our least squares formula, we may rewrite $\vec{u}'$ as
 \[
-    \vec{u}' = \frac{1}{\vec{u}[i] - S[i]S[i]^T\vec{u}[i]} (\vec{u}[i] - S[i]S[i]^T\vec{u}[i]).
+    \vec{u}' = \frac{1}{\norm{\vec{u}[i] - S[i]S[i]^T\vec{u}[i]}} (\vec{u}[i] - S[i]S[i]^T\vec{u}[i]).
 \]
 But as $\vec{u}'$ is normalized and orthogonal to all elements of $S[i]$, it is orthogonal to all the columns $\vec{s}_j$ of $S[i]$, so we can simply concatenate it onto the end! Thus, we have
 \[
