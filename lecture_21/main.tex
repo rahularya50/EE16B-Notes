@@ -1,0 +1,377 @@
+\documentclass[letterpaper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[parfill]{parskip}    % Activate to begin paragraphs with an empty line rather than an indent
+\usepackage{graphicx}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{mathtools}
+\usepackage{mathrsfs}
+
+\usepackage{afterpage}
+
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+
+\usepackage{verse}
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{corollary}{Corollary}[theorem]
+\newtheorem{lemma}[theorem]{Lemma}
+
+\theoremstyle{remark}
+\newtheorem*{remark}{Remark}
+
+\usepackage{epstopdf}
+\usepackage{circuitikz}
+\usepackage[separate-uncertainty = true,multi-part-units=single]{siunitx}
+\usepackage{booktabs}
+\usepackage{enumitem}
+\usepackage[toc,page]{appendix}
+\usepackage{color}
+\usepackage{pgfplots}
+\usepackage{pgfplotstable}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{url}
+\usepackage{multirow}
+\usepackage{makecell}
+\usepackage[round]{natbib}   % omit 'round' option if you prefer square brackets
+\usepackage{titling}
+\usepackage{siunitx}
+\usepackage{physics}
+
+\usepackage{setspace}
+% \doublespacing
+\usepackage{float}
+
+
+\pgfplotsset{compat=1.14}
+
+%  Special math symbols
+%       floor, ceiling, angled brackets
+%-----------------------------------------------------------------------
+\newcommand{\floor}[1]{\left\lfloor #1\right\rfloor}
+\newcommand{\ceil}[1]{\left\lceil #1\right\rceil}
+\newcommand{\etal}{\textit{et al.}}
+\newcommand{\RE}{\mathbb{R}}        % real space
+\newcommand{\ZZ}{\mathbb{Z}}        % integers
+\newcommand{\NN}{\mathbb{N}}        % natural numbers
+\newcommand{\eps}{{\varepsilon}}    % prettier epsilon
+%-----------------------------------------------------------------------
+%  Tighter lists
+%-----------------------------------------------------------------------
+\newenvironment{itemize*}% Tighter itemized list
+  {\begin{itemize}%
+    \setlength{\itemsep}{-0.5ex}%
+    \setlength{\parsep}{0pt}}%
+  {\end{itemize}}
+\newenvironment{description*}% Tighter description list
+  {\begin{description}%
+    \setlength{\itemsep}{-0.5ex}%
+    \setlength{\parsep}{0pt}}%
+  {\end{description}}
+\newenvironment{enumerate*}% Tighter enumerated list
+  {\begin{enumerate}%
+    \setlength{\itemsep}{-0.5ex}%
+    \setlength{\parsep}{0pt}}%
+  {\end{enumerate}}
+%-----------------------------------------------------------------------
+% Typing shortcuts
+%-----------------------------------------------------------------------
+\newcommand{\X}{\mathbb{X}}
+\newcommand{\SG}{\mathbf{S}}
+\newcommand{\GE}{\mathcal{G}}
+\newcommand{\ST}{\,:\,}
+\renewcommand{\tilde}[1]{\widetilde{#1}}
+\newcommand{\diam}{\mathrm{diam}}
+\newcommand{\sq}{\square}
+\newcommand{\half}[1]{\frac{#1}{2}}
+\newcommand{\inv}[1]{\frac{1}{#1}}
+\newcommand{\alg}{\textsf{SplitReduce}}
+\newcommand{\sz}[1]{\sigma_{#1}}
+\newcommand{\LL}{\mathcal{L}}
+\newcommand{\softOmega}{\widetilde{\Omega}} 
+\newcommand{\softO}{\widetilde{O}}
+\newcommand{\OO}{O^*}  %or \widetilde{O}?
+
+\newcommand{\Null}[1]{\text{Null}(#1)}
+
+
+\newcommand{\dx}{\mathrm{d}x}
+\newcommand{\dy}{\mathrm{d}y}
+\newcommand{\dz}{\mathrm{d}z}
+\newcommand{\dt}{\mathrm{d}t}
+\newcommand{\du}{\mathrm{d}u}
+\newcommand{\dtheta}{\mathrm{d}\theta}
+\newcommand{\dq}{\mathrm{d}q}
+\newcommand{\diff}{\mathrm{d}}
+\newcommand{\dV}{\mathrm{d}V}
+\newcommand{\dL}{\mathrm{d}L}
+\newcommand{\dA}{\mathrm{d}A}
+\newcommand{\dH}{\mathrm{d}H}
+\newcommand{\df}{\mathrm{d}f}
+\newcommand{\dg}{\mathrm{d}g}
+\newcommand{\dr}{\mathrm{d}r}
+\newcommand{\dw}{\mathrm{d}w}
+\newcommand{\dI}{\mathrm{d}I}
+
+\newcommand*\len[1]{\overline{#1}}
+
+
+\newcommand\note[1]{\marginpar{\textcolor{red}{#1}}}
+\newcommand*{\tageq}{\refstepcounter{equation}\tag{\theequation}}
+
+\newcommand*{\equals}{=}
+
+\usepackage{fancyhdr}
+
+\pgfplotscreateplotcyclelist{grayscale}{
+    thick,white!10!black,mark=x,mark options=solid, dashed\\%
+    thick,white!20!black,mark=o,mark options=solid\\%
+}
+
+\newcommand{\mat}[1]{\ensuremath{\begin{bmatrix}#1\end{bmatrix}}}
+\newcommand{\cat}[1]{\ensuremath{\begin{vmatrix}#1\end{vmatrix}}}
+\newcommand{\eqn}[1]{\begin{alignat*}{2}#1\end{alignat*}}
+\newcommand{\p}[2]{\frac{\partial #1}{\partial #2}}
+\newcommand*{\thus}{&\implies\quad&}
+
+\newcommand{\answer}[1]{\framebox{$\displaystyle #1 $}}
+
+\newcommand{\shrug}[1][]{%
+\begin{tikzpicture}[baseline,x=0.8\ht\strutbox,y=0.8\ht\strutbox,line width=0.125ex,#1]
+\def\arm{(-2.5,0.95) to (-2,0.95) (-1.9,1) to (-1.5,0) (-1.35,0) to (-0.8,0)};
+\draw \arm;
+\draw[xscale=-1] \arm;
+\def\headpart{(0.6,0) arc[start angle=-40, end angle=40,x radius=0.6,y radius=0.8]};
+\draw \headpart;
+\draw[xscale=-1] \headpart;
+\def\eye{(-0.075,0.15) .. controls (0.02,0) .. (0.075,-0.15)};
+\draw[shift={(-0.3,0.8)}] \eye;
+\draw[shift={(0,0.85)}] \eye;
+% draw mouth
+\draw (-0.1,0.2) to [out=15,in=-100] (0.4,0.95); 
+\end{tikzpicture}}
+
+
+\pagestyle{fancy}
+\fancyhf{}
+\rhead{Rahul Arya}
+\lhead{EE 16B}
+\cfoot{\thepage}
+
+\title{Lecture 21 - Notes}
+\author{Rahul Arya}
+\date{April 2019}
+\begin{document}
+
+\maketitle
+
+\section{Overview}
+In this lecture, we will complete our discussion of image compression from when we first introduced the SVD. In particular, we will quantify the accuracy of our compressed images using a metric known as the \emph{Frobenius Norm}. We will also begin to explore an important application of the SVD to statistics\footnote{Or ``data science'' if you wanna be trendy.}, known as \emph{principal component analysis}.
+
+\section{Image Compression and the Frobenius Norm}
+Recall that, given a rectangular image represented as an $m\times n$ matrix $A$, we need $\Theta(mn)$ space to store it in the naive fashion. However, if we use the SVD to express it as a sum of outer products (assuming WLOG that $m \ge n$)
+\[
+    A = \sigma_1 \vec{u}_1\vec{v}_1^T + \sigma_2 \vec{u}_2\vec{V}_2^T + \ldots + \sigma_n \vec{u}_n\vec{v}_n^T,
+\]
+we can approximate it as
+\[
+    \hat{A} = \sigma_1 \vec{u}_1\vec{v}_1^T + \sigma_2 \vec{u}_2\vec{V}_2^T + \ldots + \sigma_k \vec{u}_k\vec{v}_k^T,
+\]
+where $k$ is some constant much smaller than $n$ and $m$. By representing $\hat{A}$ as a sum of outer products, we can store it in $\Theta(k(m + n))$ space, a significant improvement over the naive approach.
+
+But does this approach really work? That is to say, is the compressed $\hat{A}$ anything at all like $A$? Last time, we saw that this worked for matrices $A$ that were initially of low rank, where $\hat{A}$ could perfectly represent $A$. But most matrices, including those representing images, are of full rank, so $A \ne \hat{A}$, so there will be some error term $A - \hat{A}$. We would like to quantify the magnitude of this error, and will do so using the \emph{Frobenius norm}.
+
+Consider some error term of the form
+\[
+    \Delta = \mat{a_{11} & a_{12} & \cdots & a_{1n} \\ a_{21} & a_{22} & \cdots & a_{2n} \\ \vdots & \vdots & \ddots & \vdots \\ a_{m1} & a_{m2} & \cdots & a_{mn}}.
+\]
+We define the Frobenius norm of $\Delta$ to be
+\[
+    \norm{\Delta}_F = \sqrt{\sum_{i=1}^m\sum_{j=1}^n a_{ij}^2}.
+\]
+In essence, we sum up the squares of all the terms in the matrix, and then take the square root. This norm has all the properties of norms that we expect: $\norm{\Delta}_F = 0 \iff \Delta = 0$, $\norm{k\Delta}_F = k\norm{\Delta}_F$, and $\norm{\Delta_1 + \Delta_2}_F \le \norm{\Delta_1}_F + \norm{\Delta_2}_F$\footnote{These properties aren't super important for our purposes, which is why we won't prove them rigorously.}.
+
+We can interpret this quantity in a number of ways. One would be to stack all the columns or rows of $\Delta$ into a single vector, and take its Euclidean norm. Alternatively, it could be thought of as summing the squared Euclidean norms of each of the rows or columns of $\Delta$, and taking the square root of the sum. Regardless of interpretation, what's important is to see intuitively that $\norm{\Delta}_F$ gets larger as $\Delta$ gets ``bigger''.
+
+We will now look at how this norm relates to the SVD. To do so, we will need to establish some properties. In particular, we claim that
+\[
+    \norm{\Delta}_F = \sqrt{\sum_{i=1}^n (\Delta^T\Delta)_{ii}} = \sqrt{Tr(\Delta^T\Delta)},
+\]
+where $Tr(X)$ is the sum of the diagonal entries of any matrix $X$, known as the \emph{trace}. This fact can be proven in a straightforward manner using the definition of matrix multiplication, by observing that
+\[
+    (\Delta^T\Delta)_{ii} = \sum_{j=1}^m (\Delta^T)_{ij}\Delta_{ji} = \sum_{j=1}^m \Delta_{ji}^2.
+\]
+Therefore,
+\[
+    Tr(\Delta^T\Delta) = \sum_{i=1}^n\sum_{j=1}^m \Delta_{ji}^2 = \norm{\Delta}_F^2,
+\]
+from which our desired result immediately follows by taking the square roots of both sides.
+
+Now, we will aim to use this property to relate the Frobenius norm of a matrix to its SVD. Let the SVD of $\Delta$ be $U\Sigma V^T$, where $U$ and $V$ are both square orthogonal matrices, and $\Sigma$ is a diagonal matrix. By a direct substitution and application of the above property, we see that
+\eqn{
+    && \norm{\Delta}_F &= \sqrt{Tr(\Delta^T\Delta)} \\
+    &&&= \sqrt{Tr((U\Sigma V^T)^T(U\Sigma V^T)} \\
+    &&&= \sqrt{Tr(V\Sigma^T U^TU \Sigma V^T)} \\
+    &&&= \sqrt{Tr(V\Sigma^T\Sigma V^T)} \\
+    &&&= \norm{\Sigma V^T}_F
+}
+as $U^TU = I$. In other words, we see that pre-multiplication by a orthogonal matrix $U$ does not affect the Frobenius norm. 
+
+Now, observe from the definition that taking the transpose of a matrix clearly does not affect its Frobenius norm, since its components are merely being rearranged. Therefore, continuing the above calculation,
+\eqn{
+    && \norm{\Sigma V^T}_F &= \norm{V\Sigma^T}_F \\
+    &&&= \sqrt{Tr((V\Sigma^T)^T(V\Sigma^T)} \\
+    &&&= \sqrt{Tr(\Sigma V^TV\Sigma^T)} \\
+    &&&= \sqrt{Tr(\Sigma\Sigma^T)} \\
+    &&&= \sqrt{\sum_i \sigma_i^2},
+}
+this time using the fact that $V^TV = I$, where $\sigma_i$ are the singular values of $\Delta$. Therefore, we find that the Frobenius norm of a matrix can be viewed as the square root of the sum of the squares of its singular values. 
+
+Recall that our goal was to produce a good approximation $\hat{A}$ of $A$ using the SVD, in order to minimize the Frobenius norm of the error term $\Delta = A - \hat{A}$. Using our definitions of $A$ and $\hat{A}$ from above, we see that
+\[
+    \Delta = A - \hat{A} = \sigma_{k+1} \vec{u}_{k+1}\vec{v}_{k+1}^T + \sigma_2 \vec{u}_{k+2}\vec{V}_{k+2}^T + \ldots + \sigma_n \vec{u}_n\vec{v}_n^T,
+\]
+so it clearly has the nonzero singular values $\sigma_{k+1}$ through $\sigma_n$. Thus, its Frobenius norm is
+\[
+    \norm{\Delta}_F = \sqrt{\sigma_{k+1}^2 + \sigma_{k+2}^2 + \ldots + \sigma_n^2}.
+\]
+So, is this quantity small? As it turns out, in practice for real images, the singular values drop off rapidly, so $\sigma_1 \gg \sigma_2 \gg \ldots$. Thus, for even small constants $k$ (say, on the order of dozens), $\sigma_{j}$ for $j \ge k$ is several orders of magnitude smaller than $\sigma_1$, so $\norm{\Delta}_F$ is much smaller than $\norm{A}_F$, meaning that this approach allows us to compress real-world images quite well.
+
+In fact, there exists a result, known as the \emph{Eckart–Young–Mirsky theorem}, which states that the $\hat{A}$ we produce is the \emph{optimal} rank-$k$ approximation of our input $A$ (in that it minimizes $\norm{A - \hat{A}}_F$), even if we are allowed to use techniques other than the SVD. The proof will not be presented here (though the techniques used to derive it are in scope) since this theorem may be part of a future homework problem.
+
+\section{Principal Component Analysis}
+We will now begin looking at one of the main applications of the SVD in this class, known as \emph{principal component analysis}. Broadly speaking, this technique allows us to consider (potentially noisy) data, and rewrite it in terms of uncorrelated aspects, which can then be considered separately. We will first describe the mechanical computation of the PCA of a dataset, and then discuss its meaning and importance to statistics.
+
+Consider a dataset made up of $n$ data points, each consisting of $m$ scalar observations represented as real numbers. For instance, each observation could be of a student at Berkeley, with the observations being their grades on 61A, 61B, 70, 16A, and 16B (for $m = 5$). We represent this dataset in an $n \times m$ matrix $A$, where each row of $A$ corresponds to a different data point, and each column contains one particular scalar observation across all data points. We may plot a set of data points as points in $m$-dimensional space - for instance, for $m=2$, we could start with the following dataset:
+\begin{center}
+\begin{tikzpicture}
+    \draw[->] (-2,-2)--(2,-2) node[right] {$x$};
+    \draw[->] (-2, -2)--(-2,2) node[above] {$y$};
+    \foreach \x in {-1.7,-1.5,...,1.7}{
+            \pgfmathsetmacro\xcoord{\x+rand/5}
+            \pgfmathsetmacro\ycoord{\x+rand/2}
+            \pgfmathsetmacro\xcoord{\xcoord < -1.7 ? -1.7 : \xcoord}
+            \pgfmathsetmacro\xcoord{\xcoord > 1.7 ? 1.7 : \xcoord}
+            \pgfmathsetmacro\ycoord{\ycoord < -1.7 ? -1.7 : \ycoord}
+            \pgfmathsetmacro\ycoord{\ycoord > 1.7 ? 1.7 : \ycoord}
+            \node[circle,draw,fill=black,scale=0.3] at (\xcoord,\ycoord) {};
+        }
+\end{tikzpicture}
+\end{center}
+
+The goal of PCA will be to select a new basis for our observations such that each basis vector represents an uncorrelated characteristic of a data point. Visually, the goal of PCA is to choose orthogonal axes that our data points are ``aligned about'' - for instance, in the above example, the data appears to be aligned about the line $y = x$, so we would expect a vector in that direction to be one of our basis vectors.
+
+First, though, we will translate our data such that it is centered about the origin, so that a constant offset of our entire dataset can be neglected in favor of the variation within the dataset. More precisely, letting $\mu_i$ be the mean of the $i$th scalar observation across all data points, we obtain the translated
+\[
+    \tilde{A} = \mat{A_{11} - \mu_1 & A_{12} - \mu_2 & \cdots & A_{1m} - \mu_m \\ A_{21} - \mu_1 & A_{22} - \mu_2 & \cdots & A_{2m} - \mu_m \\ \vdots & \vdots & \ddots & \vdots \\ A_{n1} - \mu_1 & A_{n2} - \mu_2 & \cdots & A_{nm} - \mu_m}.
+\]
+From a visual perspective, our example plot would become
+\begin{center}
+\begin{tikzpicture}
+    \draw[->] (-2,0)--(2,0) node[right] {$x - \mu_x$};
+    \draw[->] (0, -2)--(0,2) node[above] {$y - \mu_y$};
+    \foreach \x in {-1.7,-1.5,...,1.7}{
+            \pgfmathsetmacro\xcoord{\x+rand/5}
+            \pgfmathsetmacro\ycoord{\x+rand/2}
+            \pgfmathsetmacro\xcoord{\xcoord < -1.7 ? -1.7 : \xcoord}
+            \pgfmathsetmacro\xcoord{\xcoord > 1.7 ? 1.7 : \xcoord}
+            \pgfmathsetmacro\ycoord{\ycoord < -1.7 ? -1.7 : \ycoord}
+            \pgfmathsetmacro\ycoord{\ycoord > 1.7 ? 1.7 : \ycoord}
+            \node[circle,draw,fill=black,scale=0.3] at (\xcoord,\ycoord) {};
+        }
+\end{tikzpicture}
+\end{center}
+
+Now that we have centered our data, we will compute what is known as the \emph{covariance matrix} $S$, of our dataset, defined as
+\[
+    S = \frac{1}{n} \tilde{A}^T\tilde{A}.
+\]
+What does this matrix look like, and what does it represent? Well, letting $\vec{\tilde{A}_i}$ represent the column vector of $\tilde{A}$ corresponding to the $i$th measurement across all data points, observe that each entry
+\[
+    S_{ij} = \frac{1}{n^2} (\vec{\tilde{A}_i} \cdot \vec{\tilde{A}_j}) = \frac{1}{n^2}\norm{\vec{\tilde{A}_i}}\norm{\vec{\tilde{A}_j}}\cos{\theta},
+\]
+applying the geometric definition of the dot product, where $\theta$ is the angle between the $i$th and $j$th observation vectors.
+
+Thus, $S_{ij}$ will be positive and large if the $i$th and $j$th observation vectors are mostly aligned (indicating that they behave very similarly), zero if they are mostly orthogonal (indicating that their values appear to be unrelated) and negative and large if they tend to behave in opposite ways (so if the $i$th observation is large, the $j$th will be small, and vice-versa). This quantity is known as the \emph{covariance} between the $i$th and $j$th measurements for our dataset. Observe also that $S_{ij} = S_{ji}$, so $S$ is symmetric. This makes sense, since we'd expect the covariance between two measurements to be calculated by treating the two measurements in a symmetric fashion.
+
+Notice that the $\frac{1}{n^2}$ term means that $S_{ij}$ will not increase with more observations, since it exactly offsets the growth in the magnitudes of the observation vectors. However, $S_{ij}$ also has a dependence on the magnitudes of the scalar observations, which may not be desirable. For instance, if we switch the units of our measurements from meters to millimeters (as an example), then the magnitude of $S_{ij}$ will increase by a factor of $10^6$, even though the data hasn't really changed! Instead, we'd like it to depend only on the relation between the two observations. 
+
+To do so, we will simply divide out the unwanted factors. More precisely, let the scalar values
+\[
+    S_i = \sqrt{S_{ii}} = \frac{1}{n}\norm{\vec{\tilde{A_i}}} = \frac{1}{n}\sqrt{\sum_{j=1}^nA_{ij}^2}.
+\]
+Notice that $S_i$ is in fact the standard deviation of the $i$th measurement over the entire dataset, though this fact is technically out of scope for the course.
+
+Now, we can divide out to obtain the \emph{correlation} matrix $R$, defined such that
+\[
+    R_{ij} = \frac{S_{ij}}{S_iS_j} = \frac{\frac{1}{n^2}\norm{\vec{\tilde{A}_i}}\norm{\vec{\tilde{A}_j}}\cos{\theta}}{\left(\frac{1}{n}\norm{\vec{\tilde{A}_i}}\right)\left(\frac{1}{n}\norm{\vec{\tilde{A}_j}}\right)} = \cos{\theta},
+\]
+where $\theta$ is as defined previously. This matrix sounds great! Observe that $R$ is also symmetric, with all its entries lying between $-1$ and $1$, with its diagonal entries all normalized to $1$. 
+
+Let's look visually at what the $R_{ij}$ represent. If $R_{ij} \approx 1$, then we expect the $i$th and $j$th measurement vectors to be aligned in some fashion, as shown:
+\begin{center}
+\begin{tikzpicture}
+    \draw[->] (-2,0)--(2,0) node[right] {$\vec{\tilde{A}}_i - \mu_i$};
+    \draw[->] (0, -2)--(0,2) node[above] {$\vec{\tilde{A}}_j - \mu_j$};
+    \foreach \x in {-1.7,-1.5,...,1.7}{
+            \pgfmathsetmacro\xcoord{\x+rand/5}
+            \pgfmathsetmacro\ycoord{\x+rand/2}
+            \pgfmathsetmacro\xcoord{\xcoord < -1.7 ? -1.7 : \xcoord}
+            \pgfmathsetmacro\xcoord{\xcoord > 1.7 ? 1.7 : \xcoord}
+            \pgfmathsetmacro\ycoord{\ycoord < -1.7 ? -1.7 : \ycoord}
+            \pgfmathsetmacro\ycoord{\ycoord > 1.7 ? 1.7 : \ycoord}
+            \node[circle,draw,fill=black,scale=0.3] at (\xcoord,\ycoord) {};
+        }
+\end{tikzpicture}
+\end{center}
+
+In contrast, if $R_{ij} \approx -1$, then we expect the behavior of the $j$th measurement to be the opposite of the $i$th measurement, with the two measurement vectors pointing on opposite directions. Plotting this behavior, we'd expect to see something like:
+\begin{center}
+\begin{tikzpicture}
+    \draw[->] (-2,0)--(2,0) node[right] {$\vec{\tilde{A}}_i - \mu_i$};
+    \draw[->] (0, -2)--(0,2) node[above] {$\vec{\tilde{A}}_j - \mu_j$};
+    \foreach \x in {-1.7,-1.5,...,1.7}{
+            \pgfmathsetmacro\xcoord{\x+rand/5}
+            \pgfmathsetmacro\ycoord{\x+rand/2}
+            \pgfmathsetmacro\xcoord{\xcoord < -1.7 ? -1.7 : \xcoord}
+            \pgfmathsetmacro\xcoord{\xcoord > 1.7 ? 1.7 : \xcoord}
+            \pgfmathsetmacro\ycoord{\ycoord < -1.7 ? -1.7 : \ycoord}
+            \pgfmathsetmacro\ycoord{\ycoord > 1.7 ? 1.7 : \ycoord}
+            \node[circle,draw,fill=black,scale=0.3] at (\xcoord,-1 * \ycoord) {};
+        }
+\end{tikzpicture}
+\end{center}
+
+And of course, if $R_{ij} \approx 0$, we'd expect to see no correlation at all, as shown:
+\begin{center}
+\begin{tikzpicture}
+    \draw[->] (-2,0)--(2,0) node[right] {$\vec{\tilde{A}}_i - \mu_i$};
+    \draw[->] (0, -2)--(0,2) node[above] {$\vec{\tilde{A}}_j - \mu_j$};
+    \foreach \x in {-1.7,-1.5,...,1.7}{
+            \pgfmathsetmacro\xcoord{rand}
+            \pgfmathsetmacro\ycoord{rand}
+            \pgfmathsetmacro\xcoord{\xcoord < -1.7 ? -1.7 : \xcoord}
+            \pgfmathsetmacro\xcoord{\xcoord > 1.7 ? 1.7 : \xcoord}
+            \pgfmathsetmacro\ycoord{\ycoord < -1.7 ? -1.7 : \ycoord}
+            \pgfmathsetmacro\ycoord{\ycoord > 1.7 ? 1.7 : \ycoord}
+            \node[circle,draw,fill=black,scale=0.3] at (\xcoord,-1 * \ycoord) {};
+        }
+\end{tikzpicture}
+\end{center}
+
+Observe, however, that there are a few slight edge cases in our definition of correlation. In particular, notice that it is defined as the ratio
+\[
+    R_{ij} = \frac{S_{ij}}{S_iS_j},
+\]
+but what if $S_i = 0$? This would occur, for instance, if all the $i$th measurements across the dataset were constant. Then we could not say anything about its correlation to the $j$th measurements, since we could not know how the $j$th measurements vary as the $i$th measurements change, since in our dataset the $i$th measurement is always a constant.
+
+Thus, despite the very intuitive nature of the correlation matrix, we will have to perform PCA with respect to the covariance matrix $S$ (which is always defined, since there's never a risk of dividing by zero), in order to obtain a fully general result. Recall that $S$ is a symmetric matrix, and so can be diagonalized into
+\[
+    S = P\Lambda P^T,
+\]
+where $P$ is an orthogonal matrix and $\Lambda$ consists of nonnegative numbers. As it turns out, the columns of $P$ are our \emph{principal components}, and if we write our dataset in the basis of $P$, we will see that these columns provide us with uncorrelated, orthogonal, measurement directions. While intuitively this may ``feel'' true, a rigorous justification of this result will be presented next lecture.
+
+\end{document}
