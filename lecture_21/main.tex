@@ -291,23 +291,23 @@ Now that we have centered our data, we will compute what is known as the \emph{c
 \]
 What does this matrix look like, and what does it represent? Well, letting $\vec{\tilde{A}_i}$ represent the column vector of $\tilde{A}$ corresponding to the $i$th measurement across all data points, observe that each entry
 \[
-    S_{ij} = \frac{1}{n^2} (\vec{\tilde{A}_i} \cdot \vec{\tilde{A}_j}) = \frac{1}{n^2}\norm{\vec{\tilde{A}_i}}\norm{\vec{\tilde{A}_j}}\cos{\theta},
+    S_{ij} = \frac{1}{n} (\vec{\tilde{A}_i} \cdot \vec{\tilde{A}_j}) = \frac{1}{n}\norm{\vec{\tilde{A}_i}}\norm{\vec{\tilde{A}_j}}\cos{\theta},
 \]
 applying the geometric definition of the dot product, where $\theta$ is the angle between the $i$th and $j$th observation vectors.
 
 Thus, $S_{ij}$ will be positive and large if the $i$th and $j$th observation vectors are mostly aligned (indicating that they behave very similarly), zero if they are mostly orthogonal (indicating that their values appear to be unrelated) and negative and large if they tend to behave in opposite ways (so if the $i$th observation is large, the $j$th will be small, and vice-versa). This quantity is known as the \emph{covariance} between the $i$th and $j$th measurements for our dataset. Observe also that $S_{ij} = S_{ji}$, so $S$ is symmetric. This makes sense, since we'd expect the covariance between two measurements to be calculated by treating the two measurements in a symmetric fashion.
 
-Notice that the $\frac{1}{n^2}$ term means that $S_{ij}$ will not increase with more observations, since it exactly offsets the growth in the magnitudes of the observation vectors. However, $S_{ij}$ also has a dependence on the magnitudes of the scalar observations, which may not be desirable. For instance, if we switch the units of our measurements from meters to millimeters (as an example), then the magnitude of $S_{ij}$ will increase by a factor of $10^6$, even though the data hasn't really changed! Instead, we'd like it to depend only on the relation between the two observations. 
+Notice that the $\frac{1}{n}$ term means that $S_{ij}$ will not increase with more observations, since it exactly offsets the growth in the magnitudes of the observation vectors. However, $S_{ij}$ also has a dependence on the magnitudes of the scalar observations, which may not be desirable. For instance, if we switch the units of our measurements from meters to millimeters (as an example), then the magnitude of $S_{ij}$ will increase by a factor of $10^6$, even though the data hasn't really changed! Instead, we'd like it to depend only on the relation between the two observations. 
 
 To do so, we will simply divide out the unwanted factors. More precisely, let the scalar values
 \[
-    S_i = \sqrt{S_{ii}} = \frac{1}{n}\norm{\vec{\tilde{A_i}}} = \frac{1}{n}\sqrt{\sum_{j=1}^nA_{ij}^2}.
+    S_i = \sqrt{S_{ii}} = \frac{1}{\sqrt{n}}\norm{\vec{\tilde{A_i}}} = \sqrt{\frac{\sum_{j=1}^nA_{ij}^2}{n}}.
 \]
 Notice that $S_i$ is in fact the standard deviation of the $i$th measurement over the entire dataset, though this fact is technically out of scope for the course.
 
 Now, we can divide out to obtain the \emph{correlation} matrix $R$, defined such that
 \[
-    R_{ij} = \frac{S_{ij}}{S_iS_j} = \frac{\frac{1}{n^2}\norm{\vec{\tilde{A}_i}}\norm{\vec{\tilde{A}_j}}\cos{\theta}}{\left(\frac{1}{n}\norm{\vec{\tilde{A}_i}}\right)\left(\frac{1}{n}\norm{\vec{\tilde{A}_j}}\right)} = \cos{\theta},
+    R_{ij} = \frac{S_{ij}}{S_iS_j} = \frac{\frac{1}{n}\norm{\vec{\tilde{A}_i}}\norm{\vec{\tilde{A}_j}}\cos{\theta}}{\left(\frac{1}{\sqrt{n}}\norm{\vec{\tilde{A}_i}}\right)\left(\frac{1}{\sqrt{n}}\norm{\vec{\tilde{A}_j}}\right)} = \cos{\theta},
 \]
 where $\theta$ is as defined previously. This matrix sounds great! Observe that $R$ is also symmetric, with all its entries lying between $-1$ and $1$, with its diagonal entries all normalized to $1$. 
 
