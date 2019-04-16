@@ -240,8 +240,8 @@ In addition, let us define $\vec{y}_{free}$ to be the observations that we would
 Observe that we may rewrite any given $\vec{y}[j]$ as follows
 \eqn{
     && \vec{y}[j] &= CA^j\vec{x}[0] + CA^{j-1}B\vec{u}[0] + CA^{j-2}B\vec{u}[1] + \ldots + CB\vec{u}[j-1] \\
-    &&&= CA^j\vec{x}[0] + \sum_{k=0}^{j-1} CA^{j - k - 1}\vec{u}[k] \\
-    &&&= \vec{y}_{free}[j] + \sum_{k=0}^{j-1} CA^{j - k - 1}\vec{u}[k].
+    &&&= CA^j\vec{x}[0] + \sum_{k=0}^{j-1} CA^{j - k - 1}B\vec{u}[k] \\
+    &&&= \vec{y}_{free}[j] + \sum_{k=0}^{j-1} CA^{j - k - 1}B\vec{u}[k].
 }
 
 Critically, notice that the second term in the sum for $\vec{y}[j]$ has no dependence on the initial state, and so can be determined exactly given only the system and the applied inputs. Therefore, it gives us neither more or less information about the initial state, no matter what inputs we apply. As a result, we can focus on the case when $\vec{u} = 0$, since we will always be able to recover $\vec{y}_{free}$ from $\vec{y}$ by subtracting out the known dependence on the inputs.

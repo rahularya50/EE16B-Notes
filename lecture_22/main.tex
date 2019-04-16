@@ -1,0 +1,359 @@
+\documentclass[letterpaper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[parfill]{parskip}    % Activate to begin paragraphs with an empty line rather than an indent
+\usepackage{graphicx}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{mathtools}
+\usepackage{mathrsfs}
+
+\usepackage{afterpage}
+
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+
+\usepackage{verse}
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{corollary}{Corollary}[theorem]
+\newtheorem{lemma}[theorem]{Lemma}
+
+\theoremstyle{remark}
+\newtheorem*{remark}{Remark}
+
+\usepackage{epstopdf}
+\usepackage{circuitikz}
+\usepackage[separate-uncertainty = true,multi-part-units=single]{siunitx}
+\usepackage{booktabs}
+\usepackage{enumitem}
+\usepackage[toc,page]{appendix}
+\usepackage{color}
+\usepackage{pgfplots}
+\usepackage{pgfplotstable}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{url}
+\usepackage{multirow}
+\usepackage{makecell}
+\usepackage[round]{natbib}   % omit 'round' option if you prefer square brackets
+\usepackage{titling}
+\usepackage{siunitx}
+\usepackage{physics}
+
+\usepackage{setspace}
+% \doublespacing
+\usepackage{float}
+
+
+\pgfplotsset{compat=1.14}
+
+%  Special math symbols
+%       floor, ceiling, angled brackets
+%-----------------------------------------------------------------------
+\newcommand{\floor}[1]{\left\lfloor #1\right\rfloor}
+\newcommand{\ceil}[1]{\left\lceil #1\right\rceil}
+\newcommand{\etal}{\textit{et al.}}
+\newcommand{\RE}{\mathbb{R}}        % real space
+\newcommand{\ZZ}{\mathbb{Z}}        % integers
+\newcommand{\NN}{\mathbb{N}}        % natural numbers
+\newcommand{\eps}{{\varepsilon}}    % prettier epsilon
+%-----------------------------------------------------------------------
+%  Tighter lists
+%-----------------------------------------------------------------------
+\newenvironment{itemize*}% Tighter itemized list
+  {\begin{itemize}%
+    \setlength{\itemsep}{-0.5ex}%
+    \setlength{\parsep}{0pt}}%
+  {\end{itemize}}
+\newenvironment{description*}% Tighter description list
+  {\begin{description}%
+    \setlength{\itemsep}{-0.5ex}%
+    \setlength{\parsep}{0pt}}%
+  {\end{description}}
+\newenvironment{enumerate*}% Tighter enumerated list
+  {\begin{enumerate}%
+    \setlength{\itemsep}{-0.5ex}%
+    \setlength{\parsep}{0pt}}%
+  {\end{enumerate}}
+%-----------------------------------------------------------------------
+% Typing shortcuts
+%-----------------------------------------------------------------------
+\newcommand{\X}{\mathbb{X}}
+\newcommand{\SG}{\mathbf{S}}
+\newcommand{\GE}{\mathcal{G}}
+\newcommand{\ST}{\,:\,}
+\renewcommand{\tilde}[1]{\widetilde{#1}}
+\newcommand{\diam}{\mathrm{diam}}
+\newcommand{\sq}{\square}
+\newcommand{\half}[1]{\frac{#1}{2}}
+\newcommand{\inv}[1]{\frac{1}{#1}}
+\newcommand{\alg}{\textsf{SplitReduce}}
+\newcommand{\sz}[1]{\sigma_{#1}}
+\newcommand{\LL}{\mathcal{L}}
+\newcommand{\softOmega}{\widetilde{\Omega}} 
+\newcommand{\softO}{\widetilde{O}}
+\newcommand{\OO}{O^*}  %or \widetilde{O}?
+
+\newcommand{\Null}[1]{\text{Null}(#1)}
+
+
+\newcommand{\dx}{\mathrm{d}x}
+\newcommand{\dy}{\mathrm{d}y}
+\newcommand{\dz}{\mathrm{d}z}
+\newcommand{\dt}{\mathrm{d}t}
+\newcommand{\du}{\mathrm{d}u}
+\newcommand{\dtheta}{\mathrm{d}\theta}
+\newcommand{\dq}{\mathrm{d}q}
+\newcommand{\diff}{\mathrm{d}}
+\newcommand{\dV}{\mathrm{d}V}
+\newcommand{\dL}{\mathrm{d}L}
+\newcommand{\dA}{\mathrm{d}A}
+\newcommand{\dH}{\mathrm{d}H}
+\newcommand{\df}{\mathrm{d}f}
+\newcommand{\dg}{\mathrm{d}g}
+\newcommand{\dr}{\mathrm{d}r}
+\newcommand{\dw}{\mathrm{d}w}
+\newcommand{\dI}{\mathrm{d}I}
+
+\newcommand*\len[1]{\overline{#1}}
+
+
+\newcommand\note[1]{\marginpar{\textcolor{red}{#1}}}
+\newcommand*{\tageq}{\refstepcounter{equation}\tag{\theequation}}
+
+\newcommand*{\equals}{=}
+
+\usepackage{fancyhdr}
+
+\pgfplotscreateplotcyclelist{grayscale}{
+    thick,white!10!black,mark=x,mark options=solid, dashed\\%
+    thick,white!20!black,mark=o,mark options=solid\\%
+}
+
+\newcommand{\mat}[1]{\ensuremath{\begin{bmatrix}#1\end{bmatrix}}}
+\newcommand{\cat}[1]{\ensuremath{\begin{vmatrix}#1\end{vmatrix}}}
+\newcommand{\eqn}[1]{\begin{alignat*}{2}#1\end{alignat*}}
+\newcommand{\p}[2]{\frac{\partial #1}{\partial #2}}
+\newcommand*{\thus}{&\implies\quad&}
+
+\newcommand{\answer}[1]{\framebox{$\displaystyle #1 $}}
+
+\newcommand{\shrug}[1][]{%
+\begin{tikzpicture}[baseline,x=0.8\ht\strutbox,y=0.8\ht\strutbox,line width=0.125ex,#1]
+\def\arm{(-2.5,0.95) to (-2,0.95) (-1.9,1) to (-1.5,0) (-1.35,0) to (-0.8,0)};
+\draw \arm;
+\draw[xscale=-1] \arm;
+\def\headpart{(0.6,0) arc[start angle=-40, end angle=40,x radius=0.6,y radius=0.8]};
+\draw \headpart;
+\draw[xscale=-1] \headpart;
+\def\eye{(-0.075,0.15) .. controls (0.02,0) .. (0.075,-0.15)};
+\draw[shift={(-0.3,0.8)}] \eye;
+\draw[shift={(0,0.85)}] \eye;
+% draw mouth
+\draw (-0.1,0.2) to [out=15,in=-100] (0.4,0.95); 
+\end{tikzpicture}}
+
+
+\pagestyle{fancy}
+\fancyhf{}
+\rhead{Rahul Arya}
+\lhead{EE 16B}
+\cfoot{\thepage}
+
+\title{Lecture 22 - Notes}
+\author{Rahul Arya}
+\date{April 2019}
+\begin{document}
+
+\maketitle
+
+\section{Overview}
+Last lecture, we began looking at statistical applications of linear algebra. In particular, given a dataset, we tasked ourselves with extracting the primary ``features'' from the data points, in a manner robust to noise. Last time, we saw how calculating the correlation matrix of a dataset provided some insight into the data. Now, we will look at a technique known as \emph{principal component analysis}, which addresses a number of issues with the correlation matrix, in addition to providing a more mathematically elegant way of extracting meaning from noisy data.
+
+\section{Problems with Correlations}
+One technique we saw last time was the calculation of the correlation matrix, which expressed how any two observations correlated\footnote{Sorry, couldn't think of a synonym.} with each other across all the data points. If the correlation was near $1$, then the two observations behaved similarly, if it was near $-1$, the two observations behaved in opposite ways, and if it was about $0$, there was no strong relationship between the two observations. 
+
+However, the correlation matrix wasn't ideal for the purposes of extracting meaning from noisy data. Consider the following two datasets, which have already been mean centered:
+\begin{figure}[H]
+\centering
+\begin{subfigure}{.5\textwidth}
+\centering
+\begin{tikzpicture}
+    \draw[->] (-2,0)--(2,0) node[right] {$x - \mu_x$};
+    \draw[->] (0, -2)--(0,2) node[above] {$y - \mu_y$};
+    \foreach \x in {-0.5, -0.4, ..., 0.5}{
+            \pgfmathsetmacro\xcoord{\x+rand/2}
+            \pgfmathsetmacro\ycoord{\x*5+rand/5}
+            \pgfmathsetmacro\xcoord{\xcoord < -1.7 ? -1.7 : \xcoord}
+            \pgfmathsetmacro\xcoord{\xcoord > 1.7 ? 1.7 : \xcoord}
+            \pgfmathsetmacro\ycoord{\ycoord < -1.7 ? -1.7 : \ycoord}
+            \pgfmathsetmacro\ycoord{\ycoord > 1.7 ? 1.7 : \ycoord}
+            \node[circle,draw,fill=black,scale=0.3] at (\xcoord,\ycoord) {};
+        }
+\end{tikzpicture}
+\caption{Positive correlation.}
+\end{subfigure}%
+\begin{subfigure}{.5\textwidth}
+\centering
+\begin{tikzpicture}
+    \draw[->] (-2,0)--(2,0) node[right] {$x - \mu_x$};
+    \draw[->] (0, -2)--(0,2) node[above] {$y - \mu_y$};
+    \foreach \x in {-0.5, -0.4, ..., 0.5}{
+            \pgfmathsetmacro\xcoord{\x+rand/2}
+            \pgfmathsetmacro\ycoord{-\x*5+rand/5}
+            \pgfmathsetmacro\xcoord{\xcoord < -1.7 ? -1.7 : \xcoord}
+            \pgfmathsetmacro\xcoord{\xcoord > 1.7 ? 1.7 : \xcoord}
+            \pgfmathsetmacro\ycoord{\ycoord < -1.7 ? -1.7 : \ycoord}
+            \pgfmathsetmacro\ycoord{\ycoord > 1.7 ? 1.7 : \ycoord}
+            \node[circle,draw,fill=black,scale=0.3] at (\xcoord,\ycoord) {};
+        }
+\end{tikzpicture}
+\caption{Negative correlation.}
+\end{subfigure}
+\captionsetup{labelformat=empty}
+\end{figure}
+Both datasets appear very similar, with $y$ varying much more than $x$ does. Despite that, in the first dataset, there is a strong positive correlation between $x$ and $y$, while in the second, there is a strong negative correlation. So from the perspective of correlations, despite their visual similarities, these two datasets are in fact very different. Now, consider the next two datasets, again mean centered:
+\begin{figure}[H]
+\centering
+\begin{subfigure}{.5\textwidth}
+\centering
+\begin{tikzpicture}
+    \draw[->] (-2,0)--(2,0) node[right] {$x - \mu_x$};
+    \draw[->] (0, -2)--(0,2) node[above] {$y - \mu_y$};
+    \foreach \x in {-1.7, -1.5, ..., 1.7}{
+            \pgfmathsetmacro\xcoord{\x+rand/2}
+            \pgfmathsetmacro\ycoord{0.5*\x+rand/5}
+            \pgfmathsetmacro\xcoord{\xcoord < -1.7 ? -1.7 : \xcoord}
+            \pgfmathsetmacro\xcoord{\xcoord > 1.7 ? 1.7 : \xcoord}
+            \pgfmathsetmacro\ycoord{\ycoord < -1.7 ? -1.7 : \ycoord}
+            \pgfmathsetmacro\ycoord{\ycoord > 1.7 ? 1.7 : \ycoord}
+            \node[circle,draw,fill=black,scale=0.3] at (\xcoord,\ycoord) {};
+        }
+\end{tikzpicture}
+\caption{Positive correlation.}
+\end{subfigure}%
+\begin{subfigure}{.5\textwidth}
+\centering
+\begin{tikzpicture}
+    \draw[->] (-2,0)--(2,0) node[right] {$x - \mu_x$};
+    \draw[->] (0, -2)--(0,2) node[above] {$y - \mu_y$};
+    \foreach \x in {-1.7, -1.5, ..., 1.7}{
+            \pgfmathsetmacro\xcoord{\x+rand/2}
+            \pgfmathsetmacro\ycoord{1.5*\x+rand/5}
+            \pgfmathsetmacro\xcoord{\xcoord < -1.7 ? -1.7 : \xcoord}
+            \pgfmathsetmacro\xcoord{\xcoord > 1.7 ? 1.7 : \xcoord}
+            \pgfmathsetmacro\ycoord{\ycoord < -1.7 ? -1.7 : \ycoord}
+            \pgfmathsetmacro\ycoord{\ycoord > 1.7 ? 1.7 : \ycoord}
+            \node[circle,draw,fill=black,scale=0.3] at (\xcoord,\ycoord) {};
+        }
+\end{tikzpicture}
+\caption{Negative correlation.}
+\end{subfigure}
+\captionsetup{labelformat=empty}
+\end{figure}
+Both these datasets exhibit a strong positive correlation between their two variables - in other words, the correlation between $x$ and $y$ is very close to $1$ in both. However, the datasets are clearly different, looking at the slope of the line of best fit passing through the points.
+
+Clearly, the correlation matrix does not give us the full story, so something else is needed.
+
+\section{Principal Component Analysis}
+Let's briefly review notation. Let $A$ be an $n \times m$ matrix of our data, with each data point forming a row of $m$ components. We mean-center each column of $A$ independently, to obtain the mean-centered data matrix $\tilde{A}$. We then compute the covariance matrix $S$ defined as
+\[
+    S = \frac{1}{n}\tilde{A}^T\tilde{A},
+\]
+which represents how each pair of measurement columns from $\tilde{A}$ align, with $S_{ij}$ being large in magnitude if the $i$th and $j$th measurements behave similarly across all data points, and close to $0$ if they are uncorrelated. 
+
+Last time, we took this intuitive understanding of covariance further by normalizing the entries of $S$, to obtain the correlation matrix $R$. Now, however, we've seen the problems with using $R$ to try and extract trends and features of our data. Indeed, as we saw last time, in some cases it may be impossible to compute $R$, as it would involve dividing by zero.
+
+Instead, we will stick with $S$, which can always be computed, and see what further properties can be obtained from it. Last time, we claimed that we should diagonalize $S$, to obtain
+\[
+    S = P\Lambda P^T.
+\]
+We will call the columns of $P$ our \emph{principal components}, and assert that they can be used to obtain the key properties of our dataset. First, notice that as $S$ is a real symmetric matrix, the real spectral theorem tells us that such a diagonalization will always exist, with the columns of $P$ being orthogonal. Moreover, recall that we showed in a previous lecture that all the eigenvalues of $\tilde{A}^T\tilde{A}$ will be nonnegative, so all the entries of $\Lambda$ will be nonnegative as well. Without loss of generality, we can order our eigenvectors such that the eigenvalues in $\Lambda$ are in descending order from left to right. Consequently, writing
+\[
+    P = \mat{| & & | \\ \vec{p}_1 & \cdots & \vec{p}_m \\ | & & |},
+\]
+we have that the eigenvalues corresponding to $\vec{p}_1, \vec{p}_2, \ldots$ will be in descending order.
+
+\section{Maximizing Variance}
+Now, what's so important about these principal component vectors? We claim that the $\vec{p}_i$ describe the ``most important'' directions of our dataset, in descending order of importance - in particular, we claim that $\vec{p}_1$ is the direction that contains the ``most'' information about our data.
+
+What does it mean for a direction to be important? Intuitively speaking, we should expect our data to be ``most aligned'' along such a direction, as shown below, with the red line representing what we might imagine to be an ``important direction'':
+\begin{center}
+\begin{tikzpicture}
+    \draw[->] (-2,0)--(2,0) node[right] {$x - \mu_x$};
+    \draw[->] (0, -2)--(0,2) node[above] {$y - \mu_y$};
+    \foreach \x in {-1.7, -1.5, ..., 1.7}{
+            \pgfmathsetmacro\xcoord{\x+rand/2}
+            \pgfmathsetmacro\ycoord{\x+rand/5}
+            \pgfmathsetmacro\xcoord{\xcoord < -1.7 ? -1.7 : \xcoord}
+            \pgfmathsetmacro\xcoord{\xcoord > 1.7 ? 1.7 : \xcoord}
+            \pgfmathsetmacro\ycoord{\ycoord < -1.7 ? -1.7 : \ycoord}
+            \pgfmathsetmacro\ycoord{\ycoord > 1.7 ? 1.7 : \ycoord}
+            \node[circle,draw,fill=black,scale=0.3] at (\xcoord,\ycoord) {};
+        }
+    \draw[red] (-2, -2) to (2, 2);
+\end{tikzpicture}
+\end{center}
+Notice that the data varies greatly along this line, but does not vary as much away from it. In other words, we will define the ``most important'' direction to be the direction along which our data points, when projected onto this direction, have the \emph{maximum variance}.
+
+Let's prove that our first principal component $\vec{p}_1$ is indeed along this direction. Consider some arbitrary direction, represented by a unit vector $\vec{v}$. Observe that the variance of our dataset does not change with translation, so we can work entirely with our mean-centered data matrix $\tilde{A}$. Let each data point within $\tilde{A}$ be $\vec{a}_i$, so we have
+\[
+    \tilde{A} = \mat{- & \vec{a}_1^T & - \\ - & \vec{a}_2^T & - \\ & \vdots & \\ - & \vec{a}_n^T & -}.
+\]
+
+We need to first project each of the $\vec{a}_i$ onto $\vec{v}$. Since $\vec{v}$ is of unit magnitude, each scalar projection will simply be
+\[
+    \mathrm{proj}_{\vec{v}}(\vec{a}_i) = \vec{a}_i^T \vec{v},
+\]
+so we can stack our scalar projections in a vector
+\[
+    \mat{\mathrm{proj}_{\vec{v}}(\vec{a}_1) \\ \mathrm{proj}_{\vec{v}}(\vec{a}_2) \\ \vdots \\ \mathrm{proj}_{\vec{v}}(\vec{a}_n)} = \tilde{A}\vec{v}.
+\]
+By definition, observe that the variance of these projections is
+\[
+    \frac{1}{n} \sqrt{(\mathrm{proj}_{\vec{v}}(\vec{a}_1))^2 + (\mathrm{proj}_{\vec{v}}(\vec{a}_2))^2 + \ldots + (\mathrm{proj}_{\vec{v}}(\vec{a}_n))^2} &= \norm{\tilde{A}\vec{v}}.
+\]
+Now, our problem reduces to determining the unit vector $\vec{v}$ that maximizes this quantity. Recall that the $\vec{p}_i$ formed an orthonormal basis for our $m$-dimensional space, so we may write
+\[
+    \vec{v} = \alpha_1 \vec{p}_1 + \alpha_2 \vec{p}_2 + \ldots + \alpha_n \vec{p}_m,
+\]
+where
+\[
+    1 = \norm{\vec{v}} = \sqrt{\alpha_1^2 + \alpha_2^2 + \ldots + \alpha_m^2}
+\]
+for suitable chosen constants $\alpha_i$. 
+
+Now, it should be clear that maximizing $\norm{\tilde{A}\vec{v}}$ is the same thing as maximizing $\norm{\tilde{A}\vec{v}}^2 = \vec{v}^T\tilde{A}^T\tilde{A}\vec{v}$, since they are both always nonnegative. Since the $\vec{p}_i$ are eigenvectors, we can write
+\eqn{
+    && \vec{v}^T\tilde{A}^T\tilde{A}\vec{v} &= (\alpha_1 \vec{p}_1 + \alpha_2 \vec{p}_2 + \ldots + \alpha_n \vec{p}_n)^T\tilde{A}^T\tilde{A}(\alpha_1 \vec{p}_1 + \alpha_2 \vec{p}_2 + \ldots + \alpha_m \vec{p}_m) \\
+    &&&= (\alpha_1 \vec{p}_1 + \alpha_2 \vec{p}_2 + \ldots + \alpha_n \vec{p}_m)^T(\alpha_1 \lambda_1 \vec{p}_1 + \alpha_2 \lambda_2 \vec{p}_2 + \ldots + \alpha_m \lambda_m \vec{p}_m),
+}
+where the $\lambda_i$ are the eigenvalues associated with the $\vec{p}_i$. Taking advantage of the fact that the $\vec{p}_i$ are all orthogonal to one another, we can continue our above calculation to see that
+\eqn{
+    && \vec{v}^T\tilde{A}^T\tilde{A}\vec{v} &= (\alpha_1 \vec{p}_1 + \alpha_2 \vec{p}_2 + \ldots + \alpha_n \vec{p}_m)^T(\alpha_1 \lambda_1 \vec{p}_1 + \alpha_2 \lambda_2 \vec{p}_2 + \ldots + \alpha_m \lambda_m \vec{p}_m) \\
+    &&&= \alpha_1^2 \lambda_1 + \alpha_2^2 \lambda_2 + \ldots + \alpha_n^2 \lambda_m.
+}
+We wish to choose our $\alpha_i$ to maximize the above quantity, while keeping the sum of their squares equal to $1$. For notational convenience, let $\beta_i = \alpha_i^2$. From the previous equation, and since $\vec{v}$ is a unit vector, we therefore have
+\eqn{
+    && \beta_1 + \beta_2 + \ldots + \beta_m &= 1 \\
+    && \vec{v}^TA^TA\vec{v} &= \beta_1\lambda_1 + \beta_2\lambda_2 + \ldots + \beta_m\lambda_m.
+}
+Recall that we chose our diagonalization, using the properties of $S$, such that
+\[
+    \lambda_1 \ge \lambda_2 \ge \ldots \ge \lambda_m \ge 0.
+\]
+Since all the $\beta_i$ are nonnegative (since they are the squares of real numbers), it is obvious (and can be easily shown using a simple exchange argument) that $\vec{v}^T\tilde{A}^T\tilde{A}\vec{v}$ has a maximum value of $\lambda_1$, that can be achieved by setting $\beta_1 = \alpha_1 = 1$ and the other $\beta_i = \alpha_i = 0$. Thus, we see that our optimal value
+\[
+    \vec{v} = 1 \vec{p}_1 + 0 \vec{p}_2 + \ldots + 0 \vec{p}_m = \vec{p}_1,
+\]
+as expected. Thus, we have shown that the first principal component (i.e. the one with the largest eigenvalue) corresponds to the direction that maximizes the variance of the data, when projected onto it.
+
+As it turns out, we can go one step further. Often, simply looking at the projection of a dataset onto a single direction is not sufficient, even if this direction is the first principal component. It would be nice to obtain a $k$-dimensional subspace that maximizes the variance of the data points projected onto it. Although we will not prove it here (as it will be a homework problem), it turns out that this subspace is exactly the subspace formed by taking linear combinations of the first $k$ principal components.
+
+\section{Zero Covariance}
+One important use for these principal components is known as \emph{feature extraction}. That is to say, given an $m$-dimensional dataset where $m$ is large, we may wish to extract $k$ scalar features that represent the most interesting aspects of our dataset. In the previous section, we saw that PCA allowed us to pick $k$ orthogonal scalar features that each maximized the variance of the data points projected onto each of the $k$ principal components. However, having more features is of little use if they convey no additional information - that is to say, if a feature are strongly correlated with some others, then it is less useful, since we can use these other features to form a good estimate of the new feature.
+
+As it turns out, the features obtained by projecting each datapoint onto the principal component directions are highly uncorrelated - in fact, the correlation between the data projected onto any pair of principal components is zero! Let's try to show this.
+
+\end{document}

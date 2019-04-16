@@ -226,7 +226,7 @@ using stacked matrix notation.
 
 More generally, we know that
 \[
-    \vec{x}[i] = A^n\vec{x}[0] + \mat{B & AB & \cdots & A^{i - 1}B} \mat{\vec{u}[0] \\ \vdots \\ \vec{u}[i - 1]}.
+    \vec{x}[i] = A^n\vec{x}[0] + \mat{B & AB & \cdots & A^{i - 1}B} \mat{\vec{u}[i - 1] \\ \vdots \\ \vec{u}[0]}.
 \]
 Therefore, we find that our system is controllable after $i$ time steps if and only if the matrix
 \[
@@ -289,11 +289,11 @@ An immediate consequence of this result is that a system is controllable if and 
 
 The next natural question is as follows: even if our system is controllable, how do we calculate the necessary inputs needed to reach a desired state $\vec{x}^*$? As it turns out, this is straightforward, if we consider the stacked matrix representation of $\vec{x}[n] = \vec{x}^*$:
 \[
-    \vec{x}^* = A^n\vec{x}[0] + \mat{B & AB & \cdots & A^{n - 1}B} \mat{\vec{u}[0] \\ \vdots \\ \vec{u}[n - 1]} = A^n\vec{x}[0] + \mathscr{C}\mat{\vec{u}[0] \\ \vdots \\ \vec{u}[n - 1]}.
+    \vec{x}^* = A^n\vec{x}[0] + \mat{B & AB & \cdots & A^{n - 1}B} \mat{\vec{u}[n - 1] \\ \vdots \\ \vec{u}[0]} = A^n\vec{x}[0] + \mathscr{C}\mat{\vec{u}[n - 1] \\ \vdots \\ \vec{u}[0]}.
 \]
 Rearranging, we obtain
 \[
-    \mathscr{C}\mat{\vec{u}[0] \\ \vdots \\ \vec{u}[n - 1]} = \vec{x}^* - A^n\vec{x}[0].
+    \mathscr{C}\mat{\vec{u}[n - 1] \\ \vdots \\ \vec{u}[0]} = \vec{x}^* - A^n\vec{x}[0].
 \]
 Using Gaussian elimination, we can now determine the sequence of control inputs to make, if such a sequence exists. Thus, we have resolved the problem that was initially posed at the beginning of the lecture.
 
