@@ -354,6 +354,38 @@ As it turns out, we can go one step further. Often, simply looking at the projec
 \section{Zero Covariance}
 One important use for these principal components is known as \emph{feature extraction}. That is to say, given an $m$-dimensional dataset where $m$ is large, we may wish to extract $k$ scalar features that represent the most interesting aspects of our dataset. In the previous section, we saw that PCA allowed us to pick $k$ orthogonal scalar features that each maximized the variance of the data points projected onto each of the $k$ principal components. However, having more features is of little use if they convey no additional information - that is to say, if a feature are strongly correlated with some others, then it is less useful, since we can use these other features to form a good estimate of the new feature.
 
-As it turns out, the features obtained by projecting each datapoint onto the principal component directions are highly uncorrelated - in fact, the correlation between the data projected onto any pair of principal components is zero! Let's try to show this.
+As it turns out, the features obtained by projecting each datapoint onto the principal component directions are highly uncorrelated - in fact, the correlation between the data projected onto any pair of principal components is zero! Let's try to show this. Let $\hat{A}$ be the mean-centered data matrix expressed in the principal component basis, so we have
+\[
+     \tilde{A} = \hat{A}P \implies \hat{A} = \tilde{A}P^T.
+\]
+Now, we can compute the covariance matrix $\hat{S}$ in the standard manner, to obtain
+\eqn{
+    && \hat{S} &= \frac{1}{n} \hat{A}^T\hat{A} \\
+    &&&= \frac{1}{n} (\tilde{A}P^T)^T(\tilde{A}P^T) \\
+    &&&= \frac{1}{n} P\tilde{A}^T\tilde{A}P^T \\
+    &&&= \frac{1}{n} PSP^T
+}
+Since, by their construction, our principal components are the eigenvectors of $S$, we have that
+\[
+    \hat{S} = \frac{1}{n}PSP^T = \frac{1}{n}\Lambda,
+\]
+which is clearly a diagonal matrix. Thus, the covariances of any two features in the principal component basis are $0$, so their correlations are therefore also $0$.
+
+\section{Relationship to the SVD}
+Finally, we will look at how the principal components of a matrix relate to its SVD - some sort of relationship may have already been hinted at in our earlier calculations, since diagonalizing $\tilde{A}^T\tilde{A}$ is a key step both in computing the principal components and the SVD. Let's formalize this connection, by considering the SVD
+\[
+    \tilde{A} = U \Sigma V^T.
+\]
+Observe that our covariance matrix
+\eqn{
+    && S &= \frac{1}{n} V\Sigma^T U^T U \Sigma V^T \\
+    &&&= \frac{1}{n} V\Sigma^T\Sigma V^T \\
+    &&&= V\left(\frac{1}{n}\Sigma^T\Sigma\right)V^T,
+}
+which is a diagonalization of the covariance matrix. Thus, it is clear that the columns of $V$ are our principal components, and we can relate the eigenvalues of the principal components to the singular values as follows:
+\[
+    \lambda_i = \frac{1}{n} \sigma_i^2
+\]
+for $1 \le i \le m$. This process can clearly be reversed, starting from the principal components to obtain the singular value decomposition of a mean-centered data matrix. Thus, we have obtained a straightforward relationship between the SVD and PCA.
 
 \end{document}

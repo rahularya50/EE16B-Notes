@@ -368,7 +368,7 @@ Horizontally stacking this result for all $i \le n$m, we find that
 \]
 This is probably beginning to look very familiar, since it's practically the singular value decomposition of $\mathscr{C}_t$! What's missing? Well, recall that each of the $\vec{v}_i$ was $t$ dimensional, but we only use $n$ of them here, so the matrix stacking them horizontally is not square! To fix this, we can simply ``pad'' that matrix with the remaining $\vec{v}_i$ for $i > n$, and introduce additional zero columns to the diagonal matrix of the $\sigma_i$, to obtain
 \[
-    \mathscr{C}_t \mat{| & & | \\ \vec{v}_1 & \cdots & \vec{v}_t \\ | & & |}^T = \mat{| & & | \\ \vec{w}_1 & \cdots & \vec{w}_n \\ | & & |} \mat{\sigma_1 & 0 & \ldots & 0 & 0 & \ldots & 0 \\ 0 & \sigma_2 & \ldots & 0 & 0 & \ldots & 0 \\ \vdots & \vdots & \ddots & \vdots & \vdots & \ddots & \vdots \\ 0 & 0 & \ldots & \sigma_n & 0 & \ldots & 0},
+    \mathscr{C}_t \mat{| & & | \\ \vec{v}_1 & \cdots & \vec{v}_t \\ | & & |} = \mat{| & & | \\ \vec{w}_1 & \cdots & \vec{w}_n \\ | & & |} \mat{\sigma_1 & 0 & \ldots & 0 & 0 & \ldots & 0 \\ 0 & \sigma_2 & \ldots & 0 & 0 & \ldots & 0 \\ \vdots & \vdots & \ddots & \vdots & \vdots & \ddots & \vdots \\ 0 & 0 & \ldots & \sigma_n & 0 & \ldots & 0},
 \]
 Now, since $V$ is a square orthogonal matrix, $V^{-1} = V^T$, so we can rearrange to obtain
 \[
