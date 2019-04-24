@@ -1,0 +1,272 @@
+\documentclass[letterpaper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[parfill]{parskip}    % Activate to begin paragraphs with an empty line rather than an indent
+\usepackage{graphicx}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{mathtools}
+\usepackage{mathrsfs}
+
+\usepackage{afterpage}
+
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+
+\usepackage{verse}
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{corollary}{Corollary}[theorem]
+\newtheorem{lemma}[theorem]{Lemma}
+
+\theoremstyle{remark}
+\newtheorem*{remark}{Remark}
+
+\usepackage{epstopdf}
+\usepackage{circuitikz}
+\usetikzlibrary{angles, quotes}
+\usepackage[separate-uncertainty = true,multi-part-units=single]{siunitx}
+\usepackage{booktabs}
+\usepackage{enumitem}
+\usepackage[toc,page]{appendix}
+\usepackage{color}
+\usepackage{pgfplots}
+\usepackage{pgfplotstable}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{url}
+\usepackage{multirow}
+\usepackage{makecell}
+\usepackage[round]{natbib}   % omit 'round' option if you prefer square brackets
+\usepackage{titling}
+\usepackage{siunitx}
+\usepackage{physics}
+
+\usepackage{setspace}
+% \doublespacing
+\usepackage{float}
+
+
+\pgfplotsset{compat=1.14}
+
+%  Special math symbols
+%       floor, ceiling, angled brackets
+%-----------------------------------------------------------------------
+\newcommand{\floor}[1]{\left\lfloor #1\right\rfloor}
+\newcommand{\ceil}[1]{\left\lceil #1\right\rceil}
+\newcommand{\etal}{\textit{et al.}}
+\newcommand{\RE}{\mathbb{R}}        % real space
+\newcommand{\ZZ}{\mathbb{Z}}        % integers
+\newcommand{\NN}{\mathbb{N}}        % natural numbers
+\newcommand{\eps}{{\varepsilon}}    % prettier epsilon
+%-----------------------------------------------------------------------
+%  Tighter lists
+%-----------------------------------------------------------------------
+\newenvironment{itemize*}% Tighter itemized list
+  {\begin{itemize}%
+    \setlength{\itemsep}{-0.5ex}%
+    \setlength{\parsep}{0pt}}%
+  {\end{itemize}}
+\newenvironment{description*}% Tighter description list
+  {\begin{description}%
+    \setlength{\itemsep}{-0.5ex}%
+    \setlength{\parsep}{0pt}}%
+  {\end{description}}
+\newenvironment{enumerate*}% Tighter enumerated list
+  {\begin{enumerate}%
+    \setlength{\itemsep}{-0.5ex}%
+    \setlength{\parsep}{0pt}}%
+  {\end{enumerate}}
+%-----------------------------------------------------------------------
+% Typing shortcuts
+%-----------------------------------------------------------------------
+\newcommand{\X}{\mathbb{X}}
+\newcommand{\SG}{\mathbf{S}}
+\newcommand{\GE}{\mathcal{G}}
+\newcommand{\ST}{\,:\,}
+\renewcommand{\tilde}[1]{\widetilde{#1}}
+\newcommand{\diam}{\mathrm{diam}}
+\newcommand{\sq}{\square}
+\newcommand{\half}[1]{\frac{#1}{2}}
+\newcommand{\inv}[1]{\frac{1}{#1}}
+\newcommand{\alg}{\textsf{SplitReduce}}
+\newcommand{\sz}[1]{\sigma_{#1}}
+\newcommand{\LL}{\mathcal{L}}
+\newcommand{\softOmega}{\widetilde{\Omega}} 
+\newcommand{\softO}{\widetilde{O}}
+\newcommand{\OO}{O^*}  %or \widetilde{O}?
+
+\newcommand{\Null}[1]{\text{Null}(#1)}
+
+
+\newcommand{\dx}{\mathrm{d}x}
+\newcommand{\dy}{\mathrm{d}y}
+\newcommand{\dz}{\mathrm{d}z}
+\newcommand{\dt}{\mathrm{d}t}
+\newcommand{\du}{\mathrm{d}u}
+\newcommand{\dtheta}{\mathrm{d}\theta}
+\newcommand{\dq}{\mathrm{d}q}
+\newcommand{\diff}{\mathrm{d}}
+\newcommand{\dV}{\mathrm{d}V}
+\newcommand{\dL}{\mathrm{d}L}
+\newcommand{\dA}{\mathrm{d}A}
+\newcommand{\dH}{\mathrm{d}H}
+\newcommand{\df}{\mathrm{d}f}
+\newcommand{\dg}{\mathrm{d}g}
+\newcommand{\dr}{\mathrm{d}r}
+\newcommand{\dw}{\mathrm{d}w}
+\newcommand{\dI}{\mathrm{d}I}
+
+\newcommand*\len[1]{\overline{#1}}
+
+
+\newcommand\note[1]{\marginpar{\textcolor{red}{#1}}}
+\newcommand*{\tageq}{\refstepcounter{equation}\tag{\theequation}}
+
+\newcommand*{\equals}{=}
+
+\usepackage{fancyhdr}
+
+\pgfplotscreateplotcyclelist{grayscale}{
+    thick,white!10!black,mark=x,mark options=solid, dashed\\%
+    thick,white!20!black,mark=o,mark options=solid\\%
+}
+
+\newcommand{\mat}[1]{\ensuremath{\begin{bmatrix}#1\end{bmatrix}}}
+\newcommand{\cat}[1]{\ensuremath{\begin{vmatrix}#1\end{vmatrix}}}
+\newcommand{\eqn}[1]{\begin{alignat*}{2}#1\end{alignat*}}
+\newcommand{\p}[2]{\frac{\partial #1}{\partial #2}}
+\newcommand*{\thus}{&\implies\quad&}
+
+\newcommand{\answer}[1]{\framebox{$\displaystyle #1 $}}
+
+\newcommand{\shrug}[1][]{%
+\begin{tikzpicture}[baseline,x=0.8\ht\strutbox,y=0.8\ht\strutbox,line width=0.125ex,#1]
+\def\arm{(-2.5,0.95) to (-2,0.95) (-1.9,1) to (-1.5,0) (-1.35,0) to (-0.8,0)};
+\draw \arm;
+\draw[xscale=-1] \arm;
+\def\headpart{(0.6,0) arc[start angle=-40, end angle=40,x radius=0.6,y radius=0.8]};
+\draw \headpart;
+\draw[xscale=-1] \headpart;
+\def\eye{(-0.075,0.15) .. controls (0.02,0) .. (0.075,-0.15)};
+\draw[shift={(-0.3,0.8)}] \eye;
+\draw[shift={(0,0.85)}] \eye;
+% draw mouth
+\draw (-0.1,0.2) to [out=15,in=-100] (0.4,0.95); 
+\end{tikzpicture}}
+
+
+\pagestyle{fancy}
+\fancyhf{}
+\rhead{Rahul Arya}
+\lhead{EE 16B}
+\cfoot{\thepage}
+
+\title{Lecture 24 - Notes}
+\author{Rahul Arya}
+\date{April 2019}
+\begin{document}
+
+\maketitle
+
+\emph{This note is shorter than usual, since much of the material covered is already present in the notes for Lectures 5, 6, and 19, as well as in the staff notes on complex numbers. In addition, I have chosen to move the introduction of the DFT matrix to the note for Lecture 25, since I don't think it makes sense to split its introduction over two lecture notes.}
+
+\section{Overview}
+Last lecture, we looked at interpolation, the technique of converting discrete-time signals into the time domain. Over the next few lectures, we will discuss how to transform discrete-time signals directly into the frequency domain, using a technique known as the \emph{discrete Fourier transform}, often abbreviated as the DFT.
+
+We can motivate this problem by considering its applications to signal processing. Recall from module 1 that a common technique for eliminating noise at particular frequencies is to simply filter out the undesired frequencies using low-pass or high-pass filters in what we termed analog signal processing. Unfortunately, this approach requires comparatively bulky circuit components in order to achieve the desired filtering, particularly if a large $Q$-factor is required.
+
+Instead, by first sampling the input signal and then processing it digitally, we can achieve the same effects in a far cheaper and more practical manner. The idea of processing digital signals is known as \emph{digital signal processing}\footnote{who could have guessed}, often abbrevated as DSP. As we will see in future lectures, the discrete Fourier transform proves to be an important tool in this field.
+
+\section{Roots of Unity}
+In this lecture, we will principally focus on some mathematical preliminaries necessary in order to understand the DFT. We will depend heavily on complex numbers, and will assume prior knowledge of all the content in the notes for Lectures 5 and 6, as well as in the staff review of complex numbers. In addition, future notes will assume prior knowledge of the generalization of inner products over complex vector spaces presented briefly in the note for Lecture 19.
+
+Using the polar form of complex numbers, observe that
+\[
+    (Me^{j\theta})^k = M^k e^{jk\theta},
+\]
+where $M$ and $\theta$ are real numbers representing the magnitude and argument respectively of some complex number $X$, and $k$ is another real number. In other words, raising $X$ to the power of $k$ raises its magnitude to the power of $k$, and multiplies its argument by $k$. Expressed visually, we see that
+\begin{center}
+\begin{tikzpicture}
+    \begin{scope}[dotted,font=\scriptsize]
+    \draw [->] (-1,0) -- (6,0) node [above left] (re) {$\Re\{z\}$};
+    \draw [->] (0,-1) -- (0,6) node [below right] {$\Im\{z\}$};
+    \end{scope}
+    \draw [->] (0, 0) node (o) {} -- (3, 1) node[above right] (x) {$X = Me^{j\theta}$};
+    \draw [->] (0, 0) -- (4, 5) node[above right] (xk) {$X = M^ke^{jk\theta}$};
+    \draw  pic["$\theta$",draw=black,<->,angle eccentricity=1.2,angle radius=1cm] {angle=re--o--x};
+    \draw  pic["$k\theta$",draw=black,<->,angle eccentricity=1.2,angle radius=2cm] {angle=re--o--xk};
+\end{tikzpicture}
+\end{center}
+
+For the remainder of this section, we will focus on the case where $\abs{X} = M = 1$, so exponentiation only changes the argument of a complex number.
+
+In particular, consider the case where $\theta = 0$ as well, so
+\[
+    X = Me^{j\theta} = 1 \cdot e^{j \cdot 0} = 1.
+\]
+
+Let $k = 1 / N$, for some positive integer $N$. From our understanding of real arithmetic, we know that
+\[
+    1^{1/N} = 1
+\]
+for any positive integer $N$. However, notice that
+\[
+    (-1)^2 = 1 = 1^2,
+\]
+so the square root of $1$ is \emph{not} the only number that can be squared to obtain $1$. It is a natural question to ask how this generalizes to higher-index roots, particularly when working over the complex numbers.
+
+We describe the set of complex numbers $\{ Z \}$ such that $Z^N = 1$ as the \emph{$N$th roots of unity}. Let $Z$ be one such number. Writing $Z$ in polar form, we have that
+\eqn{
+    && Z^N &= 1 \\
+    \thus (Me^{j\theta})^N &= 1 \\
+    \thus M^N e^{jN\theta} &= 1,
+}
+so $M = 1$, as $1$ is clearly the only nonnegative real $N$th of unity. Thus,
+\[
+    e^{jN\theta} = 1.
+\]
+One solution to this is clearly $\theta = 1$, which gives rise to the trivial root $Z = 1$. However, we claim that $\theta = 2\pi m / N$ is also a solution, where $m$ is any integer. We can see this by substituting
+\eqn{
+    && Z^N &= (e^{j\theta})^N \\
+    &&&= e^{j(2\pi m / N) N} \\
+    &&&= (e^{2 \pi m j}) \\
+    &&&= (e^{2 \pi j})^m \\
+    &&&= 1^m \\
+    &&&= 1.
+}
+Although we will not explicitly prove it here, it turns out that \emph{all} roots of uniy can be expressed in this form, for a suitable choice of $m$.
+
+Furthermore, notice that
+\[
+    e^{2\pi m j / N} = 1 \cdot e^{2\pi m j / N} = e^{2\pi j} e^{2\pi m j / N} = e^{2\pi j (m + N) / N}.
+\]
+In other words, adding (or subtracting) $N$ from $m$ does not produce a new root, since it is equivalent to adding or subtracting $2\pi$ from the argument. Thus, it is clear that there are exactly $N$ $N$th roots of unity, that can be enumerated as
+\[
+    e^{0(2\pi j / N)}, e^{1(2\pi j / N)}, e^{2(2\pi j/ N)}, \ldots, e^{(N - 1)(2 \pi j / N)}.
+\]
+For notational convenience, we define
+\[
+    \omega_N = e^{2\pi j / N},
+\]
+so our roots of unity can be rewritten as
+\[
+    \omega_N^0, \omega_N^1, \omega_N^2, \ldots, \omega_N^{N-1}.
+\]
+Notice that the arguments of these roots of unity are all multiples of $2\pi / N$ and their magnitudes are all $1$. Thus, we may plot them (for $N = 5$) as follows:
+\begin{center}
+\begin{tikzpicture}
+    \begin{scope}[dotted,font=\scriptsize]
+    \draw [->] (-4,0) -- (4,0) node [above left] (re) {$\Re\{z\}$};
+    \draw [->] (0,-4) -- (0,4) node [below right] {$\Im\{z\}$};
+    \end{scope}
+    \draw [->] (0, 0) -- (2, 0) node[above right] (xk) {$w_5^0$};
+    \draw [->] (0, 0) -- (0.618, 1.9029) node[above right] (xk) {$w_5^1$};
+    \draw [->] (0, 0) -- (-1.618, 1.176) node[above right] (xk) {$w_5^2$};
+    \draw [->] (0, 0) -- (-1.618, -1.176) node[above right] (xk) {$w_5^3$};
+    \draw [->] (0, 0) -- (0.618, -1.902) node[above right] (xk) {$w_5^4$};
+\end{tikzpicture}
+\end{center}
+Notice how these roots are evenly spaced around the origin. This should provide some intuition as to why no other roots of unity exist beyond those described above.
+
+\end{document}

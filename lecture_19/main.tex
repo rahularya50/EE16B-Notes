@@ -206,7 +206,7 @@ As it turns out, the quantity $\bar{x}^Tx$ is the generalization of the norm of 
 
 Furthermore, it seems natural to similarly generalize the notion of the inner product of two complex-valued vectors such that
 \[
-    \langle x, y \rangle = \bar{x}^Ty,
+    \langle x, y \rangle = \bar{y}^Tx,
 \]
 based on the premise that $\norm{x} = \langle x, x \rangle$. While we will not prove it here, it can be shown that the above definition of inner products allows us to define a consistent notion of orthogonality, such that we can calculate the Schur decomposition of \emph{any} matrix, even one with complex entries or eigenvalues.
 
@@ -292,7 +292,7 @@ where the elements of the diagonal are the $\sigma_i$, and all elements off the 
 Another interesting feature of the SVD is that, unlike the Schur decomposition and the eigenvalue decomposition, it is not simply the reexpression of $A$ in a different basis, since in general $U^{-1} \ne V^T$. So what does it do? There are many possible interpretations of its behavior, but the one we will look at today involves a concept known as \emph{outer products}.
 
 \section{Outer Products}
-Recall that, for real vectors $\vec{x}$ and $\vec{y}$ expressed as columns with $n$ components, their inner product is defined as $\vec{x}^T\vec{y}$, which yields a $1\times 1$ matrix typically treated as a scalar.
+Recall that, for real vectors $\vec{x}$ and $\vec{y}$ expressed as columns with $n$ components, their inner product is defined as $\vec{y}^T\vec{x}$, which yields a $1\times 1$ matrix typically treated as a scalar.
 
 Similarly, we will define their \emph{outer product} to be $\vec{x}\vec{y}^T$. Let's see what this means. Let
 \eqn{
