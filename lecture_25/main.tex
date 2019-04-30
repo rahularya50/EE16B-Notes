@@ -1,0 +1,350 @@
+\documentclass[letterpaper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[parfill]{parskip}    % Activate to begin paragraphs with an empty line rather than an indent
+\usepackage{graphicx}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{mathtools}
+\usepackage{mathrsfs}
+
+\usepackage{afterpage}
+
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+
+\usepackage{verse}
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{corollary}{Corollary}[theorem]
+\newtheorem{lemma}[theorem]{Lemma}
+
+\theoremstyle{remark}
+\newtheorem*{remark}{Remark}
+
+\usepackage{epstopdf}
+\usepackage{circuitikz}
+\usetikzlibrary{angles, quotes}
+\usepackage[separate-uncertainty = true,multi-part-units=single]{siunitx}
+\usepackage{booktabs}
+\usepackage{enumitem}
+\usepackage[toc,page]{appendix}
+\usepackage{color}
+\usepackage{pgfplots}
+\usepackage{pgfplotstable}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{url}
+\usepackage{multirow}
+\usepackage{makecell}
+\usepackage[round]{natbib}   % omit 'round' option if you prefer square brackets
+\usepackage{titling}
+\usepackage{siunitx}
+\usepackage{physics}
+
+\usepackage{setspace}
+% \doublespacing
+\usepackage{float}
+
+
+\pgfplotsset{compat=1.14}
+
+%  Special math symbols
+%       floor, ceiling, angled brackets
+%-----------------------------------------------------------------------
+\newcommand{\floor}[1]{\left\lfloor #1\right\rfloor}
+\newcommand{\ceil}[1]{\left\lceil #1\right\rceil}
+\newcommand{\etal}{\textit{et al.}}
+\newcommand{\RE}{\mathbb{R}}        % real space
+\newcommand{\ZZ}{\mathbb{Z}}        % integers
+\newcommand{\NN}{\mathbb{N}}        % natural numbers
+\newcommand{\eps}{{\varepsilon}}    % prettier epsilon
+%-----------------------------------------------------------------------
+%  Tighter lists
+%-----------------------------------------------------------------------
+\newenvironment{itemize*}% Tighter itemized list
+  {\begin{itemize}%
+    \setlength{\itemsep}{-0.5ex}%
+    \setlength{\parsep}{0pt}}%
+  {\end{itemize}}
+\newenvironment{description*}% Tighter description list
+  {\begin{description}%
+    \setlength{\itemsep}{-0.5ex}%
+    \setlength{\parsep}{0pt}}%
+  {\end{description}}
+\newenvironment{enumerate*}% Tighter enumerated list
+  {\begin{enumerate}%
+    \setlength{\itemsep}{-0.5ex}%
+    \setlength{\parsep}{0pt}}%
+  {\end{enumerate}}
+%-----------------------------------------------------------------------
+% Typing shortcuts
+%-----------------------------------------------------------------------
+\newcommand{\X}{\mathbb{X}}
+\newcommand{\SG}{\mathbf{S}}
+\newcommand{\GE}{\mathcal{G}}
+\newcommand{\ST}{\,:\,}
+\renewcommand{\tilde}[1]{\widetilde{#1}}
+\newcommand{\diam}{\mathrm{diam}}
+\newcommand{\sq}{\square}
+\newcommand{\half}[1]{\frac{#1}{2}}
+\newcommand{\inv}[1]{\frac{1}{#1}}
+\newcommand{\alg}{\textsf{SplitReduce}}
+\newcommand{\sz}[1]{\sigma_{#1}}
+\newcommand{\LL}{\mathcal{L}}
+\newcommand{\softOmega}{\widetilde{\Omega}} 
+\newcommand{\softO}{\widetilde{O}}
+\newcommand{\OO}{O^*}  %or \widetilde{O}?
+
+\newcommand{\Null}[1]{\text{Null}(#1)}
+
+
+\newcommand{\dx}{\mathrm{d}x}
+\newcommand{\dy}{\mathrm{d}y}
+\newcommand{\dz}{\mathrm{d}z}
+\newcommand{\dt}{\mathrm{d}t}
+\newcommand{\du}{\mathrm{d}u}
+\newcommand{\dtheta}{\mathrm{d}\theta}
+\newcommand{\dq}{\mathrm{d}q}
+\newcommand{\diff}{\mathrm{d}}
+\newcommand{\dV}{\mathrm{d}V}
+\newcommand{\dL}{\mathrm{d}L}
+\newcommand{\dA}{\mathrm{d}A}
+\newcommand{\dH}{\mathrm{d}H}
+\newcommand{\df}{\mathrm{d}f}
+\newcommand{\dg}{\mathrm{d}g}
+\newcommand{\dr}{\mathrm{d}r}
+\newcommand{\dw}{\mathrm{d}w}
+\newcommand{\dI}{\mathrm{d}I}
+
+\newcommand*\len[1]{\overline{#1}}
+
+
+\newcommand\note[1]{\marginpar{\textcolor{red}{#1}}}
+\newcommand*{\tageq}{\refstepcounter{equation}\tag{\theequation}}
+
+\newcommand*{\equals}{=}
+
+\usepackage{fancyhdr}
+
+\pgfplotscreateplotcyclelist{grayscale}{
+    thick,white!10!black,mark=x,mark options=solid, dashed\\%
+    thick,white!20!black,mark=o,mark options=solid\\%
+}
+
+\newcommand{\mat}[1]{\ensuremath{\begin{bmatrix}#1\end{bmatrix}}}
+\newcommand{\cat}[1]{\ensuremath{\begin{vmatrix}#1\end{vmatrix}}}
+\newcommand{\eqn}[1]{\begin{alignat*}{2}#1\end{alignat*}}
+\newcommand{\p}[2]{\frac{\partial #1}{\partial #2}}
+\newcommand*{\thus}{&\implies\quad&}
+
+\newcommand{\answer}[1]{\framebox{$\displaystyle #1 $}}
+
+\newcommand{\shrug}[1][]{%
+\begin{tikzpicture}[baseline,x=0.8\ht\strutbox,y=0.8\ht\strutbox,line width=0.125ex,#1]
+\def\arm{(-2.5,0.95) to (-2,0.95) (-1.9,1) to (-1.5,0) (-1.35,0) to (-0.8,0)};
+\draw \arm;
+\draw[xscale=-1] \arm;
+\def\headpart{(0.6,0) arc[start angle=-40, end angle=40,x radius=0.6,y radius=0.8]};
+\draw \headpart;
+\draw[xscale=-1] \headpart;
+\def\eye{(-0.075,0.15) .. controls (0.02,0) .. (0.075,-0.15)};
+\draw[shift={(-0.3,0.8)}] \eye;
+\draw[shift={(0,0.85)}] \eye;
+% draw mouth
+\draw (-0.1,0.2) to [out=15,in=-100] (0.4,0.95); 
+\end{tikzpicture}}
+
+
+\pagestyle{fancy}
+\fancyhf{}
+\rhead{Rahul Arya}
+\lhead{EE 16B}
+\cfoot{\thepage}
+
+\title{Lecture 25 - Notes}
+\author{Rahul Arya}
+\date{April 2019}
+\begin{document}
+
+\maketitle
+
+\section{Overview}
+Having established some mathematical preliminaries in the previous lecture, we will now begin to consider the DFT itself. Specifically, we will look at a linear transformation that, when applied on a discrete-time signal, allows us to write it as a sum of discrete-time sinusoidal signals. In this lecture, we will focus on the properties of this linear transformation in its matrix representation. We will explain why it is useful in converting between the time and frequency domains (which, of course, is the DFT matrix's most important property!) in future lectures.
+
+\section{The DFT Matrix}
+Recall that we define a particular $k$th root of unity
+\[
+    \omega_k = e^{2\pi j / k}.
+\]
+We define the DFT matrix for a signal of length $N$ to be
+\[
+    F_N = \mat{
+    \omega_N^{-0 \cdot 0} & \omega_N^{-0 \cdot 1} & \cdots & \omega_N^{-0 \cdot (N-1)} \\
+    \omega_N^{-1 \cdot 0} & \omega_N^{-1 \cdot 1} & \cdots & \omega_N^{-1 \cdot (N-1)} \\
+    \vdots & \vdots & \ddots & \vdots \\
+    \omega_N^{-(N-1) \cdot 0} & \omega_N^{-(N-1) \cdot 1} & \cdots & \omega_N^{-(N-1) \cdot (N-1)}},
+\]
+where the entry at the $a$th row and $b$th column is
+\[
+    (F_N)_{a,b} = \omega_N^{-a\cdot b},
+\]
+with our row and column numbering both starting at $0$\footnote{From this lecture on, we will continue to use the convention of $0$-indexing our enumerations, unless we explicitly state otherwise or it is extremely obvious from context. Note also that we will not use $i$ or $j$ as indices in most contexts, to avoid confusion when working with complex numbers.}.
+
+What does this matrix look like? Let's consider this matrix for a particular value of $N$ - say, $N = 3$. Substituting directly into the definition, we find that
+\[
+    F_3 = \mat{
+    \omega_3^{-0 \cdot 0} & \omega_3^{-0 \cdot 1} & \omega_3^{-0 \cdot 2} \\
+    \omega_3^{-1 \cdot 0} & \omega_3^{-1 \cdot 1} & \omega_3^{-1 \cdot 2} \\
+    \omega_3^{-2 \cdot 0} & \omega_3^{-2 \cdot 1} & \omega_3^{-2 \cdot 2}} = \mat{
+    \omega_3^{0} & \omega_3^{0} & \omega_3^{0} \\
+    \omega_3^{0} & \omega_3^{-1} & \omega_3^{-2} \\
+    \omega_3^{0} & \omega_3^{-2} & \omega_3^{-4}}.
+\]
+
+To simplify this matrix representation, recall that $\omega_3$, being a cube root of unity, has the property that $\omega_3^3 = 1$. Thus, we can multiply any number by this quantity and not change its value. In particular, observe that
+\eqn{
+    && \omega^{-1} &= \omega^{-1} \cdot \omega^3 = \omega^2 \\
+    && \omega^{-2} &= \omega^{-2} \cdot \omega^3 = \omega^1 = \omega \\
+    && \omega^{-4} &= \omega^{-4} \cdot \omega^3 \cdot \omega^3 = \omega^2.
+}
+Notice further that clearly $\omega_3^0 = 0$. Thus, we can simplify our representation of $F_3$ to become
+\[
+    F_3 = \mat{
+    1 & 1 & 1 \\
+    1 & \omega_3^{2} & \omega_3 \\
+    1 & \omega_3 & \omega_3^{2}}.
+\]
+Thus, we see that there are three distinct values in the matrix: $1$, $\omega_3$, and $\omega_3^2$. Notice that these values are exactly the three cube roots of unity, and so will be evenly spaced on a unit circle if plotted on the complex plane, as shown:
+\begin{center}
+\begin{tikzpicture}
+    \begin{scope}[dotted,font=\scriptsize]
+    \draw [->] (-4,0) -- (4,0) node [above left] (re) {$\Re\{z\}$};
+    \draw [->] (0,-4) -- (0,4) node [below right] {$\Im\{z\}$};
+    \end{scope}
+    \draw [->] (0, 0) -- (2, 0) node[above right] {$1$};
+    \draw [->] (0, 0) -- (-1, 1.72) node[above left] {$\omega_3$};
+    \draw [->] (0, 0) -- (-1, -1.72) node[below left] {$\omega_3^2$};
+    \draw[dashed] (0, 0) circle (2 cm);
+\end{tikzpicture}
+\end{center}
+
+Looking at each of the rows of $F_3$, we can view them as representing motion around the circle with different angular frequencies - the first row represents the angular frequency $\omega = 0$, the second represents $\omega = -\pi / 3$ (treating each entry as representing one unit of time), and the third represents $\omega = \pi / 3$. This interpretation of the rows will be important in future lectures, when we rigorously consider writing signals in the frequency domain.
+
+\section{Simple Properties of the DFT Matrix}
+We will now establish some properties of DFT matrices, that are fairly straightforward consequences. First, notice that for all valid $a$, $b$, and $N$,
+\[
+    (F_N)_{a, b} = \omega_N^{-ab} = \omega_N^{-ba} = (F_N)_{b, a},
+\]
+so $F_N$ is symmetric. Written algebraically, $F_N = F_N^T$.
+
+Moreover, observe that each entry of $F_N$ is a root of unity raised to some real power, so each entry has unit magnitude. Consider the rows of $F_N$, written as $\vec{u}_k$ such that
+\[
+    F_N = \mat{- & \vec{u}_0^T & - \\ - & \vec{u}_1^T & - \\ & \vdots & \\ - & \vec{u}_{N-1}^T & -}.
+\]
+Observe that, by definition, for any valid $k$,
+\eqn{
+    && \norm{\vec{u}_k} &= \sqrt{\sum_{a=0}^{N-1} \abs{(F_N)_{k, a}}} \\
+    &&&= \sqrt{\sum_{a=0}^{N-1} 1} \\
+    &&&= \sqrt{N},
+}
+using our observation about the magnitudes of the entries of $F_N$. Since $F_N$ is symmetric, it is clear that the magnitude of each of its columns is also $\sqrt{N}$. Thus, if we divide $F_N$ by $\sqrt{N}$, we will obtain the matrix $(1/\sqrt{N})F_N$ of a similar form but with rows and columns of unit length. Some other texts call this matrix (rather than $F_N$) the DFT matrix, but we will not do so here.
+
+Finally, consider the entries of $\vec{u}_k$:
+\[
+    \vec{u}_k^T = \mat{\omega_N^{-0 \cdot k} & \omega_N^{-1 \cdot k} & \omega_N^{-2 \cdot k} & \cdots & \omega_N^{-(N-1) \cdot k}}.
+\]
+Observe that we can rewrite these entries as
+\[
+    \vec{u}_k^T = \mat{(\omega_N^{-k})^0 & (\omega_N^{-k})^1 & (\omega_N^{-k})^2 & \cdots & (\omega_N^{-k})^{N-1}},
+\]
+so they form the entries of a geometric sequence with first element $1$. By definition, we have thus shown that $F_N$ is a Vandermonde matrix, since the common ratios of each of its rows is clearly distinct.
+
+\section{Orthogonality of the DFT Matrix}
+Above, we showed that the norms of the rows and columns of $F_N$ are both $\sqrt{N}$, using a straightforward algebraic argument. However, we claim that these rows are all also orthogonal. To prove this, it is natural to take the inner product of two rows. We need to be careful, though, to use the inner product generalized to the complex field, so we have for valid $a \ne b$
+\eqn{
+    && \langle \vec{u}_a^T, \vec{u}_b^T \rangle &= \overline{\vec{u}_b} \vec{u}_a^T \\
+    &&&= \sum_{k=0}^{N-1} \overline{(F_N)_{b, k}} (F_N)_{a, k} \\
+    &&&= \sum_{k=0}^{N-1} \overline{\omega_N^{-bk}}\omega_N^{-ak} \\
+    &&&= \sum_{k=0}^{N-1} \omega_N^{bk}\omega_N^{-ak} \\
+    &&&= \sum_{k=0}^{N-1} (\omega_N^{b-a})^k,
+}
+since, from basic properties of the polar form of complex numbers, we have that
+\eqn{
+    && \overline{\omega_N^{-bk}} &= \overline{(e^{2\pi / N})^{-bk}} \\
+    &&&= \overline{e^{-2\pi b k / N}} \\
+    &&&= e^{2 \pi b k / N} \\
+    &&&= (e^{2 \pi / N})^{bk} \\
+    &&&= \omega_N^{bk}.
+}
+Now, observe that since $a \ne b$, our summation is actually just the summation of a geometric series with initial term $1$ and common ratio $\omega_N^{b-a}$. Thus, we may apply the well-known formula for summing a geometric series, to obtain
+\eqn{
+    && \langle \vec{u}_a^T, \vec{u}_b^T \rangle &= \sum_{k=0}^{N-1} (\omega_N^{b-a})^k \\
+    &&&= \frac{1 - (\omega_N^{b-a})^N}{1 - \omega_N^{b-a}}.
+}
+Observe that for $a \ne b$, the denominator is nonzero, so this expression is defined. However, observe that since $\omega_N^{b-a}$ is an $N$th root of unity raised to an integer power, it is itself a root of unity. By definition, therefore, $(\omega_N^{b-a})^N = 1$\footnote{If you're not comfortable with the properties of roots of unity, you can of course show this directly by swapping the order of the powers. But going about it this way helps build intuition for complex numbers and is marginally simpler.}. Substituting into the above expression, we obtain
+\eqn{
+    && \langle \vec{u}_a^T, \vec{u}_b^T \rangle &= \frac{1 - (\omega_N^{b-a})^N}{1 - \omega_N^{b-a}} \\
+    &&&= \frac{0}{1 - \omega_N^{b-a}} \\
+    &&&= 0,
+}
+so $\vec{u}_a$ and $\vec{u}_b$ are indeed orthogonal.
+
+We thus have that all the rows and columns of $F_N$ have the same magnitude and are mutually orthogonal. This sounds very similar, but not the same, as orthogonality - the only difference being that the magnitudes of these vectors are all $\sqrt{N}$, not $1$. However, by normalizing these magnitudes, we thus have that $(1/\sqrt{N})F_N$ is an orthogonal matrix!
+
+One property of orthogonal matrices, that we have seen many times before, is that their Hermitian transpose is their own inverse. Thus,
+\eqn{
+    && \left(\frac{1}{\sqrt{N}} F_N\right)^{-1} &= \left(\frac{1}{\sqrt{N}} F_N\right)^* \\
+    \thus \sqrt{N} F_N^{-1} &= \frac{1}{\sqrt{N}} F_N^* \\
+    \thus F_NF_N^* &= NI,
+}
+where $I$ is the $N \times N$ identity matrix.
+
+\section{Complex Conjugates within the DFT Matrix}
+Above, we saw that the $F_N$'s conjugate transpose was essentially its inverse (up to a factor of $N$). Indeed, since $F_N$ is symmetric, we have that
+\[
+    F_N\overline{F_N} = NI,
+\]
+so the conjugate of $F_N$ is also essentially its inverse. Now, we will look at this conjugate from a different perspective. Writing it out elementwise, we have that
+\eqn{
+    && \overline{F_N} &= \mat{
+    \overline{\omega_N^{-0 \cdot 0}} & \overline{\omega_N^{-0 \cdot 1}} & \cdots & \overline{\omega_N^{-0 \cdot (N-1)}} \\
+    \overline{\omega_N^{-1 \cdot 0}} & \overline{\omega_N^{-1 \cdot 1}} & \cdots & \overline{\omega_N^{-1 \cdot (N-1)}} \\
+    \vdots & \vdots & \ddots & \vdots \\
+    \overline{\omega_N^{-(N-1) \cdot 0}} & \overline{\omega_N^{-(N-1) \cdot 1}} & \cdots & \overline{\omega_N^{-(N-1) \cdot (N-1)}}} \\
+    &&&= \mat{
+    \omega_N^{0 \cdot 0} & \omega_N^{0 \cdot 1} & \cdots & \omega_N^{0 \cdot (N-1)} \\
+    \omega_N^{1 \cdot 0} & \omega_N^{1 \cdot 1} & \cdots & \omega_N^{1 \cdot (N-1)} \\
+    \vdots & \vdots & \ddots & \vdots \\
+    \omega_N^{(N-1) \cdot 0} & \omega_N^{(N-1) \cdot 1} & \cdots & \omega_N^{(N-1) \cdot (N-1)}},
+}
+since taking the conjugate is the same thing as flipping the sign of the complex term in the exponent.
+
+We claim that taking the conjugate is the same thing as rearranging the order of the columns (or rows) of $F_N$. For $a = 0$, $\vec{u}_a = \vec{u}_0$ is a real vector consisting of all $1$s, so it is not affected by taking the conjugate. However, we claim that the order of all the other columns is reversed after taking the conjugate. Specifically, we assert that, for all valid $a \ge 1$,
+\[
+    \vec{u}_a = \overline{\vec{u}_{N - a}}.
+\]
+This can be proved via a straightforward algebraic argument. Consider the $b$th element of $\vec{u}_a$. By definition, since $\omega_N^N = 1$, we have that
+\eqn{
+    && (\vec{u}_a)_b &= F_{a, b} \\
+    &&&= \omega_N^{-ab} \\
+    &&&= \omega_N^{-ab} (\omega_N^{N})^b \\
+    &&&= \omega_N^{-ab} \omega_N^{Nb} \\
+    &&&= \omega_N^{(N - a)b} \\
+    &&&= \overline{\omega_N^{-(N-a)b}} \\
+    &&&= \overline{F_{N - a, b}} \\
+    &&&= \overline{(\vec{u}_{N-a})_b}.
+}
+Since every element of $\vec{u}_{N-a}$ is the conjugate of its corresponding term from $\vec{u}_a$, we have that
+\[
+    \vec{u}_a = \overline{\vec{u}_{N-a}},
+\]
+as desired.
+
+Applying this result on all the columns of $\overline{F_N}$, it is clear that we may write
+\[
+    \overline{F_N} = \mat{ | & | & | & & | \\ \overline{\vec{u}_0} & \overline{\vec{u}_1} & \overline{\vec{u}_2} & \cdots & \overline{\vec{u}_{N-1}} \\ | & | & | & & | } = \mat{ | & | & | & & | \\ \vec{u}_0 & \vec{u}_{N-1} & \vec{u}_{N-2} & \cdots & \vec{u}_1 \\ | & | & | & & | }.
+\]
+An analogous result can immediately be obtained for the rows by taking the transpose of the above equation.
+
+\end{document}

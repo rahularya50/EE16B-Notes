@@ -312,7 +312,7 @@ so we can stack our scalar projections in a vector
 \]
 By definition, observe that the variance of these projections is
 \[
-    \frac{1}{n} \sqrt{(\mathrm{proj}_{\vec{v}}(\vec{a}_1))^2 + (\mathrm{proj}_{\vec{v}}(\vec{a}_2))^2 + \ldots + (\mathrm{proj}_{\vec{v}}(\vec{a}_n))^2} &= \norm{\tilde{A}\vec{v}}.
+    \frac{1}{n} \sqrt{(\mathrm{proj}_{\vec{v}}(\vec{a}_1))^2 + (\mathrm{proj}_{\vec{v}}(\vec{a}_2))^2 + \ldots + (\mathrm{proj}_{\vec{v}}(\vec{a}_n))^2} = \frac{1}{n}\norm{\tilde{A}\vec{v}}.
 \]
 Now, our problem reduces to determining the unit vector $\vec{v}$ that maximizes this quantity. Recall that the $\vec{p}_i$ formed an orthonormal basis for our $m$-dimensional space, so we may write
 \[
@@ -324,7 +324,7 @@ where
 \]
 for suitable chosen constants $\alpha_i$. 
 
-Now, it should be clear that maximizing $\norm{\tilde{A}\vec{v}}$ is the same thing as maximizing $\norm{\tilde{A}\vec{v}}^2 = \vec{v}^T\tilde{A}^T\tilde{A}\vec{v}$, since they are both always nonnegative. Since the $\vec{p}_i$ are eigenvectors, we can write
+Now, it should be clear that maximizing $\frac{1}{n}\norm{\tilde{A}\vec{v}}$ is the same thing as maximizing $\norm{\tilde{A}\vec{v}}^2 = \vec{v}^T\tilde{A}^T\tilde{A}\vec{v}$, since they are both always nonnegative. Since the $\vec{p}_i$ are eigenvectors, we can write
 \eqn{
     && \vec{v}^T\tilde{A}^T\tilde{A}\vec{v} &= (\alpha_1 \vec{p}_1 + \alpha_2 \vec{p}_2 + \ldots + \alpha_n \vec{p}_n)^T\tilde{A}^T\tilde{A}(\alpha_1 \vec{p}_1 + \alpha_2 \vec{p}_2 + \ldots + \alpha_m \vec{p}_m) \\
     &&&= (\alpha_1 \vec{p}_1 + \alpha_2 \vec{p}_2 + \ldots + \alpha_n \vec{p}_m)^T(\alpha_1 \lambda_1 \vec{p}_1 + \alpha_2 \lambda_2 \vec{p}_2 + \ldots + \alpha_m \lambda_m \vec{p}_m),
