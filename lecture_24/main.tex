@@ -193,7 +193,7 @@ where $M$ and $\theta$ are real numbers representing the magnitude and argument 
     \draw [->] (0,-1) -- (0,6) node [below right] {$\Im\{z\}$};
     \end{scope}
     \draw [->] (0, 0) node (o) {} -- (3, 1) node[above right] (x) {$X = Me^{j\theta}$};
-    \draw [->] (0, 0) -- (4, 5) node[above right] (xk) {$X = M^ke^{jk\theta}$};
+    \draw [->] (0, 0) -- (4, 5) node[above right] (xk) {$X^k = M^ke^{jk\theta}$};
     \draw  pic["$\theta$",draw=black,<->,angle eccentricity=1.2,angle radius=1cm] {angle=re--o--x};
     \draw  pic["$k\theta$",draw=black,<->,angle eccentricity=1.2,angle radius=2cm] {angle=re--o--xk};
 \end{tikzpicture}
@@ -222,7 +222,7 @@ We describe the set of complex numbers $\{ Z \}$ such that $Z^N = 1$ as the \emp
     \thus (Me^{j\theta})^N &= 1 \\
     \thus M^N e^{jN\theta} &= 1,
 }
-so $M = 1$, as $1$ is clearly the only nonnegative real $N$th of unity. Thus,
+so $M = 1$, as $1$ is clearly the only nonnegative real $N$th root of unity. Thus,
 \[
     e^{jN\theta} = 1.
 \]

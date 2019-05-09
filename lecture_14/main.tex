@@ -228,7 +228,7 @@ so our state equation becomes
 \[
     z[i+1] = d_{n-1}z[i] + d_{n-2}z[i-1] + \ldots + d_0z[i - n + 1] + \omega.
 \]
-Since we could set the $d_i$ to whatever we want, we see here that we can arbitrarily adjust the evolution of our system over time by applying an input at very timestep.
+Since we could set the $d_i$ to whatever we want, we see here that we can arbitrarily adjust the evolution of our system over time by applying an input at every timestep.
 
 \section{Controllable Canonical Form}
 The scalar model from the previous section sounds pretty good! It has the ``vector-like'' behavior we expect, due to its dependence on the previous $n$ states, but a one-dimensional input can still be used to stabilize it. However, it still has the slightly unusual behavior of depending on the past $n$ states, not just the most recent one.
