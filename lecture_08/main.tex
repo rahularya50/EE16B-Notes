@@ -657,15 +657,15 @@ Observe the sharp drop in impedance near the resonant frequency, with the impeda
 \]
 since from our linear model $Z_{eq}(\omega_n) = \sqrt{L / C}$, when in reality $Z_{eq}(\omega_n) = R$.
 
-Another way of quantifying the sharpness of this drop is known as the \emph{bandwidth} $B$, and is defined to be the maximum value such that
+Another way of quantifying the sharpness of this drop is known as the \emph{bandwidth} $B$, and is defined to be the difference of the maximum and minimum values of $\omega$ such that
 \[
-    \abs{Z_{eq}}(\omega_n \pm B / 2) \le \sqrt{2} (\abs{Z_{eq}}(\omega_n)).
+    \abs{Z_{eq}(\omega)} \le \sqrt{2} (\abs{Z_{eq}(\omega_n)}).
 \]
 In other words, it describes how far the frequency $\omega$ can deviate from $\omega_n$ before the impedance rises significantly. 
 
-Now, we can solve for $B$. Let $\omega_1 = \omega_n - B/2$. Thus,
+Now, we can solve for $B$. Let $\omega_1$ be the minimum value of $\omega$ satisfying the above inequality. Thus,
 \eqn{
-    && \abs{Z_{eq}}\left(\omega - \frac{B}{2}\right) &= \sqrt{2} (\abs{Z_{eq}}(\omega_n)) \\
+    && \abs{Z_{eq}(\omega_1)} &= \sqrt{2} (\abs{Z_{eq}(\omega_n)}) \\
     \thus \sqrt{R^2 + (\omega_1 L - \frac{1}{\omega_1 C})^2} &= R\sqrt{2} \\
     \thus R^2 + (\omega_1 L - \frac{1}{\omega_1 C})^2 &= 2R^2 \\
     \thus \omega L - \frac{1}{\omega_1 C} &= -R \\
@@ -674,7 +674,7 @@ Now, we can solve for $B$. Let $\omega_1 = \omega_n - B/2$. Thus,
     &&&= -\frac{R}{2L} + \sqrt{\frac{R^2}{4L^2} + \frac{1}{LC}} \\
     &&&= \frac{1}{\sqrt{LC}} \left(-\frac{R\sqrt{C}}{2\sqrt{L}} + \sqrt{1 + \frac{R^2C}{L}} \right) \\
 }
-Let $\omega_2 = \omega_n + B/2$. A very similar calculation will demonstrate that
+Let $\omega_2$ be the largest value of $\omega$ satisfying our previous inequality. A very similar calculation will demonstrate that
 \[
     \omega_2 = \frac{1}{\sqrt{LC}} \left(\frac{R\sqrt{C}}{2\sqrt{L}} + \sqrt{1 + \frac{R^2C}{L}} \right).
 \]
@@ -727,7 +727,7 @@ Notice that the first term is the impedance of a real inductor, the second term 
 \end{loglogaxis}
 \end{tikzpicture}
 \end{center}
-It can be shown, though we will not do so, that the peak of $\abs{Z_{eq}}$ here is a further factor of $Q$ above the linear approximation (so it equals $Q^2R$), just like how in the RLC series circuit the minimum was a factor of $Q$ below the linear approximation. The key idea here is that we have produced a circuit with high impedance only very near a particular frequency $\omega_n$. Thus, we can finally construct an RLC filter as follows:
+It can be shown, though we will not do so here, that the peak of $\abs{Z_{eq}}$ here is a further factor of $Q$ above the linear approximation (so it equals $Q^2R$), just like how in the RLC series circuit the minimum was a factor of $Q$ below the linear approximation. The key idea here is that we have produced a circuit with high impedance only very near a particular frequency $\omega_n$. Thus, we can finally construct an RLC filter as follows:
 \begin{center}
 \begin{circuitikz}[american]
 \draw (-2, 0) node[ocirc]{} node[left]{$V_{in}$} to[R, l=$R_{big}$] (0, 0) to (2, 0) to[R, l=$R$] (2, -2) to[L, l=$L$] (2, -4) node[ground] {};
