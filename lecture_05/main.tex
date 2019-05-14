@@ -255,7 +255,7 @@ Notice now how $V(t)$ and $I(t)$ have very similar forms - that of
 \[
     f(t) = \frac{1}{2} \left(\tilde{X}e^{j\omega t} + \overline{\tilde{X}} e^{-j\omega t} \right),
 \]
-where $\tilde{X}$ is some complex number that does not depend on $t$. We call $\tilde{X}$ a \emph{phasor} representing $f(t)$. Thus, here we have the phasors $\tilde{V}$ and $\tilde{I}$ representing the voltage and current across the capacitor to be
+where $\tilde{X}$ is some complex number that does not depend on $t$. We call $\tilde{X}$ a \emph{phasor} representing $f(t)$\footnote{See the warning at the end of this note to avoid losing marks on exams!}. Thus, here we have the phasors $\tilde{V}$ and $\tilde{I}$ representing the voltage and current across the capacitor to be
 \eqn{
     && \tilde{V} &= V_0 \\
     && \tilde{I} &= j\omega C V_0.
@@ -345,5 +345,24 @@ Substituting these values into our equation for $\tilde{u}$, we find that
     \tilde{u} = \frac{R}{\frac{1}{j\omega C} + R} V_0,
 \]
 which allows us to solve for $u(t)$ exactly (using the equation converting phasors back into real-valued functions).
+
+\setcounter{section}{0}
+\renewcommand{\thesection}{\Alph{section}}
+\section{Warning}
+Be aware that in this note, and in all subsequent notes, phasors are defined slightly differently from what we use in the course. Essentially, there is a factor of $2$ difference.
+
+In these notes, we define the phasor representation $\tilde{X}$ of a sinusoid to be such that
+\[
+    x(t) = \frac{1}{2} (\tilde{X} e^{j\omega t} + \overline{\tilde{X}} e^{-j\omega t}).
+\]
+
+In the course, we define it to be such that
+\[
+    x(t) = \tilde{X} e^{j\omega t} + \overline{\tilde{X}} e^{-j\omega t}.
+\]
+
+My way is, I believe, more common in the literature, but can lead to some confusion if misunderstood. The course's way is less commonly used, but is probably better from a pedagogical standpoint. But if done correctly, there is no real difference between the two, in that both are derived equally rigorously. I just use a different way so I can copy and paste from older notes. 
+
+Make sure to use the course's definition when doing exams!
 
 \end{document}

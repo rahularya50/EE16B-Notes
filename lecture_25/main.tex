@@ -263,7 +263,7 @@ so they form the entries of a geometric sequence with first element $1$. By defi
 \section{Orthogonality of the DFT Matrix}
 Above, we showed that the norms of the rows and columns of $F_N$ are both $\sqrt{N}$, using a straightforward algebraic argument. However, we claim that these rows are all also orthogonal. To prove this, it is natural to take the inner product of two rows. We need to be careful, though, to use the inner product generalized to the complex field, so we have for valid $a \ne b$
 \eqn{
-    && \langle \vec{u}_a^T, \vec{u}_b^T \rangle &= \overline{\vec{u}_b} \vec{u}_a^T \\
+    && \langle \vec{u}_a, \vec{u}_b \rangle &= \overline{\vec{u}_b}^T \vec{u}_a \\
     &&&= \sum_{k=0}^{N-1} \overline{(F_N)_{b, k}} (F_N)_{a, k} \\
     &&&= \sum_{k=0}^{N-1} \overline{\omega_N^{-bk}}\omega_N^{-ak} \\
     &&&= \sum_{k=0}^{N-1} \omega_N^{bk}\omega_N^{-ak} \\
@@ -279,12 +279,12 @@ since, from basic properties of the polar form of complex numbers, we have that
 }
 Now, observe that since $a \ne b$, our summation is actually just the summation of a geometric series with initial term $1$ and common ratio $\omega_N^{b-a}$. Thus, we may apply the well-known formula for summing a geometric series, to obtain
 \eqn{
-    && \langle \vec{u}_a^T, \vec{u}_b^T \rangle &= \sum_{k=0}^{N-1} (\omega_N^{b-a})^k \\
+    && \langle \vec{u}_a, \vec{u}_b \rangle &= \sum_{k=0}^{N-1} (\omega_N^{b-a})^k \\
     &&&= \frac{1 - (\omega_N^{b-a})^N}{1 - \omega_N^{b-a}}.
 }
 Observe that for $a \ne b$, the denominator is nonzero, so this expression is defined. However, observe that since $\omega_N^{b-a}$ is an $N$th root of unity raised to an integer power, it is itself a root of unity. By definition, therefore, $(\omega_N^{b-a})^N = 1$.\footnote{If you're not comfortable with the properties of roots of unity, you can of course show this directly by swapping the order of the powers. But going about it this way helps build intuition for complex numbers and is marginally simpler.} Substituting into the above expression, we obtain
 \eqn{
-    && \langle \vec{u}_a^T, \vec{u}_b^T \rangle &= \frac{1 - (\omega_N^{b-a})^N}{1 - \omega_N^{b-a}} \\
+    && \langle \vec{u}_a, \vec{u}_b \rangle &= \frac{1 - (\omega_N^{b-a})^N}{1 - \omega_N^{b-a}} \\
     &&&= \frac{0}{1 - \omega_N^{b-a}} \\
     &&&= 0,
 }
