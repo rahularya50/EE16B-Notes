@@ -259,19 +259,19 @@ pulling the root of unity $\omega_N$ out from the exponential terms. For notatio
 Recall that we defined the $\vec{u}_l$ to be the columns (or rows, since $F_N$ is symmetric) of $F_N$. Observe in particular that we can rewrite the above expression as
 \eqn{
     && \vec{x}[k] &= \frac{1}{2} (C_l\omega_N^{lk} + \overline{C_l}\omega_N^{-lk}) \\
-    &&&= \frac{1}{2} (C_l\omega_N^{(l - lN)k} + \overline{C_l}\omega_N^{-lk}) \\
-    &&&= \frac{1}{2} (C_l\omega_N^{-(N - 1)lk} + \overline{C_l}\omega_N^{-lk}),
+    &&&= \frac{1}{2} (C_l\omega_N^{(l - N)k} + \overline{C_l}\omega_N^{-lk}) \\
+    &&&= \frac{1}{2} (C_l\omega_N^{-(N - l)k} + \overline{C_l}\omega_N^{-lk}),
 }
 since $\omega_N^N = 1$, so we have that
 \[
-    \vec{x} = \frac{1}{2} (C_l\vec{u}_l e^{j\phi_l} + \overline{C_l}\vec{u}_{N - l} e^{-j\phi_l}) = \frac{1}{2} (C_l\overline{\vec{u}_l} e^{j\phi_l} + \overline{C_l}\overline{\vec{u}_{N-l}} e^{-j\phi_l}),
+    \vec{x} = \frac{1}{2} (C_l\vec{u}_{N - l} + \overline{C_l}\vec{u}_l) = \frac{1}{2} (C_l\overline{\vec{u}_l} + \overline{C_l}\overline{\vec{u}_{N-l}}),
 \]
 since we saw last time that $\vec{u}_l$ and $\vec{u}_{N-l}$ were complex conjugates of one another.
 
 Now, we can finally evaluate $F_N\vec{x}$ directly, to obtain
 \eqn{
     && X &= F_N \vec{x} \\
-    &&&= \frac{1}{2} F_N (C_l\overline{\vec{u}_l} e^{j\phi_l} + \overline{C_l}\overline{\vec{u}_{N-l}} e^{-j\phi_l}) \\
+    &&&= \frac{1}{2} F_N (C_l\overline{\vec{u}_l} + \overline{C_l}\overline{\vec{u}_{N-l}}) \\
     &&&= \frac{1}{2} \mat{ - & \vec{u}_0^T & - \\ & \vdots & \\ - & \vec{u}_{N-1}^T & - } (C_l\overline{\vec{u}_l} + \overline{C_l}\overline{\vec{u}_{N-l}}) \\
     &&&= \frac{C_l}{2} \mat{ - & \vec{u}_0^T & - \\ & \vdots & \\ - & \vec{u}_{N-1}^T & - } \overline{\vec{u}_l} + \frac{\overline{C_l}}{2} \mat{ - & \vec{u}_0^T & - \\ & \vdots & \\ - & \vec{u}_{N-1}^T & - } \overline{\vec{u}_{N-l}} \\
     &&&= \frac{C_l}{2} \mat{ \vec{u}_0^T\overline{\vec{u}_l} \\ \vdots \\ \vec{u}_{N-1}^T\overline{\vec{u}_l}} + \frac{\overline{C_l}}{2} \mat{ \vec{u}_0^T\overline{\vec{u}_{N - l}} \\ \vdots \\ \vec{u}_{N-1}^T\overline{\vec{u}_{N - l}}} \\
