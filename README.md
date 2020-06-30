@@ -2,6 +2,8 @@
 
 This repo contains my notes for EE 16B.
 
+The [pdfs folder](pdfs) contains generated pdfs from all the .tex files. These are from the commit on 06/29/2020, and they may be out of date from the rest of the repo.
+
 I compile the .tex files using pdftex, and embed graphics as .pdf.
 
 The graphics are generated using IPE (http://ipe.otfried.org/), and the generated pdfs can be opened directly using IPE if you need to make any changes. _DO NOT_ open / edit them in anything else, as that deletes the metadata that IPE needs to preserve layers and stuff.
@@ -11,5 +13,5 @@ There's also a gigantic header at the top of each file, but most of it can be sa
  - The \mat and \cat commands (sorry), as I use them to avoid writing \begin{bmatrix} \end{bmatrix} all the time
  - The \eqn and \thus commands, as I use them to make my equations look more aligned
  - The \eps command, as I think \varepsilon is too long to type
- 
+
  Hopefully these notes can be of some use!
